@@ -18,42 +18,12 @@ require_once './views/header.php';
             
         }
         .mw{
-            max-width: 20%;
+            max-width: 25%;
         }
     </style>
 </head>
 <body>
-    <div class=" bg-gray-900 h-16 "></div>
-    <div class="bg-gray-800">
-       <div class="row flex justify-center">
-            <div class="col-1 font-bold text-white text-sm flex justify-center hover:bg-gray-400 p-1"> 
-                <img class="h-6 mx-1" src="https://img.icons8.com/?size=100&id=11409&format=png&color=000000">
-                <a>IPhone</a>
-            </div>
-            <div class="col-1 font-bold text-white text-sm flex justify-center hover:bg-gray-400 p-1">  
-                <img class="h-6 mx-1" src="https://img.icons8.com/?size=100&id=10326&format=png&color=000000">
-                <a>MacBook</a>
-            </div>
-            <div class="col-1 font-bold text-white text-sm flex justify-center hover:bg-gray-400 p-1">  
-                <img class="h-6 mx-1" src="https://img.icons8.com/?size=100&id=11309&format=png&color=000000">
-                <a>Mac</a>
-            </div>
-            <div class="col-1 font-bold text-white text-sm flex justify-center hover:bg-gray-400 p-1">  
-                <img class="h-6 mx-1" src="https://img.icons8.com/?size=100&id=2318&format=png&color=000000">
-                <a>Ipad</a>
-            </div>
-            <div class="col-1 font-bold text-white text-sm flex justify-center hover:bg-gray-400 p-1">  
-                <img class="h-6 mx-1" src="https://img.icons8.com/?size=100&id=111236&format=png&color=000000">
-                <a>Watch</a>
-            </div>
-            <div class="col-1 font-bold text-white text-sm flex justify-center hover:bg-gray-400 p-1">  
-                <img class="h-6 mx-1" src="https://img.icons8.com/?size=100&id=Cxy3RFJwyy2Z&format=png&color=000000">
-                <a>Accessory</a>
-            </div>
-            
-            
-       </div>
-    </div>
+    <div class=" bg-gray-900 h-16 mt-1"></div>
     <div id="carouselExampleControls" class="carousel slide bg-gray-900 p-2" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
@@ -75,72 +45,72 @@ require_once './views/header.php';
         <span class="sr-only">Next</span>
     </a>
     </div>
-    <div class="bg-gray-800">
-        <div>
-           iphone 
+    <div class="bg-gray-800 w-full">
+        <div class="flex w-full justify-center p-2">
+            <img class="h-8" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
+            <div class=" text-2xl text-center font-bold text-white">Iphone </div>
         </div>
         <div class="flex  flex-wrap items-center justify-center ">
             <div class="mw bg-gray-800 rounded-xl shadow-lg p-6 max-w-xs text-white m-4">
                 <img src="https://cdn.tgdd.vn/Products/Images/42/329149/s16/iphone-16-pro-max-titan-sa-mac-thumbnew-650x650.png" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
                 <h2 class="text-lg font-semibold mb-2">iPhone 16 Pro Max 256GB</h2>
-                <div class="flex items-center mb-4">
-                    <span class="font-bold">32.790.000₫</span>
-                    <span class="line-through text-gray-400 ml-2 text-sm">34.990.000₫</span>
-                    <span class="text-green-500 ml-2">-6%</span>
-                </div>
-                <button class=" w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    By now
-                </button>
-            </div>
-            <div class="mw bg-gray-800 rounded-xl shadow-lg p-6 max-w-xs text-white m-4">
-                <img src="https://cdn.tgdd.vn/Products/Images/42/329149/s16/iphone-16-pro-max-titan-sa-mac-thumbnew-650x650.png" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
-                <h2 class="text-lg font-semibold mb-2">iPhone 16 Pro Max 256GB</h2>
-                <div class="flex items-center mb-4">
-                    <span class="font-bold">32.790.000₫</span>
-                    <span class="line-through text-gray-400 ml-2 text-sm">34.990.000₫</span>
-                    <span class="text-green-500 ml-2">-6%</span>
-                </div>
-                <button class=" w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    By now
-                </button>
-            </div>
-            <div class="mw bg-gray-800 rounded-xl shadow-lg p-6 max-w-xs text-white m-4">
-                <img src="https://cdn.tgdd.vn/Products/Images/42/329149/s16/iphone-16-pro-max-titan-sa-mac-thumbnew-650x650.png" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
-                <h2 class="text-lg font-semibold mb-2">iPhone 16 Pro Max 256GB</h2>
-                <div class="flex items-center mb-4">
-                    <span class="font-bold">32.790.000₫</span>
-                    <span class="line-through text-gray-400 ml-2 text-sm">34.990.000₫</span>
-                    <span class="text-green-500 ml-2">-6%</span>
-                </div>
-                <button class=" w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    By now
-                </button>
-            </div>
-            <div class="mw bg-gray-800 rounded-xl shadow-lg p-6 max-w-xs text-white m-4">
-                <img src="https://cdn.tgdd.vn/Products/Images/42/329149/s16/iphone-16-pro-max-titan-sa-mac-thumbnew-650x650.png" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
-                <h2 class="text-lg font-semibold mb-2">iPhone 16 Pro Max 256GB</h2>
-                <div class="flex items-center mb-4">
-                    <span class="font-bold">32.790.000₫</span>
-                    <span class="line-through text-gray-400 ml-2 text-sm">34.990.000₫</span>
-                    <span class="text-green-500 ml-2">-6%</span>
-                </div>
-                <button class=" w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    By now
-                </button>
-            </div>
-            <div class="mw bg-gray-800 rounded-xl shadow-lg p-6 max-w-xs text-white m-4">
-                <img src="https://cdn.tgdd.vn/Products/Images/42/329149/s16/iphone-16-pro-max-titan-sa-mac-thumbnew-650x650.png" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
-                <h2 class="text-lg font-semibold mb-2">iPhone 16 Pro Max 256GB</h2>
-                <div class="flex items-center mb-4">
-                    <span class="font-bold">32.790.000₫</span>
-                    <span class="line-through text-gray-400 ml-2 text-sm">34.990.000₫</span>
-                    <span class="text-green-500 ml-2">-6%</span>
-                </div>
+                    <h1 class="font-bold">32.790.000₫</h1>
+                    <h1 class="line-through text-gray-400 ml-20 text-sm">34.990.000₫</h1>
                 <button class=" w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     By now
                 </button>
             </div>
         </div>
+<!-- macbock -->
+        <div class="flex w-full justify-center p-2">
+            <img class="h-8" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
+            <div class=" text-2xl text-center font-bold text-white">Macbook </div>
+        </div>
+        <div class="flex  flex-wrap items-center justify-center ">
+            <div class="mw bg-gray-800 rounded-xl shadow-lg p-6 max-w-xs text-white m-4">
+                <img src="https://cdn.tgdd.vn/Products/Images/44/231244/s16/mac-air-m1-13-xam-new-650x650.png" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
+                <h2 class="text-lg font-semibold mb-2">iPhone 16 Pro Max 256GB</h2>
+                    <h1 class="font-bold">32.790.000₫</h1>
+                    <h1 class="line-through text-gray-400 ml-20 text-sm">34.990.000₫</h1>
+                <button class=" w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    By now
+                </button>
+            </div>
+        </div>
+<!-- ipad -->
+        <div class="flex w-full justify-center p-2">
+            <img class="h-8" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
+            <div class=" text-2xl text-center font-bold text-white">Ipad </div>
+        </div>
+        <div class="flex  flex-wrap items-center justify-center ">
+            <div class="mw bg-gray-800 rounded-xl shadow-lg p-6 max-w-xs text-white m-4">
+                <img src="https://cdn.tgdd.vn/Products/Images/522/325513/s16/ipad-pro-11-inch-wifi-black-thumb-650x650.png" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
+                <h2 class="text-lg font-semibold mb-2">iPhone 16 Pro Max 256GB</h2>
+                    <h1 class="font-bold">32.790.000₫</h1>
+                    <h1 class="line-through text-gray-400 ml-20 text-sm">34.990.000₫</h1>
+                <button class=" w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    By now
+                </button>
+            </div>
+        </div>
+<!-- Watch -->
+        <div class="flex w-full justify-center p-2">
+            <img class="h-8" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
+            <div class=" text-2xl text-center font-bold text-white">Watch </div>
+        </div>
+        <div class="flex  flex-wrap items-center justify-center ">
+            <div class="mw bg-gray-800 rounded-xl shadow-lg p-6 max-w-xs text-white m-4">
+                <img src="https://cdn.tgdd.vn/Products/Images/7077/329153/s16/apple-watch-s10-den-tb-650x650.png" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
+                <h2 class="text-lg font-semibold mb-2">iPhone 16 Pro Max 256GB</h2>
+                    <h1 class="font-bold">32.790.000₫</h1>
+                    <h1 class="line-through text-gray-400 ml-20 text-sm">34.990.000₫</h1>
+                <button class=" w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    By now
+                </button>
+            </div>
+        </div>
+
+
     </div>
     
 </body>   
