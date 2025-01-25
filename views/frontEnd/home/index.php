@@ -15,7 +15,6 @@ require_once './views/header.php';
         .px12{
             margin-left:12.5%;
             max-height: 300px;
-            
         }
         .mw{
             max-width: 25%;
