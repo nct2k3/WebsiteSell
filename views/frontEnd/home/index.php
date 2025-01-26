@@ -49,64 +49,72 @@ require_once './views/header.php';
             <img class="h-8" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
             <div class=" text-2xl text-center font-bold text-white">Iphone </div>
         </div>
-        <div class="flex  flex-wrap items-center justify-center ">
-            <div class="mw bg-gray-800 rounded-xl shadow-lg p-6 max-w-xs text-white m-4">
-                <img src="https://cdn.tgdd.vn/Products/Images/42/329149/s16/iphone-16-pro-max-titan-sa-mac-thumbnew-650x650.png" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
-                <h2 class="text-lg font-semibold mb-2">iPhone 16 Pro Max 256GB</h2>
-                    <h1 class="font-bold">32.790.000₫</h1>
-                    <h1 class="line-through text-gray-400 ml-20 text-sm">34.990.000₫</h1>
-                <button class=" w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    By now
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 p-0">
+             <?php foreach($ProductIphone as $items): ?>
+            <div class="bg-gray-800 rounded-xl shadow-lg p-6 max-w-xs text-white mx-auto mb-0 mt-22">
+                <img src="<?php  echo $items->img;  ?>" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
+                <h2 class="text-lg font-semibold mb-2"><?php  echo $items->productName;  ?></h2>
+                <h1 class="font-bold text-xl"><?php  echo $items->price;  ?>₫</h1>
+                <h1 class="line-through text-gray-400 text-sm"><?php  echo $items->originalPrice;  ?>₫</h1>
+                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+                    Buy now
                 </button>
             </div>
+            <?php endforeach; ?>
         </div>
 <!-- macbock -->
         <div class="flex w-full justify-center p-2">
             <img class="h-8" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
             <div class=" text-2xl text-center font-bold text-white">Macbook </div>
         </div>
-        <div class="flex  flex-wrap items-center justify-center ">
-            <div class="mw bg-gray-800 rounded-xl shadow-lg p-6 max-w-xs text-white m-4">
-                <img src="https://cdn.tgdd.vn/Products/Images/44/231244/s16/mac-air-m1-13-xam-new-650x650.png" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
-                <h2 class="text-lg font-semibold mb-2">iPhone 16 Pro Max 256GB</h2>
-                    <h1 class="font-bold">32.790.000₫</h1>
-                    <h1 class="line-through text-gray-400 ml-20 text-sm">34.990.000₫</h1>
-                <button class=" w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    By now
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 p-0">
+             <?php foreach($ProductMacbock as $items): ?>
+            <div class="bg-gray-800 rounded-xl shadow-lg p-6 max-w-xs text-white mx-auto mb-0 mt-22">
+                <img src="<?php  echo $items->img;  ?>" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
+                <h2 class="text-lg font-semibold mb-2"><?php  echo $items->productName;  ?></h2>
+                <h1 class="font-bold text-xl"><?php  echo $items->price;  ?>₫</h1>
+                <h1 class="line-through text-gray-400 text-sm"><?php  echo $items->originalPrice;  ?>₫</h1>
+                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+                    Buy now
                 </button>
             </div>
+            <?php endforeach; ?>
         </div>
 <!-- ipad -->
         <div class="flex w-full justify-center p-2">
             <img class="h-8" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
             <div class=" text-2xl text-center font-bold text-white">Ipad </div>
         </div>
-        <div class="flex  flex-wrap items-center justify-center ">
-            <div class="mw bg-gray-800 rounded-xl shadow-lg p-6 max-w-xs text-white m-4">
-                <img src="https://cdn.tgdd.vn/Products/Images/522/325513/s16/ipad-pro-11-inch-wifi-black-thumb-650x650.png" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
-                <h2 class="text-lg font-semibold mb-2">iPhone 16 Pro Max 256GB</h2>
-                    <h1 class="font-bold">32.790.000₫</h1>
-                    <h1 class="line-through text-gray-400 ml-20 text-sm">34.990.000₫</h1>
-                <button class=" w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    By now
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 p-0">
+             <?php foreach($ProductIPad as $items): ?>
+            <div class="bg-gray-800 rounded-xl shadow-lg p-6 max-w-xs text-white mx-auto mb-0 mt-22">
+                <img src="<?php  echo $items->img;  ?>" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
+                <h2 class="text-lg font-semibold mb-2"><?php  echo $items->productName;  ?></h2>
+                <h1 class="font-bold text-xl"><?php  echo $items->price;  ?>₫</h1>
+                <h1 class="line-through text-gray-400 text-sm"><?php  echo $items->originalPrice;  ?>₫</h1>
+                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+                    Buy now
                 </button>
             </div>
+            <?php endforeach; ?>
         </div>
 <!-- Watch -->
         <div class="flex w-full justify-center p-2">
             <img class="h-8" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
             <div class=" text-2xl text-center font-bold text-white">Watch </div>
         </div>
-        <div class="flex  flex-wrap items-center justify-center ">
-            <div class="mw bg-gray-800 rounded-xl shadow-lg p-6 max-w-xs text-white m-4">
-                <img src="https://cdn.tgdd.vn/Products/Images/7077/329153/s16/apple-watch-s10-den-tb-650x650.png" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
-                <h2 class="text-lg font-semibold mb-2">iPhone 16 Pro Max 256GB</h2>
-                    <h1 class="font-bold">32.790.000₫</h1>
-                    <h1 class="line-through text-gray-400 ml-20 text-sm">34.990.000₫</h1>
-                <button class=" w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    By now
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 p-0">
+             <?php foreach($ProductWatch as $items): ?>
+            <div class="bg-gray-800 rounded-xl shadow-lg p-6 max-w-xs text-white mx-auto mb-0 mt-22">
+                <img src="<?php  echo $items->img;  ?>" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
+                <h2 class="text-lg font-semibold mb-2"><?php  echo $items->productName;  ?></h2>
+                <h1 class="font-bold text-xl"><?php  echo $items->price;  ?>₫</h1>
+                <h1 class="line-through text-gray-400 text-sm"><?php  echo $items->originalPrice;  ?>₫</h1>
+                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+                    Buy now
                 </button>
             </div>
+            <?php endforeach; ?>
         </div>
 
 
