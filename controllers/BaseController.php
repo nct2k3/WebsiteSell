@@ -15,11 +15,14 @@ class BaseController
     }
 
     protected function loadModel($model)
-    {
-        // Yêu cầu mô hình
-        require (self::MODEL_FOLDER_NAME . '/' . str_replace('.', '/', $model) . '.php');
+{
+    // Đường dẫn đến mô hình
+    $modelPath = __DIR__ . '/../' . self::MODEL_FOLDER_NAME . '/' . str_replace('.', '/', $model) . '.php';
 
-        // Khởi tạo mô hình và trả về instance
-        return new $model();
-    }
+    // Yêu cầu mô hình
+    require_once $modelPath;
+
+    // Khởi tạo mô hình và trả về instance
+    return new $model(); // Đảm bảo rằng tên lớp chính xác và có sẵn
+}
 }
