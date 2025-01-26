@@ -1,3 +1,6 @@
+<?php
+require_once './views/header.php';
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,12 +14,11 @@
         .px12 {
             max-height: 300px;
         }
-        .mw {
-            max-width: 25%;
-        }
+    
     </style>
 </head>
 <body class="bg-dark text-light">
+
 <div class=" bg-gray-900 h-16 mt-1"></div>
   <!-- Header -->
   <div class="text-center bg-dark py-3">
@@ -64,55 +66,31 @@
   <div>
     <div class="container mx-auto p-5">
         <!-- Section iPhone Products -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- iPhone 16 Pro Max -->
-            <div class="bg-gray-800 rounded-2xl shadow-lg p-5 text-center hover:bg-gray-700">
-                <img class="mx-auto w-40 h-40" src="https://cdn.tgdd.vn/Products/Images/42/329149/s16/iphone-16-pro-max-titan-sa-mac-thumbnew-650x650.png" alt="iPhone 16 Pro Max">
-                <h2 class="text-lg font-bold mt-4">iPhone 16 Pro Max</h2>
-                <div class="flex justify-center space-x-2 mt-3">
-                    <span class="bg-gray-700 px-3 py-1 rounded text-sm">256GB</span>
-                    <span class="bg-gray-700 px-3 py-1 rounded text-sm">512GB</span>
-                    <span class="bg-gray-700 px-3 py-1 rounded text-sm">1TB</span>
-                </div>
-                <div class="mt-4">
-                    <p class="text-xl font-bold text-yellow-400">32.790.000₫</p>
-                    <p class="text-sm line-through text-gray-400">34.990.000₫</p>
-                </div>
-                <p class="text-orange-500 font-semibold mt-2">Online giá rẻ quá</p>
-            </div>
-
-            <!-- iPhone 16 Pro -->
-            <div class="bg-gray-800 rounded-2xl shadow-lg p-5 text-center">
-                <img class="mx-auto w-40 h-40" src="https://cdn.tgdd.vn/Products/Images/42/329149/s16/iphone-16-pro-max-titan-sa-mac-thumbnew-650x650.png" alt="iPhone 16 Pro">
-                <h2 class="text-lg font-bold mt-4">iPhone 16 Pro</h2>
-                <div class="flex justify-center space-x-2 mt-3">
-                    <span class="bg-gray-700 px-3 py-1 rounded text-sm">128GB</span>
-                    <span class="bg-gray-700 px-3 py-1 rounded text-sm">256GB</span>
-                    <span class="bg-gray-700 px-3 py-1 rounded text-sm">1TB</span>
-                </div>
-                <div class="mt-4">
-                    <p class="text-xl font-bold text-yellow-400">27.490.000₫</p>
-                    <p class="text-sm line-through text-gray-400">28.990.000₫</p>
-                </div>
-                <p class="text-orange-500 font-semibold mt-2">Online giá rẻ quá</p>
-            </div>
-
-            <!-- iPhone 16 Plus -->
-            <div class="bg-gray-800 rounded-2xl shadow-lg p-5 text-center">
-                <img class="mx-auto w-40 h-40" src="https://cdn.tgdd.vn/Products/Images/42/329149/s16/iphone-16-pro-max-titan-sa-mac-thumbnew-650x650.png" alt="iPhone 16 Plus">
-                <h2 class="text-lg font-bold mt-4">iPhone 16 Plus</h2>
-                <div class="flex justify-center space-x-2 mt-3">
-                    <span class="bg-gray-700 px-3 py-1 rounded text-sm">128GB</span>
-                    <span class="bg-gray-700 px-3 py-1 rounded text-sm">256GB</span>
-                    <span class="bg-gray-700 px-3 py-1 rounded text-sm">512GB</span>
-                </div>
-                <div class="mt-4">
-                    <p class="text-xl font-bold text-yellow-400">24.690.000₫</p>
-                    <p class="text-sm line-through text-gray-400">25.990.000₫</p>
-                </div>
-                <p class="text-orange-500 font-semibold mt-2">Online giá rẻ quá</p>
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 p-0">
+        
+        <?php foreach ($products as $productData): ?>
+    <div class="w-auto bg-gray-800 rounded-2xl shadow-lg p-5 text-center hover:bg-gray-700 m-4">
+        <a class="hidden"><?php echo htmlspecialchars($productData['item']->productID); ?></a>
+        <img class="mx-auto w-40 h-40" src="<?php echo htmlspecialchars($productData['item']->img); ?>" alt="<?php echo htmlspecialchars($productData['item']->productName); ?>">
+        <h2 class="text-lg font-bold mt-4"><?php echo htmlspecialchars($productData['item']->productName); ?></h2>
+        <div class="flex justify-center space-x-2 mt-3">
+            <?php if (!empty($productData['capacity'])): ?>
+                <?php foreach ($productData['capacity'] as $capacityData): ?>
+                    <span class="bg-gray-700 px-3 py-1 rounded text-sm"><?php echo htmlspecialchars($capacityData['Capacity']); ?></span>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <span class="bg-gray-700 px-3 py-1 rounded text-sm">No capacity available</span>
+            <?php endif; ?>
         </div>
+        <div class="mt-4">
+            <p class="text-xl font-bold text-yellow-400"><?php echo number_format($productData['item']->price); ?>₫</p>
+            <p class="text-sm line-through text-gray-400"><?php echo number_format($productData['item']->originalPrice); ?>₫</p>
+        </div>
+        <p class="text-orange-500 font-semibold mt-2">Online giá rẻ quá</p>
+    </div>
+<?php endforeach; ?>
+
+          
     </div>
   </div>
   <div class="flex justify-center w-full p-4">

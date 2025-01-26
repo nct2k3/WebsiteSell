@@ -23,10 +23,19 @@ class BaseModel extends Database {
         return $data; 
     }
 
-    public function getById($table, $id) {
-        $sql = "SELECT * FROM ${table} WHERE id = " . intval($id);
+    public function getById($table, $id ,$typeID) {
+        $sql = "SELECT * FROM ${table} WHERE ${typeID} = " . intval($id);
         $result = $this->_query($sql);
         return mysqli_fetch_assoc($result);
+    }
+    public function getByIdGroupByGroupBy($table, $id ,$typeID,$By,$limit) {
+        $sql = "SELECT * FROM ${table} WHERE ${typeID} = " . intval($id)." GROUP BY ${By} LIMIT ${limit}";
+        $result = $this->_query($sql);
+        $data = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            array_push($data, $row);
+        }
+        return $data; 
     }
 
     public function create($table, $data) {
