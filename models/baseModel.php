@@ -28,8 +28,27 @@ class BaseModel extends Database {
         $result = $this->_query($sql);
         return mysqli_fetch_assoc($result);
     }
+    public function getListById($table, $id ,$typeID) {
+        $sql = "SELECT * FROM ${table} WHERE ${typeID} = " . intval($id);
+        $result = $this->_query($sql);
+        $data = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            array_push($data, $row);
+        }
+        return $data; 
+    }
     public function getByIdGroupByGroupBy($table, $id ,$typeID,$By,$limit) {
         $sql = "SELECT * FROM ${table} WHERE ${typeID} = " . intval($id)." GROUP BY ${By} LIMIT ${limit}";
+        $result = $this->_query($sql);
+        $data = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            array_push($data, $row);
+        }
+        return $data; 
+    }
+
+    public function getCustome($sqls) {
+        $sql = $sqls;
         $result = $this->_query($sql);
         $data = [];
         while ($row = mysqli_fetch_assoc($result)) {

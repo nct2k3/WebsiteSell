@@ -22,7 +22,6 @@ require_once './views/header.php';
     </style>
 </head>
 <body>
-    <div class=" bg-gray-900 h-16 mt-1"></div>
     <div id="carouselExampleControls" class="carousel slide bg-gray-900 p-2" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
@@ -51,7 +50,9 @@ require_once './views/header.php';
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-0 p-0">
              <?php foreach($ProductIphone as $items): ?>
-            <div class="bg-gray-800 rounded-xl shadow-lg p-6 max-w-xs text-white mx-auto mb-0 mt-22">
+            <div
+            onclick="window.location='?controller=DetalProduct&items=<?php echo $items->productID; ?>'"
+            class="bg-gray-800 hover:bg-gray-400 rounded-xl shadow-lg p-6 max-w-xs text-white mx-auto mb-0 mt-22">
                 <img src="<?php  echo $items->img;  ?>" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
                 <h2 class="text-lg font-semibold mb-2"><?php  echo $items->productName;  ?></h2>
                 <h1 class="font-bold text-xl"><?php  echo $items->price;  ?>₫</h1>
