@@ -19,7 +19,6 @@ require_once './views/header.php';
 </head>
 <body class="bg-dark text-light">
 
-<div class=" bg-gray-900 h-16 mt-1"></div>
   <!-- Header -->
   <div class="text-center bg-dark py-3">
       <div class="flex w-full justify-center p-2">
@@ -32,14 +31,15 @@ require_once './views/header.php';
   <div id="carouselExampleControls" class="carousel slide px-20" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img class="d-block px12 w-100 rounded-3xl" src="https://cdnv2.tgdd.vn/mwg-static/topzone/Banner/b8/30/b830392d62a91134d24090c872d02e03.png" alt="First slide">
+            <img class="d-block px12 w-100 rounded-3xl" src="https://support.apple.com/content/dam/edam/applecare/images/en_US/psp/psp-hero-banner-communities.image.large_2x.jpg" alt="First slide">
         </div>
+        <?php foreach ($Banner as $Items): ?>
         <div class="carousel-item">
-            <img class="d-block px12 w-100 rounded-3xl" src="https://cdnv2.tgdd.vn/mwg-static/tgdd/Banner/be/8e/be8e7b84b9075827701e90bb1c3de053.png" alt="Second slide">
+            <img class="d-block px12 w-100 rounded-3xl" src="
+             <?php echo htmlspecialchars($Items->img); ?>" alt="Second slide">
         </div>
-        <div class="carousel-item">
-            <img class="d-block px12 w-100 rounded-3xl" src="https://cdnv2.tgdd.vn/mwg-static/tgdd/Banner/e0/f2/e0f27a962faace8fa8a6341c51fac39a.png" alt="Third slide">
-        </div>
+        <?php endforeach; ?>
+       
     </div>
     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -55,40 +55,38 @@ require_once './views/header.php';
   <div class="mx-8 mt-2">
     <div class="container flex-wrap d-flex gap-3">
       <button class="text-white hover:underline underline">All</button>
-      <button class="text-white hover:underline">iPhone 16</button>
-      <button class="text-white hover:underline">iPhone 15</button>
-      <button class="text-white hover:underline">iPhone 14</button>
-      <button class="text-white hover:underline">iPhone 13</button>
-      <button class="text-white hover:underline">iPhone 12</button>
-      <button class="text-white hover:underline">iPhone 11</button>
+      <?php foreach ($Model as $Models): ?>
+      <button class="text-white hover:underline">
+      <?php echo htmlspecialchars($Models->productModel); ?>
+      </button>
+      <?php endforeach; ?>
     </div>
   </div>
   <div>
-    <div class="container mx-auto p-5">
-        <!-- Section iPhone Products -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 p-0">
-        
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-0 p-0">
         <?php foreach ($products as $productData): ?>
-    <div class="w-auto bg-gray-800 rounded-2xl shadow-lg p-5 text-center hover:bg-gray-700 m-4">
-        <a class="hidden"><?php echo htmlspecialchars($productData['item']->productID); ?></a>
-        <img class="mx-auto w-40 h-40" src="<?php echo htmlspecialchars($productData['item']->img); ?>" alt="<?php echo htmlspecialchars($productData['item']->productName); ?>">
-        <h2 class="text-lg font-bold mt-4"><?php echo htmlspecialchars($productData['item']->productName); ?></h2>
-        <div class="flex justify-center space-x-2 mt-3">
-            <?php if (!empty($productData['capacity'])): ?>
-                <?php foreach ($productData['capacity'] as $capacityData): ?>
-                    <span class="bg-gray-700 px-3 py-1 rounded text-sm"><?php echo htmlspecialchars($capacityData['Capacity']); ?></span>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <span class="bg-gray-700 px-3 py-1 rounded text-sm">No capacity available</span>
-            <?php endif; ?>
-        </div>
-        <div class="mt-4">
-            <p class="text-xl font-bold text-yellow-400"><?php echo number_format($productData['item']->price); ?>₫</p>
-            <p class="text-sm line-through text-gray-400"><?php echo number_format($productData['item']->originalPrice); ?>₫</p>
-        </div>
-        <p class="text-orange-500 font-semibold mt-2">Online giá rẻ quá</p>
-    </div>
-<?php endforeach; ?>
+            <div class="w-auto bg-gray-800 rounded-2xl shadow-lg p-5 text-center hover:bg-gray-700 m-4"
+            onclick="window.location='?controller=DetalProduct&items=<?php echo $productData['item']->productID; ?>'"
+            >
+                <a class="hidden"><?php echo htmlspecialchars($productData['item']->productID); ?></a>
+                <img class="mx-auto w-40 h-40" src="<?php echo htmlspecialchars($productData['item']->img); ?>" alt="<?php echo htmlspecialchars($productData['item']->productName); ?>">
+                <h2 class="text-lg font-bold mt-4"><?php echo htmlspecialchars($productData['item']->productName); ?></h2>
+                <div class="flex justify-center space-x-2 mt-3">
+                    <?php if (!empty($productData['capacity'])): ?>
+                        <?php foreach ($productData['capacity'] as $capacityData): ?>
+                            <span class="bg-gray-700 px-3 py-1 rounded text-sm"><?php echo htmlspecialchars($capacityData['Capacity']); ?></span>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <span class="bg-gray-700 px-3 py-1 rounded text-sm">No capacity available</span>
+                    <?php endif; ?>
+                </div>
+                <div class="mt-4">
+                    <p class="text-xl font-bold text-yellow-400"><?php echo number_format($productData['item']->price); ?>₫</p>
+                    <p class="text-sm line-through text-gray-400"><?php echo number_format($productData['item']->originalPrice); ?>₫</p>
+                </div>
+                <p class="text-orange-500 font-semibold mt-2">Online giá rẻ quá</p>
+            </div>
+        <?php endforeach; ?>
 
           
     </div>
