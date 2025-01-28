@@ -12,8 +12,7 @@ require_once './views/header.php';
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
       
-        .px12{
-            margin-left:12.5%;
+        .px12{  
             max-height: 300px;
         }
         .mw{
@@ -21,17 +20,17 @@ require_once './views/header.php';
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-800">
     <div id="carouselExampleControls" class="carousel slide bg-gray-900 p-2" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-        <img class="d-block  px12 w-75" src="https://cdnv2.tgdd.vn/mwg-static/tgdd/Banner/b0/76/b0761df21edde3ec5925b7fecee07e51.png" alt="First slide">
+        <img class="d-block  px12 w-100" src="https://cdnv2.tgdd.vn/mwg-static/topzone/Banner/d1/36/d136ac139c784757b4f6eedd67295ca8.png" alt="First slide">
         </div>
         <div class="carousel-item">
-        <img class="d-block  px12 w-75"src="https://cdnv2.tgdd.vn/mwg-static/tgdd/Banner/be/8e/be8e7b84b9075827701e90bb1c3de053.png" alt="Second slide">
+        <img class="d-block  px12 w-100"src="https://cdnv2.tgdd.vn/mwg-static/topzone/Banner/cd/96/cd968911ea2586403e61263b2eea1454.png" alt="Second slide">
         </div>
         <div class="carousel-item">
-        <img class="d-block  px12 w-75" src="https://cdnv2.tgdd.vn/mwg-static/tgdd/Banner/e0/f2/e0f27a962faace8fa8a6341c51fac39a.png" alt="Third slide">
+        <img class="d-block  px12 w-100" src="https://cdnv2.tgdd.vn/mwg-static/topzone/Banner/dd/6c/dd6c7ef3f25a5e54e2e42f4136382f3a.png" alt="Third slide">
         </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -44,7 +43,7 @@ require_once './views/header.php';
     </a>
     </div>
     <div class="bg-gray-800 w-full">
-        <div class="flex w-full justify-center p-2">
+        <div class="flex w-full justify-center p-2 my-2">
             <img class="h-8" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
             <div class=" text-2xl text-center font-bold text-white">Iphone </div>
         </div>
@@ -64,7 +63,7 @@ require_once './views/header.php';
             <?php endforeach; ?>
         </div>
 <!-- macbock -->
-        <div class="flex w-full justify-center p-2">
+        <div class="flex w-full justify-center p-2 my-2">
             <img class="h-8" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
             <div class=" text-2xl text-center font-bold text-white">Macbook </div>
         </div>
@@ -82,7 +81,7 @@ require_once './views/header.php';
             <?php endforeach; ?>
         </div>
 <!-- ipad -->
-        <div class="flex w-full justify-center p-2">
+        <div class="flex w-full justify-center p-2 my-2">
             <img class="h-8" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
             <div class=" text-2xl text-center font-bold text-white">Ipad </div>
         </div>
@@ -100,7 +99,7 @@ require_once './views/header.php';
             <?php endforeach; ?>
         </div>
 <!-- Watch -->
-        <div class="flex w-full justify-center p-2">
+        <div class="flex w-full justify-center p-2 my-2">
             <img class="h-8" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
             <div class=" text-2xl text-center font-bold text-white">Watch </div>
         </div>

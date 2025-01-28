@@ -28,6 +28,12 @@ class BaseModel extends Database {
         $result = $this->_query($sql);
         return mysqli_fetch_assoc($result);
     }
+
+    public function getOneCustome($sql) {
+       
+        $result = $this->_query($sql);
+        return mysqli_fetch_assoc($result);
+    }
     public function getListById($table, $id ,$typeID) {
         $sql = "SELECT * FROM ${table} WHERE ${typeID} = " . intval($id);
         $result = $this->_query($sql);

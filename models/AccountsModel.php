@@ -1,26 +1,27 @@
 <?php
 require_once __DIR__ . '/../entities/Account.php';
-// Đảm bảo đường dẫn đúng tới tệp Account.php
-
+require_once __DIR__ .'/BaseModel.php';
 class AccountsModel extends BaseModel
 {
-    public function getAllAccounts()
+    public function login($email,$password)
     {
-        // Lấy dữ liệu từ bảng accounts
-        $data = $this->getAll('accounts'); 
-        $accounts = [];
+        
+        $sql="SELECT * FROM accounts WHERE Email= '${email}' AND Password= '${password}' ";
+        $data = $this->getOneCustome($sql); 
 
-        foreach ($data as $row) {
-            // Tạo đối tượng Account từ dữ liệu
-            $accounts[] = new Account(
-                $row['AccountID'], // Cột AccountID
-                $row['Email'],     // Cột Email
-                $row['Password'],  // Cột Password
-                $row['Role'],      // Cột Role
-                $row['UserID']     // Cột UserID
-            );
+        if(empty($data)){
+            return -1;
         }
+        $accounts = new Account(
+                $data['AccountID'], 
+                $data['Email'],     
+                $data['Password'],  
+                $data['Role'], 
+                $data['UserID']  
+        );
+        return $accounts->role;
 
-        return $accounts; // Trả về mảng các đối tượng Account
+      
+        
     }
 }
