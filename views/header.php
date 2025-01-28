@@ -55,7 +55,8 @@
                     <a >Accessory</a>
                 </div>
                 <!-- Login -->
-                <div class="col-6 col-md-1 d-flex align-items-center justify-content-center text-white font-bold text-sm mt-2 mt-md-0">
+                <div onclick="window.location='?controller=login'"
+                 class="col-6 col-md-1 d-flex align-items-center justify-content-center text-white font-bold text-sm mt-2 mt-md-0">
                     <img class="h-6 bg-white rounded-full mx-2" src="https://img.icons8.com/?size=100&id=99268&format=png&color=000000" alt="Login">
                     <a  class="hover:text-yellow-500">LOGIN</a>
                 </div>
