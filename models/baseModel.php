@@ -72,7 +72,7 @@ class BaseModel extends Database {
         $values = implode("', '", array_values($escapedData));
         $sql = "INSERT INTO ${table} (${columns}) VALUES ('${values}')";
         
-        return $this->connect->query($sql); 
+        return $this->connect->query($sql) > 0 ? 1 : 0; 
     }
 
     public function update($table, $data, $id) {
@@ -88,5 +88,11 @@ class BaseModel extends Database {
     public function delete($table, $id) {
         $sql = "DELETE FROM ${table} WHERE id = " . intval($id);
         return $this->_query($sql);
+    }
+
+    public function deleteTowID($table, $one, $two, $idOne, $idTwo) {
+        $sql = "DELETE FROM ${table} WHERE ${one} = ${idOne} AND ${two} = ${idTwo} LIMIT 1";
+        $_SESSION['message'] = "Đăng nhập thành công!";
+        return $this->_query($sql) > 0 ? 1 : 0; 
     }
 }
