@@ -1,4 +1,3 @@
-
 <?Php
 require_once './controllers/HeaderController.php';
 $controller = new HeaderController();
@@ -82,12 +81,24 @@ $controller->index();
             <div class="mt-6">
                 <h2 class="text-lg font-bold">Online Giá Rẻ Quá</h2>
                 <p class="text-2xl font-bold text-orange-500"><?php echo htmlspecialchars($product->price); ?>đ</p>
-                <p class="text-gray-400"><?php echo htmlspecialchars($product->originalPrice); ?>đ</p>
+                <s class="text-gray-400"><?php echo htmlspecialchars($product->originalPrice); ?>đ</s>
             </div>
 
             <div class="mt-4 bg-gray-600 rounded-full">
                 <div class="bg-orange-500 rounded-full h-2" style="width: 80%;"></div>
             </div>
+            <div class="flex">
+                <button class="btn btn-primary w-full font-bold m-2 text-xl py-4">
+                    By Now
+                </button>
+
+                <button
+                onclick="window.location='?controller=DetalProduct&action=addCart&items=<?php echo $product->productID?>'"
+                class="btn btn-warning text-white w-full font-bold m-2 text-xl">
+                   Add To Cart
+                </button>
+            </div>
+
 
             <div class="mt-4 text-gray-400">
                 <p>Kết thúc vào: 23:59 / 28/01</p>

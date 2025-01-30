@@ -2,10 +2,11 @@
 class DetalProductController extends BaseController
 {
     private $ProductModel;
-
+    private $CartModel;
     public function __construct()
     {
         $this->ProductModel = $this->loadModel("ProductModel");
+        $this->CartModel = $this->loadModel("CartModel");
     }
 
     public function index()
@@ -26,6 +27,24 @@ class DetalProductController extends BaseController
         $this->view('frontEnd.detalProduct.index', ['products' => $products]);
     }
 
+    public function addCart(){
+        $userId= $this->takeIDAccount();
+        $id = $_GET['items'];
+        $cart= new Cart(
+            '',
+            $userId,
+            $id
+
+        );
+        $data=$this->CartModel->createCart($cart);
+        if ($data==1) {
+            $_SESSION['message'] = "Thêm thành công!";
+
+        }
+        $this->index(); 
+        
+
+    }
     public function getCapacity($productType) {
         // Gọi hàm trong ProductModel để lấy capacity dựa trên productType
         $capacity = $this->ProductModel->getCapacity($productType);
