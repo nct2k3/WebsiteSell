@@ -8,7 +8,7 @@ class AccountsModel extends BaseModel
         $data = $this->getOneCustome($sql);
     
         if (empty($data)) {
-            return null; // Trả về null nếu không tìm thấy tài khoản
+            return null; 
         }
     
         $accounts = new Account(
@@ -18,6 +18,24 @@ class AccountsModel extends BaseModel
             $data['Role'],
             $data['UserID']
         );
-        return $accounts; // Trả về đối tượng Account
+        return $accounts; 
     }
+
+    public function getAccountByIDUser($UserID) {
+
+        
+        $data = $this->getById('Accounts', $UserID, 'UserID');
+        if (empty($data)) {
+            return null; 
+        }
+        $Account = new Account(
+            $data['AccountID'],
+            $data['Email'],
+            $data['Password'],
+            $data['Role'],
+            $data['UserID']     
+        );
+        return $Account;
+        
+}
 }

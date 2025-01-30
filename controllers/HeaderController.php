@@ -9,12 +9,18 @@ class HeaderController extends BaseController
     }
 
     public function index() {
-       
         $accountID = $this->takeIDAccount();
-        $dataUser= $this->UserModel->getUserByID($accountID);
-        $data = ['username'=>$dataUser->FullName,'userID'=>$dataUser->userID];
-        $this->view('frontEnd.header.index', $data);
+        $dataUser = $this->UserModel->getUserByID($accountID);
+        if ($dataUser) {
+            $data = [
+                'username' => $dataUser->FullName,
+                'userID' => $dataUser->userID
+            ];
+        } else {
+            $data = [];
+        }
         
+        $this->view('frontEnd.header.index', $data);
     }
 
 
