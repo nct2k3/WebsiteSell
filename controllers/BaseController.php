@@ -25,4 +25,17 @@ class BaseController
     // Khởi tạo mô hình và trả về instance
     return new $model(); // Đảm bảo rằng tên lớp chính xác và có sẵn
 }
+
+protected function takeIDAccount(){
+    if (isset($_SESSION['AccountID'])) {
+        $accountID = $_SESSION['AccountID'];
+        return $accountID;
+    } else {
+        echo "Không tìm thấy AccountID trong session.";
+    }
+
+
+}
+
+
 }

@@ -1,7 +1,9 @@
-<?php
-require_once './views/header.php';
-?>
 
+<?Php
+require_once './controllers/HeaderController.php';
+$controller = new HeaderController();
+$controller->index();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

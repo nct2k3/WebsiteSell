@@ -1,4 +1,5 @@
 <?php
+ob_start(); // Bắt đầu output buffering
 require_once __DIR__ . '/../entities/Account.php';
 require_once __DIR__ . '/../controllers/BaseController.php';
 
@@ -14,23 +15,21 @@ class LoginController extends BaseController {
     }
 
     public function login($email, $password) {
-        static $called = false; 
-
-        if ($called) {
-            return; 
-        }
-        $called = true; 
         $temp = $this->AccountsModel->login($email, $password);
-        if ($temp == -1) {
-            
-            header("Location:?controller=login");
-        } elseif ($temp == 0) {
-            header("Location: /"); 
+        if ($temp === null) {
+            $_SESSION['messages'] = "Đăng nhập thất bại!";
+            $this->index(); 
+            exit();
+        } elseif ($temp->role == 0) {
+            $_SESSION['AccountID'] = $temp->userID;
+            $_SESSION['message'] = "Đăng nhập thành công!";
+            header("Location: /"); // Chuyển hướng đến trang chủ
             exit();
         }
     }
 }
 
+// Xử lý yêu cầu POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'] ?? null;
 
@@ -51,3 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             break;
     }
 }
+
+ob_end_flush(); // Kết thúc output buffering
+?>

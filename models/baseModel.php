@@ -64,16 +64,15 @@ class BaseModel extends Database {
     }
 
     public function create($table, $data) {
-        // Sử dụng mysqli_real_escape_string với đúng số lượng tham số
         $escapedData = array_map(function($value) {
-            return mysqli_real_escape_string($this->connect, $value); // Thêm kết nối thứ hai
+            return mysqli_real_escape_string($this->connect, $value); 
         }, $data);
     
         $columns = implode(", ", array_keys($escapedData));
         $values = implode("', '", array_values($escapedData));
         $sql = "INSERT INTO ${table} (${columns}) VALUES ('${values}')";
         
-        return $this->connect->query($sql); // Sử dụng query thay vì exec để có thể trả về true/false
+        return $this->connect->query($sql); 
     }
 
     public function update($table, $data, $id) {
