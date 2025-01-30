@@ -1,3 +1,9 @@
+
+<?Php
+require_once './controllers/HeaderController.php';
+$controller = new HeaderController();
+$controller->index();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../entities/Banner.php';
-// Đảm bảo đường dẫn đúng tới tệp Banner.php
 
 class BannerModel extends BaseModel
 {
