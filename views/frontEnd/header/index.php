@@ -29,6 +29,15 @@
             </div>
             <?php unset($_SESSION['message']); ?>
           <?php endif; ?>
+          
+          <?php if (isset($_SESSION['error'])): ?>
+            <div class="top-20 flex justify-end fixed  right-0 z-50 bg-red-500 text-white p-3 shadow-lg transition-opacity duration-500 ease-in-out opacity-100 fade-out" style="animation-delay: 3s;">
+            <?php echo $_SESSION['error']; ?> 
+            </div>
+            <?php unset($_SESSION['error']); ?>
+          <?php endif; ?>
+
+
         <div class="container-fluid w-full">
             <div id="content" class="row bg-gray-800 p-3 fixed z-40 top-0 w-full hidden md:flex md:flex-row flex-col">
                 <!-- Logo -->

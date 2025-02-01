@@ -58,9 +58,6 @@ $controller->index();
                 <h2 class="text-lg font-semibold mb-2"><?php  echo $items->productName;  ?></h2>
                 <h1 class="font-bold text-xl"><?php  echo $items->price;  ?>₫</h1>
                 <h1 class="line-through text-gray-400 text-sm"><?php  echo $items->originalPrice;  ?>₫</h1>
-                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
-                    Buy now
-                </button>
             </div>
             <?php endforeach; ?>
         </div>

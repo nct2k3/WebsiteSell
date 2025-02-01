@@ -6,10 +6,13 @@ class Cart
     public $UserID;
     public $ProductID;
 
-    public function __construct($CartID, $UserID, $ProductID)
+    public $Quantity;
+
+    public function __construct($CartID, $UserID, $ProductID ,$Quantity)
     {
         $this->CartID = $CartID;
         $this->UserID = $UserID;
         $this->ProductID = $ProductID;
+        $this->Quantity = $Quantity;
     }
 }

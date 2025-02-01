@@ -1,8 +1,9 @@
 <?php
-class CartController extends BaseController
+class PaymentController extends BaseController
 {
-    private $CartModel;
     private $ProductModel;
+
+    private $CartModel;
 
     public function __construct()
     {
@@ -32,17 +33,16 @@ class CartController extends BaseController
         foreach ($products as $product) {
             $total += $product['item']->price*$product['quantity'];
         }
-        $this->view('frontEnd.cart.index', ['products' => $products, 'total' => $total, 'userID' => $userID]);
+        $this->view('frontEnd.payment.index', ['products' => $products, 'total' => $total, 'userID' => $userID]);
     }
-
-    public function delete()
+    public function Delete()
     {
         if (isset($_GET['user']) && isset($_GET['product'])) {
             $userID = (int)$_GET['user']; 
             $productID = (int)$_GET['product']; 
             $data=$this->CartModel->delete($userID, $productID); 
             if ($data==1) {
-                $_SESSION['message'] = "Xóa thành công!";
+                $_SESSION['message'] = "Delete successfully!";
 
             }
             $this->index(); 
