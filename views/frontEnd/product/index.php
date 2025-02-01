@@ -68,7 +68,7 @@ $controller->index();
     <div class="grid grid-cols-1 md:grid-cols-3 gap-0 p-0">
         <?php foreach ($products as $productData): ?>
             <div class="w-auto bg-gray-800 rounded-2xl shadow-lg p-5 text-center hover:bg-gray-700 m-4"
-            onclick="window.location='?controller=DetalProduct&items=<?php echo $productData['item']->productID; ?>'"
+            onclick="window.location='?controller=DetailProduct&items=<?php echo $productData['item']->productID; ?>'"
             >
                 <a class="hidden"><?php echo htmlspecialchars($productData['item']->productID); ?></a>
                 <img class="mx-auto w-40 h-40" src="<?php echo htmlspecialchars($productData['item']->img); ?>" alt="<?php echo htmlspecialchars($productData['item']->productName); ?>">

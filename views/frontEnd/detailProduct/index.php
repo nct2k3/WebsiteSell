@@ -93,7 +93,7 @@ $controller->index();
                 </button>
 
                 <button
-                onclick="window.location='?controller=DetalProduct&action=addCart&items=<?php echo $product->productID?>'"
+                onclick="window.location='?controller=DetailProduct&action=addCart&items=<?php echo $product->productID?>'"
                 class="btn btn-warning text-white w-full font-bold m-2 text-xl">
                    Add To Cart
                 </button>

@@ -52,7 +52,7 @@ $controller->index();
         <div class="grid grid-cols-1 md:grid-cols-3 gap-0 p-0">
              <?php foreach($ProductIphone as $items): ?>
             <div
-            onclick="window.location='?controller=DetalProduct&items=<?php echo $items->productID; ?>'"
+            onclick="window.location='?controller=DetailProduct&items=<?php echo $items->productID; ?>'"
             class="bg-gray-800 hover:bg-gray-400 rounded-xl shadow-lg p-6 max-w-xs text-white mx-auto mb-0 mt-22">
                 <img src="<?php  echo $items->img;  ?>" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
                 <h2 class="text-lg font-semibold mb-2"><?php  echo $items->productName;  ?></h2>
