@@ -71,8 +71,22 @@ class BaseModel extends Database {
         $columns = implode(", ", array_keys($escapedData));
         $values = implode("', '", array_values($escapedData));
         $sql = "INSERT INTO ${table} (${columns}) VALUES ('${values}')";
-        
         return $this->connect->query($sql) > 0 ? 1 : 0; 
+    }
+    public function createReturnID($table, $data) {
+        $escapedData = array_map(function($value) {
+            return mysqli_real_escape_string($this->connect, $value); 
+        }, $data);
+        
+        $columns = implode(", ", array_keys($escapedData));
+        $values = implode("', '", array_values($escapedData));
+        $sql = "INSERT INTO ${table} (${columns}) VALUES ('${values}')";
+        
+        if ($this->connect->query($sql) === TRUE) {
+            return $this->connect->insert_id; 
+        } else {
+            return 0;
+        }
     }
 
     public function update($table, $data, $id) {
@@ -88,6 +102,10 @@ class BaseModel extends Database {
     
     public function delete($table, $id) {
         $sql = "DELETE FROM ${table} WHERE id = " . intval($id);
+        return $this->_query($sql);
+    }
+    public function deleteID($table, $id,$typeid) {
+        $sql = "DELETE FROM ${table} WHERE ${typeid} = " . intval($id);
         return $this->_query($sql);
     }
 
