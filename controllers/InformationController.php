@@ -23,7 +23,7 @@ class InformationController extends BaseController
     }
     public function logout(){
         $_SESSION['AccountID'] = "";
-        $_SESSION['message'] = "Đăng xuất thành công!";
+        $_SESSION['message'] = "Log out successfully!";
         header("Location: /");
         exit();
     }

@@ -17,12 +17,12 @@ class LoginController extends BaseController {
     public function login($email, $password) {
         $temp = $this->AccountsModel->login($email, $password);
         if ($temp === null) {
-            $_SESSION['messages'] = "Đăng nhập thất bại!";
+            $_SESSION['messages'] = "Login false!";
             $this->index(); 
             exit();
         } elseif ($temp->role == 0) {
             $_SESSION['AccountID'] = $temp->userID;
-            $_SESSION['message'] = "Đăng nhập thành công!";
+            $_SESSION['message'] = "Login successfully!";
             header("Location: /"); // Chuyển hướng đến trang chủ
             exit();
         }

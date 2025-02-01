@@ -31,7 +31,7 @@ protected function takeIDAccount(){
         $accountID = $_SESSION['AccountID'];
         return $accountID;
     } else {
-        echo "Không tìm thấy AccountID trong session.";
+       return;
     }
 
 

@@ -29,16 +29,24 @@ class DetalProductController extends BaseController
 
     public function addCart(){
         $userId= $this->takeIDAccount();
+        if($userId==""){
+            $_SESSION['error'] = "You are not logged in yet!";
+            $this->index(); 
+            return;
+
+        }
         $id = $_GET['items'];
         $cart= new Cart(
             '',
             $userId,
-            $id
+            $id,
+            1
+            
 
         );
         $data=$this->CartModel->createCart($cart);
         if ($data==1) {
-            $_SESSION['message'] = "Thêm thành công!";
+            $_SESSION['message'] = "Added successfully!";
 
         }
         $this->index(); 
