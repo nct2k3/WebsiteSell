@@ -37,7 +37,7 @@ $controller->index();
                                 <td class="py-2 px-2">
                                     <img class="h-12 w-12 sm:h-16 sm:w-16 object-cover" src="<?php echo htmlspecialchars($item['item']->img); ?>" alt="<?php echo htmlspecialchars($item['item']->productName); ?>">
                                 </td>
-                                <td class="py-2 px-2"><?php echo htmlspecialchars(number_format($item['item']->price, 0, ',', '.')) . '₫'; ?></td>
+                                <td class="py-2 px-2"><?php echo htmlspecialchars(number_format($item['price'], 0, ',', '.')) . '₫'; ?></td>
                                 <td class="py-2 px-2">
                                     <input 
                                         type="number" 

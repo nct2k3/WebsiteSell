@@ -25,6 +25,11 @@ class CartModel extends BaseModel
        return $this->deleteTowID('cart','UserID','ProductID', $userID, $productID);
 
     }
+    public function deleteById($userID) {
+        print_r($userID);
+        return $this->deleteID('cart', $userID,'UserID');
+ 
+     }
     public function createCart($Cart) {
         // Kiểm tra xem các thuộc tính có hợp lệ không
         if (empty($Cart->UserID) || empty($Cart->ProductID) || $Cart->Quantity <= 0) {

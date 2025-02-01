@@ -1,5 +1,5 @@
 <?php
-class DetalProductController extends BaseController
+class DetailProductController extends BaseController
 {
     private $ProductModel;
     private $CartModel;
@@ -24,7 +24,7 @@ class DetalProductController extends BaseController
                 'capacity' => $capacity,
                 'color'=> $color
             ];
-        $this->view('frontEnd.detalProduct.index', ['products' => $products]);
+        $this->view('frontEnd.detailProduct.index', ['products' => $products]);
     }
 
     public function addCart(){
@@ -41,8 +41,6 @@ class DetalProductController extends BaseController
             $userId,
             $id,
             1
-            
-
         );
         $data=$this->CartModel->createCart($cart);
         if ($data==1) {
@@ -50,8 +48,6 @@ class DetalProductController extends BaseController
 
         }
         $this->index(); 
-        
-
     }
     public function getCapacity($productType) {
         // Gọi hàm trong ProductModel để lấy capacity dựa trên productType

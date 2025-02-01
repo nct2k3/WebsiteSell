@@ -22,7 +22,8 @@ class CartController extends BaseController
                     if ($product) {
                         $products[] = [
                             'item' => $product,
-                            'quantity' => $item->Quantity
+                            'quantity' => $item->Quantity,
+                            'price'=>$product->price*$item->Quantity,
                         ];
                     }
                 }
@@ -59,6 +60,18 @@ class CartController extends BaseController
         }
         $id = $_GET['product'];
         $quantity = $_GET['quantity'];
+        if(number_format($quantity)<=0){
+            $_SESSION['error'] = "Number must be greater than zero!";
+            $this->index(); 
+            return;
+        }
+        $product = $this->ProductModel->getProductByID($id);
+        if($product->stock< $quantity){
+            $_SESSION['error'] = "Excess inventory cannot be added!";
+            $this->index(); 
+            return;
+
+        }
         $cart= new Cart(
             '',
             $userId,
