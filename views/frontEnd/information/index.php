@@ -84,6 +84,8 @@ $controller->index();
                     <?php endforeach; ?>
                     <div class="p-4 bg-gray-500 rounded">
                         <p class=""><strong>Status: </strong><?php echo $payment['status']; ?> </p>
+                        <p class=""><strong>Number Phone: </strong><?php echo $payment['invoice']->NumberPhone; ?> </p>
+                        <p class=""><strong>Status: </strong><?php echo $payment['invoice']->Address; ?> </p>
                         <div class="flex justify-between ">
                             <p><strong>Date:</strong><?php echo $payment['invoice']->invoiceDate; ?></p>
                             <p><strong>End price: </strong><?php echo $payment['invoice']->totalAmount; ?></p>

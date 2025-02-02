@@ -92,13 +92,13 @@ class PaymentController extends BaseController
         }
         $this->index(); 
     }
-    public function PaymentNormal($loyaltyPoints){
+    public function PaymentNormal($loyaltyPoints) {
         $userID = $this->takeIDAccount();
         $dataUser = $this->UserModel->getUserByID($userID);
         $dataCart = $this->CartModel->getCart($userID);
-        $products = []; 
+        $products = [];
     
-        if (is_array($dataCart)) {
+        if (is_array($dataCart) && count($dataCart) > 0) {
             foreach ($dataCart as $item) {
                 if (isset($item->ProductID)) {
                     $product = $this->ProductModel->getProductByID($item->ProductID);
@@ -116,39 +116,48 @@ class PaymentController extends BaseController
         foreach ($products as $product) {
             $total += $product['item']->price * $product['quantity'];
         }
-
+    
         $loyaltyPoints = floatval($loyaltyPoints);
-   
-        if ($loyaltyPoints > 0) {
-            $endTotal = $total - $loyaltyPoints; 
-        } else {
-            $endTotal = $total; 
+        $endTotal = ($loyaltyPoints > 0) ? $total - $loyaltyPoints : $total;
+    
+        // Kiểm tra nếu dữ liệu người dùng tồn tại
+        if (!$dataUser) {
+            $_SESSION['error'] = "User data not found.";
+            header("Location: /?controller=information&user=$userID");
+            return;
         }
+    
         $invoice = new Invoice(
             '',
             $userID,
             date('Y-m-d H:i:s'),
             $endTotal,
             0,
-            'normal'
+            'normal',
+            $dataUser->PhoneNumber,
+            $dataUser->Address 
         );
     
-        $invoiceId=$this->InvoiceModel->createInvoice($invoice);
-        foreach ($products as $product) {
-            $invoiceDetail = new InvoiceDetail(
-                '',
-                $invoiceId,
-                $product['item']->productID,
-                $product['quantity'],
-                
-            );
-            $this->InvoiceDetailModel->createInvoice($invoiceDetail);
-
-        
+        $invoiceId = $this->InvoiceModel->createInvoice($invoice);
+        if ($invoiceId) {
+            foreach ($products as $product) {
+                $invoiceDetail = new InvoiceDetail(
+                    '',
+                    $invoiceId,
+                    $product['item']->productID,
+                    $product['quantity']
+                );
+                $this->InvoiceDetailModel->createInvoice($invoiceDetail);
+            }
+            
+            // Xóa giỏ hàng
+            $this->CartModel->deleteById($userID);
+            $_SESSION['message'] = "Payment successfully!";
+            header("Location: /?controller=information&user=$userID");
+        } else {
+            $_SESSION['error'] = "Failed to create invoice.";
+            header("Location: /?controller=information&user=$userID");
         }
-        $this->CartModel->deleteById($userID);
-        $_SESSION['message'] = "Payment successfully!";
-        header("Location: /?controller=information&user=$userID");
     }
 
 }

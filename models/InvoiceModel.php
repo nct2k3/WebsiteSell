@@ -10,6 +10,8 @@ class InvoiceModel extends BaseModel
             'TotalAmount' => $Invoice->totalAmount,
             'Status' => $Invoice->status,
             'PaymentType' => $Invoice->paymentType,
+            'NumberPhone'=>$Invoice->NumberPhone,
+            'Address'=> $Invoice->Address,
         ];
         return $this->createReturnID('invoices', $invoiceData);
     }
@@ -27,7 +29,9 @@ class InvoiceModel extends BaseModel
             $data['InvoiceDate'],
             $data['TotalAmount'],
             $data['status']    ,
-            $data['PaymentType'] 
+            $data['PaymentType'] ,
+            $data['NumberPhone'],
+            $data['Address']
         );
     }
         return $Invoice;
