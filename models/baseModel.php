@@ -43,6 +43,40 @@ class BaseModel extends Database {
         }
         return $data; 
     }
+    public function getListBystring($table, $name, $typeID) {
+        $sql = "SELECT * FROM {$table} WHERE {$typeID} ='$name'";
+        $result = $this->_query($sql);
+        $data = [];
+        
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        
+        return $data; 
+    }
+
+    public function getListByTowstring($table, $name, $typeID,$nameTow,$typeIDTow) {
+        $sql = "SELECT * FROM {$table} WHERE {$typeID} ='$name' and {$typeIDTow}='$nameTow' ";
+        $result = $this->_query($sql);
+        $data = [];
+        
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        return $data; 
+    }
+    public function getListByThreeString($table, $name, $typeID,$nameTow,$typeIDTow,$nameThree,$typeIDThree) {
+        $sql = "SELECT * FROM {$table} WHERE {$typeID} ='$name' and {$typeIDTow}='$nameTow' and {$typeIDThree}='$nameThree' ";
+        $result = $this->_query($sql);
+        $data = [];
+        
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        return $data; 
+    }
+
+
     public function getByIdGroupByGroupBy($table, $id ,$typeID,$By,$limit) {
         $sql = "SELECT * FROM ${table} WHERE ${typeID} = " . intval($id)." GROUP BY ${By} LIMIT ${limit}";
         $result = $this->_query($sql);
