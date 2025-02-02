@@ -14,4 +14,20 @@ class InvoiceDetailModel extends BaseModel
         $this->create('invoicedetails', $invoiceData); 
        
     }
+    public function getInvoiceDetailByIDUser($InvoiceID)
+{
+    
+    $data = $this->getListById('invoicedetails', $InvoiceID, 'InvoiceID');
+        $InvoiceDetail = [];
+
+        foreach ($data as $row) {
+            $InvoiceDetail[] = new InvoiceDetail(
+                $row['DetailID'], 
+                $row['InvoiceID'],     
+                $row['ProductID'], 
+                $row['Quantity']
+            );
+        }
+        return $InvoiceDetail; 
+}
 }

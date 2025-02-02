@@ -16,9 +16,9 @@ $controller->index();
 <div class="container mx-auto p-5">
     <div class="flex flex-wrap">
         <!-- Thông tin khách hàng -->
-        <div class="w-full md:w-1/2 p-4">
+        <div class="w-full md:w-1/2 p-2">
             <div class="bg-gray-600 rounded-lg shadow-md py-6 px-14">
-                <h2 class="text-xl font-semibold mb-2 text-center font-bold">Thông Tin Khách Hàng</h2>
+                <h2 class="text-xl font-semibold mb-2 text-center font-bold">Customer Information</h2>
                 <div class="w-full flex justify-center">
 
                     <div class="h-20 w-20 p-2 bg-gray-300 rounded-full">
@@ -50,7 +50,7 @@ $controller->index();
                     <input type="email" name="Email" id="Email" class="w-auto p-1 border-0 focus:outline-none h-8 bg-gray-600 hover:bg-red-400 rounded-2xl" placeholder="<?php echo $Email; ?>" required readonly>
                 </p>
                 <p class="flex items-center">
-                    <strong class="mr-2">LoyaltyPoints:</strong>
+                    <strong class="mr-2">Loyalty Points:</strong>
                     <input type="text" name="LoyaltyPoints" id="LoyaltyPoints" class="w-auto p-1 border-0 focus:outline-none h-8 bg-gray-600 hover:bg-red-400 rounded-2xl" placeholder="<?php echo number_format($dataUser->LoyaltyPoints, 0, ',', '.'); ?>đ" required readonly>
                 </p>
                 
@@ -63,33 +63,40 @@ $controller->index();
         </div>
 
         <!-- Thông tin đơn hàng -->
-        <div class="w-full md:w-1/2 p-4 bg-gray-600 mt-4 rounded-lg">
-        <h2 class="text-xl font-semibold mb-2 font-bold text-center">Thông Tin Đơn Hàng</h2>
-            <div class="bg-gray-500 rounded-lg shadow-md p-6 mb-2 flex justify-between">
-                <div>
-                    <p><strong>Tên Sản Phẩm:</strong> Laptop XYZ</p>
-                    <p><strong>Số Lượng:</strong> 1</p>
-                    <p><strong>Giá:</strong> 20,000,000 VNĐ</p>
-                    <p><strong>Tình Trạng:</strong> Đang chờ xử lý</p>
-                    <p><strong>Ghi Chú:</strong> Giao hàng vào cuối tuần.</p>
+        <div class="w-full md:w-1/2 p-4 bg-gray-600 mt-2 rounded-lg">
+        <h2 class="text-xl font-semibold mb-2 font-bold text-center">Shopping Information</h2>
+       
+            <?php foreach ($dataPament as $payment): ?>
+                <div class="p-3 rounded bg-gray-800 m-2 hover:bg-gray-700">
+                    <div class="font-bold text-center my-2">Shopping Information ID: <?php echo $payment['invoice']->invoiceID; ?></div>
+                    <?php foreach ($payment['products'] as $productDetail): ?>
+                        <div class="bg-gray-500 rounded-lg shadow-md p-6 mb-2 flex justify-between">
+                            <div>
+                                <p><strong>Name Product:</strong> <?php echo $productDetail['product']->productName; ?> </p>
+                                <p><strong>Quantity:</strong> <?php echo $productDetail['quantity']; ?></p>
+                                <p><strong>Price:</strong> <?php echo number_format($productDetail['product']->price*$productDetail['quantity'], 0, ',', '.'); ?></p>
+                
+                            </div>
+                            <div>
+                                <img class="h-32" src="<?php echo $productDetail['product']->img; ?>">
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                    <div class="p-4 bg-gray-500 rounded">
+                        <p class=""><strong>Status: </strong><?php echo $payment['status']; ?> </p>
+                        <div class="flex justify-between ">
+                            <p><strong>Date:</strong><?php echo $payment['invoice']->invoiceDate; ?></p>
+                            <p><strong>End price: </strong><?php echo $payment['invoice']->totalAmount; ?></p>
+                        </div>
+                        <button class="p-2 w-full rounded bg-green-500 hover:bg-green-600 my-2 font-bold">Order Confirmation</button>
+                        <?php if ($payment['status']=='wait for confirmation'): ?>
+                            <button 
+                            onclick="window.location='?controller=Information&action=CancalOder&ID=<?php echo $payment['invoice']->invoiceID; ?>'"
+                            class="p-2 w-full rounded bg-red-500 hover:bg-red-600 my-2 font-bold">Cancel Order</button>
+                        <?php endif; ?>
+                    </div>
                 </div>
-                <div>
-                    <img class="h-32" src="https://cdn.tgdd.vn/Products/Images/42/329138/s16/iphone-16-pink-thumbnew-650x650.png">
-                </div>
-            </div>
-            <div class="bg-gray-500 rounded-lg shadow-md p-6 mb-2 flex justify-between">
-                <div>
-                    <p><strong>Tên Sản Phẩm:</strong> Laptop XYZ</p>
-                    <p><strong>Số Lượng:</strong> 1</p>
-                    <p><strong>Giá:</strong> 20,000,000 VNĐ</p>
-                    <p><strong>Tình Trạng:</strong> Đang chờ xử lý</p>
-                    <p><strong>Ghi Chú:</strong> Giao hàng vào cuối tuần.</p>
-                </div>
-                <div>
-                    <img class="h-32" src="https://cdn.tgdd.vn/Products/Images/42/329138/s16/iphone-16-pink-thumbnew-650x650.png">
-                </div>
-            </div>
-            
+            <?php endforeach; ?>
         </div>
     </div>
 </div>
