@@ -58,7 +58,9 @@ $controller->index();
                 <h2 class="font-semibold mb-2">Dung lượng</h2>
                 <div class="flex space-x-4">
                 <?php foreach ($productInfo['capacity'] as $cap): ?>
-                    <button class="bg-gray-700 text-white rounded-full py-1 px-3">
+                    <button
+                    onclick="window.location='?controller=DetailProduct&action=searchCapacity&capacity=<?php echo $cap['Capacity']; ?>&productType=<?php echo $productType; ?>'"
+                    class="bg-gray-700 text-white rounded-full py-1 px-3">
                          <?php echo htmlspecialchars($cap['Capacity']); ?>
                     </button>
                     <?php endforeach; ?>
@@ -72,7 +74,10 @@ $controller->index();
                     <?php
                         $color = ($col['Color'] == "black" || $col['Color'] == "white") ? $col['Color'] : $col['Color'] . '-500';
                     ?>
-                    <div class="w-8 h-8 bg-<?php echo $color; ?> rounded-full cursor-pointer"></div>
+                    <div
+                    onclick="window.location='?controller=DetailProduct&action=searchColor&color=<?php echo $col['Color']; ?>&productType=<?php echo $productType; ?>'"
+                    
+                    class="w-8 h-8 bg-<?php echo $color; ?> rounded-full cursor-pointer"></div>
                 <?php endforeach; ?>
                 
                 </div>

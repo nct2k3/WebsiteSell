@@ -56,9 +56,13 @@ $controller->index();
   <!-- Footer Navigation -->
   <div class="mx-8 mt-2">
     <div class="container flex-wrap d-flex gap-3">
-      <button class="text-white hover:underline underline">All</button>
+      <button
+      onclick="window.location='?controller=product&items=<?php echo $items?>'"
+      class="text-white hover:underline underline">All</button>
       <?php foreach ($Model as $Models): ?>
-      <button class="text-white hover:underline">
+      <button
+      onclick="window.location='?controller=product&action=productModel&items=<?php echo $items?>&model=<?php echo htmlspecialchars($Models->productModel); ?>'"
+      class="text-white hover:underline">
       <?php echo htmlspecialchars($Models->productModel); ?>
       </button>
       <?php endforeach; ?>

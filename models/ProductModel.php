@@ -17,7 +17,7 @@ class ProductModel extends BaseModel
         $result = $this->_query($sql);
     
         if ($result === false) {
-            die("SQL Error: " . mysqli_error($this->connect)); // Hiển thị lỗi SQL nếu có
+            die("SQL Error: " . mysqli_error($this->connect)); 
         }
     
         $data = [];
@@ -32,7 +32,7 @@ class ProductModel extends BaseModel
         $result = $this->_query($sql);
     
         if ($result === false) {
-            die("SQL Error: " . mysqli_error($this->connect)); // Hiển thị lỗi SQL nếu có
+            die("SQL Error: " . mysqli_error($this->connect)); 
         }
     
         $data = [];
@@ -47,7 +47,7 @@ class ProductModel extends BaseModel
         $result = $this->_query($sql);
     
         if ($result === false) {
-            die("SQL Error: " . mysqli_error($this->connect)); // Hiển thị lỗi SQL nếu có
+            die("SQL Error: " . mysqli_error($this->connect)); 
         }
     
         $data = [];
@@ -60,33 +60,31 @@ class ProductModel extends BaseModel
     
     public function getProduct($ProductLineID)
     {
-        // Lấy dữ liệu từ bảng Product
         $data = $this->getByProductLineID('Products',$ProductLineID); 
         $Product = [];
 
         foreach ($data as $row) {
-            // Tạo đối tượng Account từ dữ liệu
+           
             $Product[] = new Product(
-                $row['ProductID'], // Cột AccountID
-                $row['ProductLineID'],     // Cột Email
+                $row['ProductID'], 
+                $row['ProductLineID'],     
                 $row['ProductType'],
-                $row['ProductModel'],  // Cột Password
-                $row['ProductName'],      // Cột Role
+                $row['ProductModel'],  
+                $row['ProductName'],      
                 $row['Price']  ,
                 $row['OriginalPrice'],
                 $row['Stock'],
                 $row['Img'],
                 $row['Capacity'],
-                $row['Color']   // Cột UserID
+                $row['Color']   
             );
         }
 
-        return $Product; // Trả về mảng các đối tượng Account
+        return $Product; 
     }
 
     public function getProductByID($ProductID)
 {
-    // Lấy dữ liệu từ bảng Products
     $data = $this->getById('Products', $ProductID, 'ProductID');
     if (empty($data)) {
         return null; 
@@ -105,29 +103,53 @@ class ProductModel extends BaseModel
         $data['Color']
     );
 
-    return $Product; // Trả về đối tượng Product
+    return $Product; 
 }
 
 public function getByIdGroup($ProductID)
 {
-    // Lấy dữ liệu từ bảng Products
+   
     $data = $this->getByIdGroupByGroupBy('Products', $ProductID, 'ProductLineID',"	ProductType",3);
         $Product = [];
 
         foreach ($data as $row) {
-            // Tạo đối tượng Account từ dữ liệu
             $Product[] = new Product(
-                $row['ProductID'], // Cột AccountID
-                $row['ProductLineID'],     // Cột Email
+                $row['ProductID'], 
+                $row['ProductLineID'],    
                 $row['ProductType'], 
-                $row['ProductModel'], // Cột Password
-                $row['ProductName'],      // Cột Role
+                $row['ProductModel'],
+                $row['ProductName'],     
                 $row['Price']  ,
                 $row['OriginalPrice'],
                 $row['Stock'],
                 $row['Img'],
                 $row['Capacity'],
-                $row['Color']   // Cột UserID
+                $row['Color']  
+            );
+        }
+
+        return $Product; 
+}
+
+public function getProductModel($ID)
+{
+   
+    $data = $this->getListBystring('Products', $ID, 'ProductModel');
+        $Product = [];
+
+        foreach ($data as $row) {
+            $Product[] = new Product(
+                $row['ProductID'], 
+                $row['ProductLineID'],   
+                $row['ProductType'], 
+                $row['ProductModel'],
+                $row['ProductName'],    
+                $row['Price']  ,
+                $row['OriginalPrice'],
+                $row['Stock'],
+                $row['Img'],
+                $row['Capacity'],
+                $row['Color']   
             );
         }
 
@@ -136,27 +158,141 @@ public function getByIdGroup($ProductID)
 
 public function getModel($ProductID)
 {
-    // Lấy dữ liệu từ bảng Products
+    
     $data = $this->getByIdGroupByGroupBy('Products', $ProductID, 'ProductLineID',"	ProductModel",20);
         $Product = [];
 
         foreach ($data as $row) {
-            // Tạo đối tượng Account từ dữ liệu
+           
             $Product[] = new Product(
-                $row['ProductID'], // Cột AccountID
-                $row['ProductLineID'],     // Cột Email
+                $row['ProductID'], 
+                $row['ProductLineID'],     
                 $row['ProductType'], 
-                $row['ProductModel'], // Cột Password
-                $row['ProductName'],      // Cột Role
+                $row['ProductModel'], 
+                $row['ProductName'],      
                 $row['Price']  ,
                 $row['OriginalPrice'],
                 $row['Stock'],
                 $row['Img'],
                 $row['Capacity'],
-                $row['Color']   // Cột UserID
+                $row['Color']   
             );
         }
 
         return $Product; 
 }
+public function getproductColor($Color, $ProductType) {
+
+    $data = $this->getListByTowstring('Products', $Color, 'Color', $ProductType, 'ProductType');
+
+    if ($data && is_array($data)) {
+        
+        $productData = $data[0]; 
+        $Product = new Product(
+            $productData['ProductID'], 
+            $productData['ProductLineID'],     
+            $productData['ProductType'], 
+            $productData['ProductModel'], 
+            $productData['ProductName'],      
+            $productData['Price'],
+            $productData['OriginalPrice'],
+            $productData['Stock'],
+            $productData['Img'],
+            $productData['Capacity'],
+            $productData['Color']
+        );
+
+        return $Product; 
+    } else {
+        
+        return null; 
+    }
+}
+public function getproductCapacity($Capacity, $ProductType) {
+
+    $data = $this->getListByTowstring('Products', $Capacity, 'Capacity', $ProductType, 'ProductType');
+
+    if ($data && is_array($data)) {
+        
+        $productData = $data[0]; 
+        $Product = new Product(
+            $productData['ProductID'], 
+            $productData['ProductLineID'],     
+            $productData['ProductType'], 
+            $productData['ProductModel'], 
+            $productData['ProductName'],      
+            $productData['Price'],
+            $productData['OriginalPrice'],
+            $productData['Stock'],
+            $productData['Img'],
+            $productData['Capacity'],
+            $productData['Color']
+        );
+
+        return $Product; 
+    } else {
+        
+        return null; 
+    }
+}
+
+public function getproductCapacityAndColor($Color,$Capacity, $ProductType) {
+
+    $data = $this->getListByThreeString('Products', $Capacity, 'Capacity', $ProductType, 'ProductType',$Color,'Color');
+
+    if ($data && is_array($data)) {
+        
+        $productData = $data[0]; 
+        $Product = new Product(
+            $productData['ProductID'], 
+            $productData['ProductLineID'],     
+            $productData['ProductType'], 
+            $productData['ProductModel'], 
+            $productData['ProductName'],      
+            $productData['Price'],
+            $productData['OriginalPrice'],
+            $productData['Stock'],
+            $productData['Img'],
+            $productData['Capacity'],
+            $productData['Color']
+        );
+
+        return $Product; 
+    } else {
+        
+        return null; 
+    }
+}
+
+public function getCapacityByTow($Producttype,$Color) {
+    $sql = "SELECT DISTINCT Capacity FROM products WHERE Color='$Color' and ProductType = '" . mysqli_real_escape_string($this->connect, $Producttype)."'";
+    $result = $this->_query($sql);
+
+    if ($result === false) {
+        die("SQL Error: " . mysqli_error($this->connect)); 
+    }
+
+    $data = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $data[] = $row; 
+    }
+    return $data; 
+}
+
+public function getColorByTow($Producttype,$Capacity) {
+
+    $sql = "SELECT DISTINCT Color FROM products WHERE Capacity='$Capacity' and ProductType = '" . mysqli_real_escape_string($this->connect, $Producttype)."'";
+    $result = $this->_query($sql);
+
+    if ($result === false) {
+        die("SQL Error: " . mysqli_error($this->connect)); 
+    }
+
+    $data = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $data[] = $row; 
+    }
+    return $data; 
+}
+
 }

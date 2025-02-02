@@ -26,7 +26,7 @@ class CartModel extends BaseModel
 
     }
     public function deleteById($userID) {
-        print_r($userID);
+      
         return $this->deleteID('cart', $userID,'UserID');
  
      }

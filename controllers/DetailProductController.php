@@ -24,7 +24,39 @@ class DetailProductController extends BaseController
                 'capacity' => $capacity,
                 'color'=> $color
             ];
-        $this->view('frontEnd.detailProduct.index', ['products' => $products]);
+        $this->view('frontEnd.detailProduct.index', ['products' => $products,'productType'=>$product->productType]);
+    }
+    public function searchColor()
+    {
+        $Color = $_GET['color'];
+        $productType=$_GET['productType'];
+        $product = $this->ProductModel->getproductColor($Color,$productType);
+        $products = [];
+            $capacity = $this->ProductModel->getCapacityByTow($product->productType,$Color);
+            $color = $this->getColor($product->productType);
+            $products[] = [
+                'item' => $product,
+                'capacity' => $capacity,
+                'color'=> $color
+            ];
+        $this->view('frontEnd.detailProduct.index', ['products' => $products,'productType'=>$product->productType]);
+    }
+    public function searchCapacity()
+    {
+        $Capacity = $_GET['capacity'];
+        $productType=$_GET['productType'];
+        $product = $this->ProductModel->getproductCapacity($Capacity,$productType);
+        $products = [];
+            $capacity = $this->getCapacity($product->productType);
+            $color = $this->ProductModel->getColorByTow($product->productType,$Capacity);
+           
+            // Thêm item và capacity vào mảng products
+            $products[] = [
+                'item' => $product,
+                'capacity' => $capacity,
+                'color'=> $color
+            ];
+        $this->view('frontEnd.detailProduct.index', ['products' => $products,'productType'=>$product->productType]);
     }
 
     public function addCart(){
