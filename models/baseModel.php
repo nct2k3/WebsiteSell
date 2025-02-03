@@ -14,10 +14,10 @@ class BaseModel extends Database {
     public function getAll($table) {
         $sql = "SELECT * FROM ${table}";
         $result = $this->_query($sql);
-        
         $data = [];
+        
         while ($row = mysqli_fetch_assoc($result)) {
-            array_push($data, $row);
+            $data[] = $row;
         }
         
         return $data; 

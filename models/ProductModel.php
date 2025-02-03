@@ -58,6 +58,30 @@ class ProductModel extends BaseModel
         return $data; 
     }
     
+    public function getAllProduct()
+    {
+        $data = $this->getAll('Products'); 
+        $Product = [];
+
+        foreach ($data as $row) {
+           
+            $Product[] = new Product(
+                $row['ProductID'], 
+                $row['ProductLineID'],     
+                $row['ProductType'],
+                $row['ProductModel'],  
+                $row['ProductName'],      
+                $row['Price']  ,
+                $row['OriginalPrice'],
+                $row['Stock'],
+                $row['Img'],
+                $row['Capacity'],
+                $row['Color']   
+            );
+        }
+
+        return $Product; 
+    }
     
     public function getProduct($ProductLineID)
     {
