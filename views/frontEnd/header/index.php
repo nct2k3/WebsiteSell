@@ -81,7 +81,7 @@
                 </div>
                 
                  <!-- Search bar -->
-                 <div  onclick=""
+                 <div  id="searchButton"
                  class="bg-gray-500 col-12 col-md-1 rounded-full hover:bg-gray-400 ">
                     <img class="h-8 mx-1 mt-1 p-1" src="https://img.icons8.com/?size=100&id=7695&format=png&color=ffffff" alt="Icon">
                     
@@ -124,6 +124,28 @@
         </div>
         <div class="p-1"></div>
     </header>
+    <div id="search" class="hiddens">
+    <div id="searchButton1" class="h-full w-full bg-black fixed z-40 opacity-75 text-white py-8"> </div>
+    <div class="col-8 fixed z-50 text-white py-2  " style="left: 50%; transform: translateX(-50%);">
+       <div class="text-center font-bold text-2xl my-2">Search Product</div>
+        <div class="flex">
+            <input class="h-10 bg-white rounded-l-full p-2 text-black w-full" type="text">
+            <button class="bg-gray-500 h-10 w-16 rounded-r-full hover:bg-gray-800">
+                <img class="h-10 p-2" src="https://img.icons8.com/?size=100&id=7695&format=png&color=ffffff" alt="Icon">
+            </button>
+        </div>
+        <div class="mt-2 p-2">
+            <div class="rounded w-full flex flex-wrap hover:bg-gray-800 hover:opacity-75 border-b border-gray-500">
+                <div class="py-2 px-2">
+                    <img class="h-12 w-12 sm:h-16 sm:w-16 object-cover" src="https://cdn.tgdd.vn/Products/Images/42/329138/s16/iphone-16-pink-thumbnew-650x650.png">
+                </div>
+                <h class="flex py-2 px-2 mt-3"> <div class="font-bold">Name Product:</div> <div class="px-2">Iphone 16</div></h>
+                <h class="flex py-2 px-2 mt-3"> <div class="font-bold">Product:</div> <div class="px-2">20.000.000 d</div></h>
+            </div>                   
+        </div>
+    </div>
+    </div>
+    </div>
 </body>
 <script>
         const button = document.getElementById('toggleButton');
@@ -131,6 +153,16 @@
 
         button.addEventListener('click', () => {
             content.classList.toggle('hidden');
+        });
+        const button1 = document.getElementById('searchButton');
+        const button2 = document.getElementById('searchButton1');
+        const content1 = document.getElementById('search');
+
+        button1.addEventListener('click', () => {
+            content1.classList.toggle('hidden');
+        });
+        button2.addEventListener('click', () => {
+            content1.classList.toggle('hidden');
         });
 </script>
 
