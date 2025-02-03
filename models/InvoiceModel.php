@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ . '/../entities/Invoice.php';
+require_once __DIR__ .'./InvoiceDetailModel.php';
+require_once __DIR__ .'./ProductModel.php';
 
 class InvoiceModel extends BaseModel
 {
@@ -39,6 +41,17 @@ class InvoiceModel extends BaseModel
     }
 
     public function deleteInvoice($InvoiceId) {
+        $InvoiceDetailmodel=new InvoiceDetailModel();
+        $InvoiceDetail= $InvoiceDetailmodel->getInvoiceDetailByIDUser($InvoiceId);
+        foreach ($InvoiceDetail as $data) {
+            $productModel= new ProductModel();
+            $product = $productModel->getProductByID($data->productID);
+            $endQuantity= $product->stock + $data->quantity;
+            $sql="UPDATE products SET Stock = $endQuantity WHERE ProductID = $data->productID";
+            print_r($sql);
+            $this->UpdateCustome($sql);
+        }
+
          $this->deleteID('invoices', $InvoiceId,'InvoiceID');
 
     }
