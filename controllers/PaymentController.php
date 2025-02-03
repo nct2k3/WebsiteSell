@@ -40,8 +40,32 @@ class PaymentController extends BaseController
         foreach ($products as $product) {
             $total += $product['item']->price*$product['quantity'];
         }
-        $this->view('frontEnd.payment.index', ['products' => $products, 'total' => $total, 'userID' => $userID,'dataUser'=>$dataUser]);
+        $dataAction='payment';
+        $this->view('frontEnd.payment.index', ['dataAction'=>$dataAction,'products' => $products, 'total' => $total, 'userID' => $userID,'dataUser'=>$dataUser,]);
     }
+    public function buyOne()
+    {
+        $userID =$this->takeIDAccount();
+        $dataUser = $this->UserModel->getUserByID($userID);
+        $dataCart = $this->CartModel->getCart($userID);
+        $products = []; 
+        $idProduct=$_GET['items'];
+        $_SESSION['IdProduct'] =$idProduct;
+       
+        $product = $this->ProductModel->getProductByID($idProduct);
+        if ($product) {
+            $products[] = [
+                            'item' => $product,
+                            'quantity' =>1,
+                            'price'=>$product->price,
+                        ];
+         }
+        $total =$product->price; 
+        $dataAction='payOne';
+        $this->view('frontEnd.payment.index', ['dataAction'=>$dataAction,'products' => $products, 'total' => $total, 'userID' => $userID,'dataUser'=>$dataUser]);
+    }
+
+
     public function Delete()
     {
         if (isset($_GET['user']) && isset($_GET['product'])) {
@@ -160,6 +184,69 @@ class PaymentController extends BaseController
         }
     }
 
+    public function PaymentOne($loyaltyPoints) {
+        $userID = $this->takeIDAccount();
+        $dataUser = $this->UserModel->getUserByID($userID);
+        $idProduct=$this->takeIDProduct();
+        $products = [];
+        if (isset($idProduct)) {
+                    $product = $this->ProductModel->getProductByID($idProduct);
+
+                    if ($product) {
+                        $products[] = [
+                            'item' => $product,
+                            'quantity' =>1,
+                        ];
+                    }
+        }
+        $total = 0;
+        foreach ($products as $product) {
+            $total += $product['item']->price * $product['quantity'];
+        }
+        $loyaltyPoints = floatval($loyaltyPoints);
+        $endTotal = ($loyaltyPoints > 0) ? $total - $loyaltyPoints : $total;
+    
+        // Kiểm tra nếu dữ liệu người dùng tồn tại
+        if (!$dataUser) {
+            $_SESSION['error'] = "User data not found.";
+            header("Location: /?controller=information&user=$userID");
+            return;
+        }
+    
+        $invoice = new Invoice(
+            '',
+            $userID,
+            date('Y-m-d H:i:s'),
+            $endTotal,
+            0,
+            'normal',
+            $dataUser->PhoneNumber,
+            $dataUser->Address 
+        );
+    
+        $invoiceId = $this->InvoiceModel->createInvoice($invoice);
+        if ($invoiceId) {
+      
+                $invoiceDetail = new InvoiceDetail(
+                    '',
+                    $invoiceId,
+                    $idProduct,
+                    1
+                );
+            
+                $this->InvoiceDetailModel->createInvoice($invoiceDetail);
+            
+            
+            // Xóa giỏ hàng
+            $this->CartModel->deleteById($userID);
+            $_SESSION['message'] = "Payment successfully!";
+            header("Location: /?controller=information&user=$userID");
+        } else {
+            $_SESSION['error'] = "Failed to create invoice.";
+            header("Location: /?controller=information&user=$userID");
+        }
+    }
+
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'] ?? null;
@@ -171,9 +258,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($paymentType) {
                 $paymentcontroller= new PaymentController;
                 $paymentcontroller->PaymentNormal($loyaltyPoints );
-                
-
-
                 if ($paymentType === 'credit_card') {
                     $cardName = $_POST['cardName'] ?? null;
                     $cardNumber = $_POST['cardNumber'] ?? null;
@@ -193,6 +277,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $paymentcontroller->index(); 
             }
             break;
+            case 'payOne':
+                $loyaltyPoints = $_POST['LoyaltyPoints'] ?? null;
+                $paymentType = $_POST['paymentType'] ?? null;
+    
+                if ($paymentType) {
+                    $paymentcontroller= new PaymentController;
+                    $paymentcontroller->PaymentOne($loyaltyPoints );
+                    if ($paymentType === 'credit_card') {
+                        $cardName = $_POST['cardName'] ?? null;
+                        $cardNumber = $_POST['cardNumber'] ?? null;
+                        $expiry = $_POST['expiry'] ?? null;
+                        $cvv = $_POST['cvv'] ?? null;
+    
+                        echo '<pre>';
+                        if ($cardName && $cardNumber && $expiry && $cvv) {
+                            echo "Thẻ tín dụng hợp lệ.<br>";
+                        } else {
+                            $_SESSION['error'] = "Invalid credit card!";
+                            $paymentcontroller->index(); 
+                        }
+                    }
+                } else {
+                    $_SESSION['error'] = "Error!";
+                    $paymentcontroller->index(); 
+                }
+                break;
 
         default:
             echo "Hành động không hợp lệ hoặc không xác định!<br>";

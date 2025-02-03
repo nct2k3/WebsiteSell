@@ -27,6 +27,14 @@ protected function takeIDAccount(){
        return;
     }
 }
+protected function takeIDProduct(){
+    if (isset($_SESSION['IdProduct'])) {
+        $IdProduct = $_SESSION['IdProduct'];
+        return $IdProduct;
+    } else {
+       return;
+    }
+}
 protected function getAllProduct() {
     // Kiểm tra nếu phiên đã được khởi động
     if (session_status() === PHP_SESSION_NONE) {

@@ -20,7 +20,7 @@ $controller->index();
         
         <h2 class="text-xl font-semibold mb-4">Payment Details</h2>
         <form action="?controller=payment" method="POST">
-            <input type="hidden" name="action" value="payment">
+            <input type="hidden" name="action" value="<?php echo $dataAction ?>">
             <div class="mb-4">
                 <label for="address" class="block text-sm font-medium text-gray-100">Shipping Address</label>
                 <input type="text" id="address" name="address" readonly  class="mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200" placeholder="<?php echo $dataUser->Address ?>">
@@ -87,6 +87,7 @@ $controller->index();
                                 <td class="py-2 px-2"><?php echo htmlspecialchars(number_format($item['price'], 0, ',', '.')) . '₫'; ?></td>
                                 <td class="py-2 px-2">
                                     <input 
+                                    <?php if($dataAction=='payOne') echo 'readonly' ?>
                                         type="number" 
                                         class="quantity-input w-16 text-center border rounded bg-gray-700" 
                                         value="<?php echo $item['quantity']; ?>" 
@@ -94,8 +95,12 @@ $controller->index();
                                         data-product-id="<?php echo $item['item']->productID; ?>" />
                                 </td>
                                 <td class="py-2 px-2">
-                                    <a href="#" class="text-red-500 hover:text-red-600"
-                                       onclick="window.location='?controller=payment&action=Delete&user=<?php echo $userID; ?>&product=<?php echo $item['item']->productID; ?>'">Delete</a>
+                                    <?php if($dataAction == 'payOne'): ?>
+                                        <span class="text-gray-500">Delete</span> <!-- Hiển thị dưới dạng văn bản không có liên kết -->
+                                    <?php else: ?>
+                                        <a href="#" class="text-red-500 hover:text-red-600"
+                                        onclick="window.location='?controller=payment&action=Delete&user=<?php echo $userID; ?>&product=<?php echo $item['item']->productID; ?>'">Delete</a>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
