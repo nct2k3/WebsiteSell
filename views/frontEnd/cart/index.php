@@ -27,7 +27,6 @@ $controller->index();
                         <th class="text-left px-2 py-1">Price</th>
                         <th class="text-left px-2 py-1">Quantity</th>
                         <th class="text-left px-2 py-1">Status</th>
-                        <th class="text-left px-2 py-1">Buy One</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,17 +42,14 @@ $controller->index();
                                         type="number" 
                                         class="quantity-input w-16 text-center border rounded bg-gray-800" 
                                         value="<?php echo $item['quantity']; ?>" 
-                                        min="1"
+                                        min="1" max="<?php $item['item']->stock; ?>?>"
                                         data-product-id="<?php echo $item['item']->productID; ?>" />
                                 </td>
                                 <td class="py-2 px-2">
                                     <a href="#" class="text-red-500 hover:text-red-600"
                                        onclick="window.location='?controller=cart&action=Delete&user=<?php echo $userID; ?>&product=<?php echo $item['item']->productID; ?>'">Delete</a>
                                 </td>
-                                <td class="py-2 px-2">
-                                    <a href="#" class="text-green-500 hover:text-green-600"
-                                      >Buy One</a>
-                                </td>
+                               
                             </tr>
                         <?php endforeach; ?>
                 </tbody>

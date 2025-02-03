@@ -100,8 +100,16 @@ $controller->index();
                     </div>
 
                     <!-- Action Buttons -->
-                    <div class="flex">
-                        <button class="btn btn-primary w-full font-bold m-2 text-xl py-4">
+                    <div class="flex">   
+                    <?php if ($product->stock == 0): ?>
+                    
+                        <button class="btn btn-danger text-white w-full font-bold m-2 text-xl" disabled>
+                         Out Of Stock
+                        </button>
+                    <?php else: ?>
+                        <button
+                            onclick="window.location='?controller=payment&action=buyOne&items=<?php echo htmlspecialchars($product->productID); ?>'"
+                            class="btn btn-primary w-full font-bold m-2 text-xl py-4">
                             Buy Now
                         </button>
 
@@ -110,6 +118,7 @@ $controller->index();
                             class="btn btn-warning text-white w-full font-bold m-2 text-xl">
                             Add To Cart
                         </button>
+<?php endif; ?>
                     </div>
 
                     <!-- Additional Info -->
