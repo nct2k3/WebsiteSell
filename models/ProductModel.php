@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../entities/Product.php';
+require_once __DIR__ .'/../entities/DetailProduct.php';
 require_once __DIR__ . '/../core/database.php';
 
 class ProductModel extends BaseModel
@@ -293,6 +294,24 @@ public function getColorByTow($Producttype,$Capacity) {
         $data[] = $row; 
     }
     return $data; 
+}
+
+public function getDeatilProduct($ID)
+{
+   
+    $data = $this->getListBystring('productdetails', $ID, 'ProductType');
+        $Product = [];
+
+        foreach ($data as $row) {
+            $Product[] = new DetailProduct(
+                $row['ProductDetaiID'], 
+                $row['ProductType'], 
+                $row['Img'], 
+                
+            );
+        }
+
+        return $Product; 
 }
 
 }
