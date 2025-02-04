@@ -40,7 +40,9 @@ $controller->index();
           <button type="submit" class="w-full h-10 bg-blue-600 hover:bg-blue-700 text-white py-1 rounded-lg font-semibold">LOGIN</button>
         </form>
         <div class="text-center mt-6">
-          <span>Don't have an account? <a href="#" class="text-red-500 hover:underline">Register</a></span>
+          <span>Don't have an account? <a 
+          onclick="window.location='?controller=register'"
+          class="text-red-500 hover:underline">Register</a></span>
         </div>
       </div>
     </div>

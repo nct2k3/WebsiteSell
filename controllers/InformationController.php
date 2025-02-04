@@ -79,5 +79,48 @@ class InformationController extends BaseController
         $this->index();
 
     }
+    public function change($FullName,$NumberPhone,$Address){
+
+        $id = $this->takeIDAccount();
+        $dataUser = $this->UserModel->getUserByID($id);
+        $dataFullName=$FullName;
+        if($FullName==''){
+            $dataFullName=$dataUser->FullName;
+        }
+        $dataNumberPhone = $NumberPhone;
+        if($NumberPhone==''){
+            $dataNumberPhone=$dataUser->NumberPhone;
+        }
+        $dataAddress= $Address;
+        if($Address== ''){
+            $dataAddress=$dataUser->Address;
+        }
+
+        $this->UserModel->updateInformation($dataFullName,$dataNumberPhone,$dataAddress,$id);
+        $_SESSION['message'] = "Change successfully!";
+
+        $this->index();
+        exit();
+
+    }
     
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $action = $_POST['action'] ?? null;
+
+    switch ($action) {
+        case 'change':
+            $FullName = $_POST['fullName'] ?? ''; // Đảm bảo có giá trị mặc định
+            $NumberPhone = $_POST['phone'] ?? '';
+            $Address = $_POST['address'] ?? '';
+            
+
+            $InformationController = new InformationController();
+            $InformationController->change($FullName, $NumberPhone, $Address);
+            break;
+
+        default:
+            echo "Hành động không hợp lệ!";
+            break;
+    }
 }

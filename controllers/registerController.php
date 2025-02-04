@@ -1,32 +1,57 @@
 <?php
 require_once __DIR__ . '/../entities/Account.php';
+require_once __DIR__ .'/../entities/User.php';
 require_once __DIR__ . '/../controllers/BaseController.php';
-// require_once __DIR__ . '/../models/RegisterModel.php';
+
 
 class RegisterController extends BaseController {
-    private $RegisterModel;
+ 
 
-    public function __construct() {
-        $this->RegisterModel = $this->loadModel("RegisterModel");
+    private $UserModel;
+    private $AccountModel;
+
+    public function __construct()
+    {
+        
+        $this->UserModel = $this->loadModel("UserModel");
+        $this->AccountModel = $this->loadModel("AccountsModel");
     }
 
     public function index() {
         $this->view('frontEnd.register.index');
     }
 
-    public function create($account) {
-        $data = [
-            'email' => $account->email,
-            'password' => password_hash($account->password, PASSWORD_DEFAULT),
-            'role' => $account->role,
-            'userID' => $account->userID,
-        ];
+    public function create($Email,$Password,$FullName,$NumberPhone,$Address) {
 
-        if ($this->RegisterModel->create('accounts', $data)) {
-            echo "Tài khoản được tạo thành công!";
-        } else {
-            echo "Lỗi khi tạo tài khoản: " . mysqli_error($this->RegisterModel->connect);
+        $emailCheck= $this->AccountModel->CheckEmail($Email);
+        if($emailCheck==1) {
+            $_SESSION['error'] = "Email already exists!";
+            $this->index();
+            exit;
         }
+        $User = new User(
+            0,
+            $FullName,
+            $NumberPhone,
+            $Address,
+            0,        
+        );
+        $IdUser= $this->UserModel->createUser($User);
+        $account= new Account(
+
+            '',
+            $Email,
+            $Password,
+            0,
+            $IdUser
+        );
+
+        $Idac= $this->AccountModel->createAccounts($account);
+        $_SESSION['AccountID'] = $IdUser;
+            $_SESSION['message'] = "Register successfully!";
+            header("Location: /"); 
+            exit();
+       
     }
 }
 
@@ -35,15 +60,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'] ?? null;
 
     switch ($action) {
-        case 'create':
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $role = $_POST['role'];
-            $userID = $_POST['userID'];
-
-            $account = new Account(null, $email, $password, $role, $userID);
+        case 'register':
+            $email = $_POST['Email'];
+            $password = $_POST['Password'];
+            $FullName = $_POST['FullName'];
+            $NumberPhone= $_POST['NumberPhone'];
+            $Address= $_POST['Address'];
+            
             $registerController = new RegisterController();
-            $registerController->create($account);
+            $registerController->create($email,$password,$FullName,$NumberPhone,$Address);
+            break;
+
+        default:
+            echo "Hành động không hợp lệ!";
+            break;
+    }
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $action = $_POST['action'] ?? null;
+
+    switch ($action) {
+        case 'change':
+            $email = $_POST['email'] ?? null;
+            $password = $_POST['password'] ?? null;
+            if ($email && $password) {
+                $loginController = new LoginController();
+                $loginController->login($email, $password);
+            } else {
+                echo "Email hoặc mật khẩu không hợp lệ!";
+            }
             break;
 
         default:
