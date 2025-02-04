@@ -134,7 +134,7 @@ class ProductModel extends BaseModel
 public function getByIdGroup($ProductID)
 {
    
-    $data = $this->getByIdGroupByGroupBy('Products', $ProductID, 'ProductLineID',"	ProductType",3);
+    $data = $this->getByIdGroupByGroupBy('Products', $ProductID, 'ProductLineID',"	ProductType",6);
         $Product = [];
 
         foreach ($data as $row) {

@@ -25,7 +25,9 @@ class DetailProductController extends BaseController
                 'capacity' => $capacity,
                 'color'=> $color
             ];
-        $this->view('frontEnd.detailProduct.index', ['productDetail'=>$ProductDeatil,'products' => $products,'productType'=>$product->productType]);
+
+        $ProductIphone = $this->ProductModel->getByIdGroup(rand(1, 6));
+        $this->view('frontEnd.detailProduct.index', ['ProductIphone' => $ProductIphone,'productDetail'=>$ProductDeatil,'products' => $products,'productType'=>$product->productType]);
     }
    
 

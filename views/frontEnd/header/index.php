@@ -67,7 +67,7 @@
                 <div  onclick="window.location='?controller=product&items=5'"
                  class="col-12 col-md-1 d-flex align-items-center justify-content-center text-white font-bold text-sm hover:bg-gray-400 p-2">
                     <img class="h-6 mx-1" src="https://img.icons8.com/?size=100&id=2318&format=png&color=ffffff" alt="Icon">
-                    <a >iPad</a>
+                    <a >IPad</a>
                 </div>
                 <div  onclick="window.location='?controller=product&items=6'"
                  class="col-12 col-md-1 d-flex align-items-center justify-content-center text-white font-bold text-sm hover:bg-gray-400 p-2">

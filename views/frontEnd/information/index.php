@@ -40,11 +40,11 @@ $controller->index();
                 </p>
                 
                 <p class="flex items-center">
-                    <strong class="mr-2">Số Điện Thoại:</strong>
+                    <strong class="mr-2">Number Phone:</strong>
                     <input type="number" name="phone" id="phone" class="w-auto p-1 border-0 focus:outline-none h-8 bg-gray-600 hover:bg-green-300 rounded-2xl" placeholder="<?php echo $dataUser->PhoneNumber; ?>" required>
                 </p>
                 <p class="flex items-center">
-                    <strong class="mr-2">Địa Chỉ:</strong>
+                    <strong class="mr-2">Address:</strong>
                     <input type="text" name="address" id="address" class="flex-1 p-1 border-0 focus:outline-none h-8 bg-gray-600 hover:bg-green-300 rounded-2xl" placeholder="<?php echo $dataUser->Address ?>" required>
                 </p>
                 <p class="flex items-center">
