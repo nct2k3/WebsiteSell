@@ -32,6 +32,8 @@ $controller->index();
                             logout
                     </div>
                 </div>
+        <form action="?controller=information" method="POST" class="space-y-4">
+          <input type="hidden" name="action" value="change">
                 <p class="flex items-center ">
                     <strong class="mr-2 ">Full Name:</strong>
                     <input type="text" name="fullName" id="fullName" class=" w-auto p-1 border-0 focus:outline-none h-8 bg-gray-600 hover:bg-green-300 rounded-2xl" placeholder="<?php echo $dataUser->FullName;?>" required>
@@ -55,10 +57,9 @@ $controller->index();
                 </p>
                 
                 <button class="w-full p-2 my-2 text-center font-bold bg-blue-500 rounded-2xl hover:bg-blue-600">
-
                 Change
                 </button>
-                                
+        </form>                        
             </div>
         </div>
 

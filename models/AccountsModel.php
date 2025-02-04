@@ -20,6 +20,29 @@ class AccountsModel extends BaseModel
         );
         return $accounts; 
     }
+    public function createAccounts($accounts) {
+        print_r($accounts);
+        $accountData = [
+            'Email' => $accounts->email,
+            'Password' => $accounts->password,
+            'Role' => $accounts->role,
+            'UserID'=> $accounts->userID,
+           
+        ];
+        return $this->createReturnID('accounts', $accountData);
+    }
+    public function CheckEmail($Email) {
+        if (empty($Email)) {
+            return 0;
+        }
+        $sql = "SELECT Email FROM accounts WHERE Email='$Email'";
+        $result = $this->getOneCustome($sql);
+        if ($result) {
+            return 1; 
+        } else {
+            return 0; 
+        }
+    }
 
     public function getAccountByIDUser($UserID) {
 
