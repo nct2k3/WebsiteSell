@@ -131,8 +131,20 @@ $controller->index();
         </div>
 
         <!-- Other Products Section -->
-        <div class="w-full bg-white">
-            <div class="text-xl font-bold text-black p-4">Other Products</div>
+        <div class="w-full bg-gray-500 p-8">
+            <div class="text-xl font-bold text-black p-4 text-white">Other Products</div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-0 p-0">
+             <?php foreach($ProductIphone as $items): ?>
+            <div
+            onclick="window.location='?controller=DetailProduct&items=<?php echo $items->productID; ?>'"
+            class="bg-gray-800 hover:bg-gray-500 rounded-xl shadow-lg p-6 max-w-xs text-white mx-auto mb-0 mt-22">
+                <img src="<?php  echo $items->img;  ?>" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
+                <h2 class="text-lg font-semibold mb-2"><?php  echo $items->productName;  ?></h2>
+                <h1 class="font-bold text-xl"><?php  echo $items->price;  ?>₫</h1>
+                <h1 class="line-through text-gray-400 text-sm"><?php  echo $items->originalPrice;  ?>₫</h1>
+            </div>
+            <?php endforeach; ?>
+        </div>
         </div>
 
     <?php endforeach; ?>
@@ -146,3 +158,4 @@ $controller->index();
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
