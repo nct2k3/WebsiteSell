@@ -163,5 +163,6 @@ class BaseModel extends Database {
         $sql = "UPDATE ${table} SET ${TypeData} = '${data}' WHERE ${TypeOne} = ${IdOne} AND ${TypeTwo} = ${IdTwo}";
         return $this->_query($sql)> 0 ? 1 : 0; 
     }
+    
 
 }
