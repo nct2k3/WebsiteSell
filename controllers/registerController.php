@@ -76,23 +76,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             break;
     }
 }
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $action = $_POST['action'] ?? null;
-
-    switch ($action) {
-        case 'change':
-            $email = $_POST['email'] ?? null;
-            $password = $_POST['password'] ?? null;
-            if ($email && $password) {
-                $loginController = new LoginController();
-                $loginController->login($email, $password);
-            } else {
-                echo "Email hoặc mật khẩu không hợp lệ!";
-            }
-            break;
-
-        default:
-            echo "Hành động không hợp lệ!";
-            break;
-    }
-}
