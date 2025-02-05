@@ -2,6 +2,10 @@
 require_once __DIR__ . '/../entities/Product.php';
 require_once __DIR__ .'/../entities/DetailProduct.php';
 require_once __DIR__ . '/../core/database.php';
+require_once __DIR__ .'/../entities/ProductLine.php';
+require_once __DIR__ .'/../entities/ProductModels.php';
+require_once __DIR__ .'/../entities/ProductType.php';
+
 
 class ProductModel extends BaseModel
 {
@@ -337,5 +341,71 @@ public function getDeatilProduct($ID)
 
         return $Product; 
 }
+
+public function getLineProduct()
+{
+   
+    $data = $this->getAll('productlines');
+        $Product = [];
+
+        foreach ($data as $row) {
+            $Product[] = new ProductLine(
+                $row['ProductLineID'], 
+                $row['ProductLineName'], 
+            );
+        }
+
+        return $Product; 
+}
+
+public function getModelProduct($ID)
+{
+   
+    $data = $this->getListById('productmodel', $ID, 'ProductLine');
+        $Product = [];
+
+        foreach ($data as $row) {
+            $Product[] = new ProductModels(
+                $row['ProductModelID'], 
+                $row['ProductModelName'],   
+                $row['ProductLine'],
+            );
+        }
+
+        return $Product; 
+}
+
+public function getTypeProduct($ID)
+{
+   
+    $data = $this->getListById('producttype', $ID, 'ProductModelID');
+        $Product = [];
+
+        foreach ($data as $row) {
+            $Product[] = new ProductType(
+                $row['ProductTypeID'], 
+                $row['ProductTypeName'],
+                $row['ProductModelID'],   
+                
+            );
+        }
+
+        return $Product; 
+}
+public function getnameLine($id){
+
+    $sql="SELECT  ProductLineName FROM productlines WHERE ProductLineID=$id";
+    $data=$this->getOneCustome($sql);
+    return $data;
+
+}
+public function getnameModel($id){
+
+    $sql="SELECT  ProductModelName FROM productmodel WHERE ProductModelID=$id";
+    $data=$this->getOneCustome($sql);
+    return $data;
+
+}
+
 
 }
