@@ -1,5 +1,5 @@
 <?php
-class InformationController extends BaseController
+class OdermanagerController extends BaseController
 {
   
     private $AccountsModel;
@@ -21,10 +21,15 @@ class InformationController extends BaseController
     
     public function index()
 {
-    $id = $this->takeIDAccount();
-    $dataUser = $this->UserModel->getUserByID($id);
-    $dataAccount = $this->AccountsModel->getAccountByIDUser($id);
-    $dataInvoice = $this->InvoiceModel->getInvoiceByIDUser($id);
+
+    $StatusPayment = 5; 
+            if (isset($_GET['id']) && $_GET['id'] !== '') {
+                $StatusPayment = $_GET['id'];
+            }
+
+
+    $dataInvoice = $this->InvoiceModel->getInvoiceAll($StatusPayment);
+
     $dataPament = [];
     if ($dataInvoice!=null) {
         foreach ($dataInvoice as $items) {
@@ -50,33 +55,22 @@ class InformationController extends BaseController
             else if($items->status == 4) {
                 $status="complete";
             }
-            else if($items->status == 5) {
-                $status="complete the order";
-            }
-            
-            
             
             $dataPament[] = [
                 'products' => $products,
                 'invoice' => $items,
-                'status'=>$status
+                'status'=>$status,
+    
             ];
         }        
         
     }
-    //print_r($dataPament);
-    $this->view('frontEnd.information.index', [
-        'dataUser' => $dataUser,
-        'Email' => $dataAccount->email,
-        'dataPament'=>$dataPament
+    
+    $this->view('manager.OderManager.index', [
+        'dataPament'=>$dataPament,'donestatus'=>$StatusPayment
     ]);
 }
-    public function logout(){
-        $_SESSION['AccountID'] = "";
-        $_SESSION['message'] = "Log out successfully!";
-        header("Location: /");
-        exit();
-    }
+    
     public function CancalOder(){
         $InvoiceId = $_GET['ID'];
         $this->InvoiceModel->deleteInvoice($InvoiceId);
@@ -108,21 +102,27 @@ class InformationController extends BaseController
         exit();
 
     }
+    public function UpdateStatus($Id,$value){
+
+        $this->InvoiceModel->UpdateStatus($Id,$value);
+        $_SESSION['message'] = "Change successfully!";
+        $this->index();
+
+
+    }
     
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'] ?? null;
 
     switch ($action) {
-        case 'change':
-            $FullName = $_POST['fullName'] ?? ''; // Đảm bảo có giá trị mặc định
-            $NumberPhone = $_POST['phone'] ?? '';
-            $Address = $_POST['address'] ?? '';
-            
-
-            $InformationController = new InformationController();
-            $InformationController->change($FullName, $NumberPhone, $Address);
-            break;
+        case 'ChangeStatus':
+            $Status = $_POST['Status'];
+            $IdPayment = $_POST['IdPayment'];
+            $OdermanagerController=new  OdermanagerController();
+            $OdermanagerController->UpdateStatus($IdPayment,$Status);
+        exit();
+        
 
         default:
             echo "Hành động không hợp lệ!";

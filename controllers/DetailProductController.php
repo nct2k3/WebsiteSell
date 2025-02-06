@@ -84,8 +84,10 @@ class DetailProductController extends BaseController
                 'color' => $color
             ];
             $ProductDeatil= $this->ProductModel->getDeatilProduct($product->productType);
+
+            $ProductIphone = $this->ProductModel->getByIdGroup(rand(1, 6));
     
-            $this->view('frontEnd.detailProduct.index', ['productDetail'=>$ProductDeatil,'products' => $products, 'productType' => $product->productType]);
+            $this->view('frontEnd.detailProduct.index', ['ProductIphone' => $ProductIphone,'productDetail'=>$ProductDeatil,'products' => $products, 'productType' => $product->productType]);
     
         } catch (Exception $e) {
             // Xử lý khi có lỗi xảy ra

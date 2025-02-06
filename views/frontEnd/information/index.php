@@ -86,12 +86,21 @@ $controller->index();
                     <div class="p-4 bg-gray-500 rounded">
                         <p class=""><strong>Status: </strong><?php echo $payment['status']; ?> </p>
                         <p class=""><strong>Number Phone: </strong><?php echo $payment['invoice']->NumberPhone; ?> </p>
-                        <p class=""><strong>Status: </strong><?php echo $payment['invoice']->Address; ?> </p>
+                        <p class=""><strong>Address: </strong><?php echo $payment['invoice']->Address; ?> </p>
                         <div class="flex justify-between ">
                             <p><strong>Date:</strong><?php echo $payment['invoice']->invoiceDate; ?></p>
                             <p><strong>End price: </strong><?php echo $payment['invoice']->totalAmount; ?></p>
                         </div>
-                        <button class="p-2 w-full rounded bg-green-500 hover:bg-green-600 my-2 font-bold">Order Confirmation</button>
+                        <?php if ($payment['status']=='delivered'): ?>
+                            <button class="p-2 w-full rounded bg-green-500 hover:bg-green-600 my-2 font-bold">Order Confirmation</button>
+
+                        <?php endif?>
+                        <?php if ($payment['status']!=='delivered'&&$payment['status']!=='wait for confirmation'&&$payment['status']!=='complete'): ?>
+                            <button  readonly class="opacity-50 p-2 w-full rounded bg-yellow-500  hover:bg-yellow-600 my-2 font-bold">The order is being processed</button>
+                        <?php endif?>
+                        <?php if ($payment['status']=='complete'): ?>
+                            <button  readonly class="opacity-50 p-2 w-full rounded bg-gray-600   my-2 font-bold">Complete the order</button>
+                        <?php endif?>
                         <?php if ($payment['status']=='wait for confirmation'): ?>
                             <button 
                             onclick="window.location='?controller=Information&action=CancalOder&ID=<?php echo $payment['invoice']->invoiceID; ?>'"
