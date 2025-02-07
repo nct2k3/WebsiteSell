@@ -13,9 +13,20 @@ $controller->index();
 </head>
 <body class="bg-gray-100 ">
     <h1 class="text-2xl font-bold mt-2 text-center ">Nhập Thông Tin Sản Phẩm</h1>
-    <div class="max-w-6xl mx-auto px-6 py-2 bg-white rounded-lg shadow-md mt-10 grid  md:grid-cols-3 gap-4">
-        
-        <form action="#" method="POST" >
+    <div class="max-w-6xl mx-auto px-6 py-2 bg-white rounded-lg shadow-md mt-10">
+        <div class="grid  md:grid-cols-3 gap-4">
+             <div>
+                <label for="img" class="block text-sm font-medium text-gray-700">Image URL:
+
+                </label>
+                <form method="POST" action="?controller=homeManager" enctype="multipart/form-data">
+                    <input type="hidden" name="action" value="upload">
+                    <input type="file" name="file" id="file" class="w-36" required>
+                    <input type="submit" class="p-1 rounded w-36"  value="Uploads">
+                </form>
+                <img class="h-16" src="<?php if($Url!='') echo $Url?>">
+            </div>
+
             <div>
             <form method="POST" action="?controller=homeManager">
                 <input type="hidden" name="action" value="chosenLine">
@@ -60,6 +71,9 @@ $controller->index();
                     </div>
             </form>
             </div>
+        </div>
+            <form action="?controller=homeManager" method="POST" class="grid  md:grid-cols-3 gap-4">
+            <input type="hidden" name="action" value="add">
             <div>
                 <label for="productLineId" class="block text-sm font-medium text-gray-700">Product Type</label>
                 <div class="w-full">
@@ -77,26 +91,32 @@ $controller->index();
                     </select>
                 </div>
             </div>
+
             <div>
                 <label for="productName" class="block text-sm font-medium text-gray-700">Product Name</label>
                 <input type="text" id="productName" name="productName" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
             </div>
+
             <div>
                 <label for="originalPrice" class="block text-sm font-medium text-gray-700">Original Price</label>
                 <input type="number" id="originalPrice" name="originalPrice" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
             </div>
+
             <div>
                 <label for="originalPrice" class="block text-sm font-medium text-gray-700">Price</label>
                 <input type="number" id="originalPrice" name="originalPrice" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
             </div>
+
             <div>
                 <label for="stock" class="block text-sm font-medium text-gray-700">Stock</label>
                 <input type="number" id="stock" name="stock" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
             </div>
+
             <div>
                 <label for="capacity" class="block text-sm font-medium text-gray-700">Capacity</label>
                 <input type="text" id="capacity" name="capacity" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
             </div>
+
             <div>
                 <label for="productLineId" class="block text-sm font-medium text-gray-700">Color</label>
                 <div class="w-full">
@@ -107,14 +127,13 @@ $controller->index();
                     </select>
                 </div>
             </div>
-            <div>
-                <label for="img" class="block text-sm font-medium text-gray-700">Image URL</label>
-                <input type="file" id="img" name="img" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
-            </div>
+
             <div class="col-span-2 flex justify-end">
                 <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Thêm</button>
             </div>
-        </form>
+            </form>
+
+        
     </div>
 </body>
 </html>
