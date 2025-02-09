@@ -13,6 +13,46 @@ class ProductModel extends BaseModel
         $this->connect = $this->connect(); 
     }
 
+    public function createProduct($productsData)
+    {
+        $product=[
+            'Img' => $productsData->img,
+            'ProductLineID' => $productsData->productLineID,
+            'ProductModel' => $productsData->productModel,
+            'ProductType' => $productsData->productType,
+            'ProductName' => $productsData->productName,
+            'OriginalPrice' => $productsData->originalPrice,
+            'Price' => $productsData->price,
+            'Stock' => $productsData->stock,
+            'Capacity' => $productsData->capacity,
+            'Color' => $productsData->color,
+
+        ];
+        $sql="SELECT * FROM products WHERE ProductType='$productsData->productType' and ProductName='$productsData->productName' and Capacity='$productsData->capacity' and Color='$productsData->color'";
+        $data=$this->getCustome($sql);
+        if($data!=null){
+            $ProductSearch = new Product(
+        $data[0]['ProductID'],         
+        $data[0]['ProductLineID'],
+        $data[0]['ProductType'],
+        $data[0]['ProductModel'],
+        $data[0]['ProductName'],
+        $data[0]['Price'],
+        $data[0]['OriginalPrice'],
+        $data[0]['Stock'],
+        $data[0]['Img'],
+        $data[0]['Capacity'],
+        $data[0]['Color']
+        );
+           $endStock=$data[0]['Stock']+$productsData->stock;
+           $sqlUpdate="UPDATE products SET Stock=$endStock WHERE ProductID= $ProductSearch->productID";
+           $this->UpdateCustome($sqlUpdate);
+        }else{
+        $this->createReturnID('products', $product);
+    }
+    }
+
+
     private function _query($sql) {
         return mysqli_query($this->connect, $sql);
     }

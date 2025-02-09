@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ ."/../entities/Product.php";
+
 class HomemanagerController extends BaseController
 {
 
@@ -29,7 +31,6 @@ class HomemanagerController extends BaseController
         $dataLineProduct=$this->ProductModel->getLineProduct();
         $_SESSION['LineId'] = $id;
         $NameLine=$this->ProductModel-> getnameLine($id);
-       
         $this->view('manager.HomeManager.index',['Url'=>$Url,'NameLine'=>$NameLine,'dataModelProduct'=>$dataModelProduct,'dataLineProduct'=>$dataLineProduct]);
     }
     public function productType($id){
@@ -45,6 +46,46 @@ class HomemanagerController extends BaseController
         $NameModel=$this->ProductModel->getnameModel($id);
         $_SESSION['TypeId'] = $id;
         $this->view('manager.HomeManager.index',['Url'=>$Url,'NameModel'=>$NameModel,'NameLine'=>$NameLine,'dataTypeProduct'=>$dataTypeProduct,'dataModelProduct'=>$dataModelProduct,'dataModelProduct'=>$dataModelProduct,'dataLineProduct'=>$dataLineProduct]);
+    }
+    public function AddProduct($productType,$productName,$originalPrice,$price,$stock,$capacity,$color){
+
+        $Url = '';
+        $Idline = '';
+        $IdType = '';
+        if (isset($_SESSION['UrlProduct']) && !empty($_SESSION['UrlProduct'])) {
+            $Url = $_SESSION['UrlProduct'];
+        }
+        if (isset($_SESSION['LineId']) && !empty($_SESSION['LineId'])) {
+            $Idline = $_SESSION['LineId'];
+        }
+        if (isset($_SESSION['TypeId']) && !empty($_SESSION['TypeId'])) {
+            $IdType = $_SESSION['TypeId'];
+        }
+        if($Url==''||$Idline==''||$IdType==''||$productName==''||$capacity==''){
+            $_SESSION['error'] = "Missing data!";
+            $this->index();
+            exit();
+        }
+        $modelData = $this->ProductModel->getnameModel($IdType);
+        $NameModel = isset($modelData['ProductModelName']) ? $modelData['ProductModelName'] : '';
+        $productData= new product(
+            '',
+            $Idline,
+            $productType,
+            $NameModel,
+            $productName,
+            $price,
+            $originalPrice,
+            $stock,
+            $Url,
+            $capacity,
+            $color
+        );
+        $data=$this->ProductModel->createProduct($productData);
+        $_SESSION['message'] = "Add successfully!";
+        header("Location: /");
+        exit();
+        
     }
     
 }
@@ -62,8 +103,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $homeManagerController= new HomemanagerController();
                 $homeManagerController->productType($productType);
                 exit();
+        case 'add':
+            $productType= $_POST['productType'];
+            $productName = $_POST['productName'];
+            $originalPrice = $_POST['originalPrice'];
+            $Price = $_POST['Price'];
+            $stock = $_POST['stock'];
+            $capacity = $_POST['capacity'];
+            $color = $_POST['color'];
+            $homeManagerController= new HomemanagerController();
+            $homeManagerController->AddProduct($productType, $productName,$originalPrice,$Price,$stock,$capacity,$color);
+            exit();
 
-                case 'upload':
+        case 'upload':
                     if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
                         $file = $_FILES['file'];
                         $fileName = time() . '_' . basename($file['name']);

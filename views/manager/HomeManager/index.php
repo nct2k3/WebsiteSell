@@ -24,7 +24,9 @@ $controller->index();
                     <input type="file" name="file" id="file" class="w-36" required>
                     <input type="submit" class="p-1 rounded w-36"  value="Uploads">
                 </form>
-                <img class="h-16" src="<?php if($Url!='') echo $Url?>">
+                <?php if (isset($Url) && $Url != ''): ?>
+                    <img class="h-16" src="<?php echo htmlspecialchars($Url); ?>" alt="Uploaded Image">
+                <?php endif; ?>
             </div>
 
             <div>
@@ -77,7 +79,7 @@ $controller->index();
             <div>
                 <label for="productLineId" class="block text-sm font-medium text-gray-700">Product Type</label>
                 <div class="w-full">
-                    <select id="paymentType" name="paymentType" required class="text-black border  mt-1 block w-full  p-2 rounded-md ">
+                    <select id="productType" name="productType" required class="text-black border  mt-1 block w-full  p-2 rounded-md ">
                         <option value="" disabled selected>Product Type</option>
                         <?php if (!empty($dataTypeProduct)): ?>
                                 <?php foreach ($dataTypeProduct as $items): ?>
@@ -99,17 +101,16 @@ $controller->index();
 
             <div>
                 <label for="originalPrice" class="block text-sm font-medium text-gray-700">Original Price</label>
-                <input type="number" id="originalPrice" name="originalPrice" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                <input type="number" min="0" id="originalPrice" name="originalPrice" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
             </div>
 
             <div>
-                <label for="originalPrice" class="block text-sm font-medium text-gray-700">Price</label>
-                <input type="number" id="originalPrice" name="originalPrice" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                <label for="Price" class="block text-sm font-medium text-gray-700">Price</label>
+                <input type="number" min="0" id="Price" name="Price" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
             </div>
-
             <div>
                 <label for="stock" class="block text-sm font-medium text-gray-700">Stock</label>
-                <input type="number" id="stock" name="stock" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                <input type="number" id="stock" min="1" name="stock" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
             </div>
 
             <div>
@@ -118,12 +119,20 @@ $controller->index();
             </div>
 
             <div>
-                <label for="productLineId" class="block text-sm font-medium text-gray-700">Color</label>
+                <label for="color" class="block text-sm font-medium text-gray-700">Color</label>
                 <div class="w-full">
-                    <select id="paymentType" name="paymentType" required class="text-black border  mt-1 block w-full  p-2 rounded-md ">
+                    <select id="color" name="color" required class="text-black border  mt-1 block w-full  p-2 rounded-md ">
                         <option value="" disabled selected>Color</option>
-                        <option value="">Iphone 16</option>
-                        <option value="">Iphone 16 Pro</option>
+                        <option value="black">Black</option>
+                        <option value="white">White</option>
+                        <option value="red">Red</option>
+                        <option value="blue">Blue</option>
+                        <option value="green">Green</option>
+                        <option value="yellow">Gold</option>
+                        <option value="pink">Pink</option>
+                        
+
+
                     </select>
                 </div>
             </div>
