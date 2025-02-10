@@ -72,6 +72,31 @@ class ProductModel extends BaseModel
         return $data; 
     }
 
+    public function getProductManager($ProductLineID)
+    {
+        $data = $this->getListById('Products',$ProductLineID,'ProductLineID'); 
+        $Product = [];
+
+        foreach ($data as $row) {
+           
+            $Product[] = new Product(
+                $row['ProductID'], 
+                $row['ProductLineID'],     
+                $row['ProductType'],
+                $row['ProductModel'],  
+                $row['ProductName'],      
+                $row['Price']  ,
+                $row['OriginalPrice'],
+                $row['Stock'],
+                $row['Img'],
+                $row['Capacity'],
+                $row['Color']   
+            );
+        }
+
+        return $Product; 
+    }
+
     public function getCapacity($Producttype) {
         $sql = "SELECT DISTINCT Capacity FROM products WHERE ProductType = '" . mysqli_real_escape_string($this->connect, $Producttype)."'";
         $result = $this->_query($sql);
@@ -442,6 +467,28 @@ public function getnameLine($id){
 public function getnameModel($id){
 
     $sql="SELECT  ProductModelName FROM productmodel WHERE ProductModelID=$id";
+    $data=$this->getOneCustome($sql);
+    return $data;
+
+}
+public function UpdateProduct($productData){
+
+    $sql="UPDATE products 
+    SET ProductName='$productData->productName',
+    Price='$productData->price',
+    OriginalPrice=$productData->originalPrice,
+    Stock='$productData->stock',
+    Img='$productData->img',
+    Capacity='$productData->capacity',
+    Color='$productData->color'
+    WHERE ProductID=$productData->productID";
+    $this->UpdateCustome($sql);
+    
+}
+
+
+public function CheclIsEmpty($product){
+    $sql="SELECT ProductID FROM products WHERE ProductName='$product->productName' and Color='$product->color' and Img='$product->img' and Capacity='$product->capacity' ";
     $data=$this->getOneCustome($sql);
     return $data;
 

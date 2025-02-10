@@ -34,14 +34,7 @@ class BaseModel extends Database {
         $result = $this->_query($sql);
         return mysqli_fetch_assoc($result);
     }
-    public function UpdateCustome($sql) {
-
-        $result = $this->_query($sql);
-        if (!$result) {
-            die("Query failed: ");
-        }
-        return $result; 
-    }
+   
     public function getListById($table, $id ,$typeID) {
         $sql = "SELECT * FROM ${table} WHERE ${typeID} = " . intval($id);
         $result = $this->_query($sql);
@@ -105,6 +98,8 @@ class BaseModel extends Database {
         return $data; 
     }
 
+    //creat
+
     public function create($table, $data) {
         $escapedData = array_map(function($value) {
             return mysqli_real_escape_string($this->connect, $value); 
@@ -131,16 +126,8 @@ class BaseModel extends Database {
         }
     }
 
-    public function update($table, $data, $id) {
-        $set = "";
-        foreach ($data as $key => $value) {
-            $set .= "${key} = '" . mysqli_real_escape_string($this->connect, $value) . "', ";
-        }
-        $set = rtrim($set, ", ");
-        $sql = "UPDATE ${table} SET ${set} WHERE id = " . intval($id);
-        return $this->_query($sql);
-    }
 
+    //delete
     
     public function delete($table, $id) {
         $sql = "DELETE FROM ${table} WHERE id = " . intval($id);
@@ -156,10 +143,31 @@ class BaseModel extends Database {
         return $this->_query($sql) > 0 ? 1 : 0; 
     }
 
+    //update
+
     public function updateTowId($table, $IdOne, $IdTwo, $TypeOne, $TypeTwo, $TypeData, $data) {
         
         $sql = "UPDATE ${table} SET ${TypeData} = '${data}' WHERE ${TypeOne} = ${IdOne} AND ${TypeTwo} = ${IdTwo}";
         return $this->_query($sql)> 0 ? 1 : 0; 
+    }
+
+    public function update($table, $data, $id) {
+        $set = "";
+        foreach ($data as $key => $value) {
+            $set .= "${key} = '" . mysqli_real_escape_string($this->connect, $value) . "', ";
+        }
+        $set = rtrim($set, ", ");
+        $sql = "UPDATE ${table} SET ${set} WHERE id = " . intval($id);
+        return $this->_query($sql);
+    }
+ 
+    public function UpdateCustome($sql) {
+
+        $result = $this->_query($sql);
+        if (!$result) {
+            die("Query failed: ");
+        }
+        return $result; 
     }
     
 
