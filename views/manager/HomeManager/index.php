@@ -60,8 +60,8 @@ $controller->index();
                 </div>
                 <div>
                     <div
-                    onclick="window.location='/?controller=homeManager&action=AddQuantity&id=<?php echo $item->productID?>'"
-                    class=" text-center text-white rounded text-sm h-7 bg-green-500 p-1 w-36 hover:bg-green-400 m-2"> Add </div>
+                    onclick="window.location='/?controller=AddQuantity&id=<?php echo $item->productID?>'"
+                    class=" text-center text-white rounded text-sm h-7 bg-green-500 p-1 w-36 hover:bg-green-400 m-2">Add quantity</div>
                     <div
                     onclick="window.location='/?controller=EditProduct&id=<?php echo $item->productID?>'"
                     class="text-center text-white rounded text-sm h-7 bg-blue-500 p-1 w-36 hover:bg-blue-400 m-2"> Edit </div>

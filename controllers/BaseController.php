@@ -40,9 +40,8 @@ protected function getAllProduct() {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
-
     if (isset($_SESSION['Product']) && is_string($_SESSION['Product'])) {
-        $productsData = json_decode($_SESSION['Product'], true); // true để lấy dưới dạng mảng
+        $productsData = json_decode($_SESSION['Product'], true); 
         $products = [];
         foreach ($productsData as $item) {
             $products[] = new Product(

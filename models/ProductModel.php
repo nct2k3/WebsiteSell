@@ -485,6 +485,14 @@ public function UpdateProduct($productData){
     $this->UpdateCustome($sql);
     
 }
+public function UpdateQuantity($productData){
+
+    $sql="UPDATE products 
+    SET Stock='$productData->stock'
+    WHERE ProductID=$productData->productID";
+    $this->UpdateCustome($sql);
+    
+}
 
 
 public function CheclIsEmpty($product){
