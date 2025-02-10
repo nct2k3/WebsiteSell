@@ -49,11 +49,11 @@
                     </h1>
                 </div>
                 <div class="col-12 col-md-2 text-white">
-                    <select id="paymentType" name="paymentType" required class="bg-gray-800 text-gray-500 mt-1 block w-full text-white p-2 rounded-md ">
+                    <select id="paymentType" onchange="handleSelectionProduct(this)" name="paymentType" required class="bg-gray-800 text-gray-500 mt-1 block w-full text-white p-2 rounded-md ">
                         <option value="" disabled selected>Product Manager</option>
-                        <option value="">List Product</option>
-                        <option value="">Add Product</option>
-                        <option>Edit Product</option>
+                        <option value="1">List Product</option>
+                        <option value="2">Add New Product</option>
+                       
                     </select>
                 </div>
                 <div class="col-12 col-md-2 text-white">
@@ -91,6 +91,18 @@
         if (value) {
             window.location = `?controller=OderManager&id=${value}`;
         }
+    }
+
+    function handleSelectionProduct(select) {
+        const value = select.value;
+        if (value==1) {
+            window.location = `?controller=homeManager`;
+        }
+        else
+        if(value==2){
+            window.location =`?controller=AddProduct`;
+        }
+
     }
 
       

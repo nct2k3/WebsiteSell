@@ -36,16 +36,14 @@ protected function takeIDProduct(){
     }
 }
 protected function getAllProduct() {
-    // Kiểm tra nếu phiên đã được khởi động
+  
     if (session_status() === PHP_SESSION_NONE) {
-        session_start(); // Khởi động phiên nếu cần thiết
+        session_start();
     }
 
     if (isset($_SESSION['Product']) && is_string($_SESSION['Product'])) {
         $productsData = json_decode($_SESSION['Product'], true); // true để lấy dưới dạng mảng
         $products = [];
-
-        // Tạo đối tượng Product từ dữ liệu
         foreach ($productsData as $item) {
             $products[] = new Product(
                 $item['productID'],
@@ -61,9 +59,9 @@ protected function getAllProduct() {
                 $item['color']
             );
         }
-        return $products; // Trả về biến $products
+        return $products; 
     } else {
-        return []; // Trả về mảng rỗng nếu không có sản phẩm
+        return [];
     }
 }
 
