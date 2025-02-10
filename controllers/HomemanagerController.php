@@ -12,7 +12,7 @@ class HomemanagerController extends BaseController
  
     public function index(){
         
-        $data = $this->getAllProduct();
+        $data = $this->ProductModel->getAllProduct();
         $dataLineProduct=$this->ProductModel->getLineProduct();
         $this->view('manager.HomeManager.index',['dataLineProduct'=>$dataLineProduct,'data'=>$data]);
     }
@@ -20,7 +20,6 @@ class HomemanagerController extends BaseController
 
     public function FilterProduct($id){
         
-      
         $data = $this->ProductModel->getProductManager($id);
         $dataLineProduct=$this->ProductModel->getLineProduct();
         $this->view('manager.HomeManager.index',['dataLineProduct'=>$dataLineProduct,'data'=>$data]);

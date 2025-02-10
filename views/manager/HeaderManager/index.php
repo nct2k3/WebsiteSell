@@ -58,7 +58,7 @@
                 </div>
                 <div class="col-12 col-md-2 text-white">
                     <select id="paymentType" name="paymentType" required class="bg-gray-800 text-gray-500 mt-1 block w-full text-white p-2 rounded-md" onchange="handleSelection(this)">
-                        <option value="" disabled selected>Order Management</option>
+                        <option value="" disabled selected>Order Manager</option>
                         <option value="5">The order has not been completed yet</option>
                         <option value="4">Order has been completed</option>
                     </select>

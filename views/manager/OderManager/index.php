@@ -11,26 +11,26 @@ $controller->index();
     <title>Thông Tin Đơn Hàng</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-400 text-white">
+<body class=" ">
 
 <div class="container mx-auto px-5 py-2">
-    <div class="">
+    <div class="mt-2">
         <?php if ($donestatus==5): ?>
-            <p class="text-red-500 font-bold text-center text-xl">The order has not yet been received</p>
+            <p class="text-yellow-500 font-bold text-center text-xl">The order has not yet been received</p>
         <?php endif?>
         <?php if ($donestatus==4): ?>
             <p class="text-blue-500 font-bold text-center text-xl">The order has been received</p>
         <?php endif?>
         <!-- Thông tin đơn hàng -->
-        <div class="w-full  p-4 bg-gray-600 mt-2 rounded-lg grid  md:grid-cols-3">
+        <div class="w-full  px-4 py-2 bg-gray-200 mt-2 rounded-lg grid  md:grid-cols-3">
             
             <?php foreach ($dataPament as $payment): ?>
-                <div class="p-3 rounded bg-gray-800 m-2 hover:bg-gray-700">
+                <div class="p-3 rounded bg-gray-100 m-2 hover:bg-gray-200">
                     <div class="font-bold text-center my-2">Shopping Information ID: <?php echo $payment['invoice']->invoiceID; ?></div>
                     <div class="font-bold text-center my-2">User ID: <?php echo $payment['invoice']->userID; ?></div>
 
                     <?php foreach ($payment['products'] as $productDetail): ?>
-                        <div class="bg-gray-500 rounded-lg shadow-md p-6 mb-2 flex justify-between">
+                        <div class="bg-gray-100 rounded-lg shadow-md p-6 mb-2 flex justify-between">
                             <div>
                                 <p><strong>Name Product:</strong> <?php echo $productDetail['product']->productName; ?> </p>
                                 <p><strong>Quantity:</strong> <?php echo $productDetail['quantity']; ?></p>
@@ -42,7 +42,7 @@ $controller->index();
                             </div>
                         </div>
                     <?php endforeach; ?>
-                    <div class="p-4 bg-gray-500 rounded">
+                    <div class="p-4 bg-gray-100 rounded">
                         
                         <p class=""><strong>Number Phone: </strong><?php echo $payment['invoice']->NumberPhone; ?> </p>
                         <p class=""><strong>Address: </strong><?php echo $payment['invoice']->Address; ?> </p>
