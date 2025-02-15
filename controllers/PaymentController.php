@@ -46,6 +46,12 @@ class PaymentController extends BaseController
     public function buyOne()
     {
         $userID =$this->takeIDAccount();
+        if($userID==""){
+            $_SESSION['error'] = "You are not logged in yet!";
+            header("Location: /");
+            return;
+
+        }
         $dataUser = $this->UserModel->getUserByID($userID);
         $dataCart = $this->CartModel->getCart($userID);
         $products = []; 
