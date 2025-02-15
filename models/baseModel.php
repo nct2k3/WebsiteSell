@@ -160,6 +160,10 @@ class BaseModel extends Database {
         $sql = "UPDATE ${table} SET ${set} WHERE id = " . intval($id);
         return $this->_query($sql);
     }
+    public function updateString($table, $data,$dataUpdate, $id,$where) {
+        $sql = "UPDATE ${table} SET $data='$dataUpdate' WHERE $where = $id ";
+        return $this->_query($sql);
+    }
  
     public function UpdateCustome($sql) {
 

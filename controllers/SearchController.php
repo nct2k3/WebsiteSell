@@ -45,8 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $searchController->index();
                 exit;
             }
-            break;
-
+           
         default:
             echo "Hành động không hợp lệ!";
             break;

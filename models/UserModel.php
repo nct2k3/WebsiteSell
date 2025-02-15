@@ -26,6 +26,11 @@ class UserModel extends BaseModel {
             return 0; 
         }
     }
+    public function UpdateLoyaltyPoints($idUser,$data) {
+
+        $this->updateString('users','LoyaltyPoints',$data,$idUser,'UserID');
+
+    }
     public function getUserByID($UserID) {
 
         

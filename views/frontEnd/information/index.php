@@ -92,7 +92,14 @@ $controller->index();
                             <p><strong>End price: </strong><?php echo $payment['invoice']->totalAmount; ?></p>
                         </div>
                         <?php if ($payment['status']=='delivered'): ?>
-                            <button class="p-2 w-full rounded bg-green-500 hover:bg-green-600 my-2 font-bold">Order Confirmation</button>
+                            <form action="?controller=information" method="POST" class="space-y-4">
+                                <input type="hidden" name="action" value="ChangeStatus">
+                                <input type="hidden" name="IdOder" value=" <?php echo $payment['invoice']->invoiceID; ?>">
+                                <input type="hidden" name="TotalAmount" value="<?php echo $payment['invoice']->totalAmount; ?>">
+                                
+                                <button class="p-2 w-full rounded bg-green-500 hover:bg-green-600 my-2 font-bold">Order Confirmation</button>
+                            </form>
+                            
 
                         <?php endif?>
                         <?php if ($payment['status']!=='delivered'&&$payment['status']!=='wait for confirmation'&&$payment['status']!=='complete'): ?>

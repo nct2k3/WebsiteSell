@@ -108,6 +108,17 @@ class InformationController extends BaseController
         exit();
 
     }
+    public function UpdateStatus($IdInvoices,$value,$TotalAmount){
+        $this->InvoiceModel->UpdateStatus($IdInvoices,$value);
+        $id = $this->takeIDAccount();
+        $dataUser = $this->UserModel->getUserByID($id);
+        $EndTotal=$dataUser->LoyaltyPoints+$TotalAmount/100;
+        $this->UserModel->UpdateLoyaltyPoints($id,$EndTotal);
+        $_SESSION['message'] = "Change successfully!";
+        $this->index();
+
+
+    }
     
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -123,6 +134,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $InformationController = new InformationController();
             $InformationController->change($FullName, $NumberPhone, $Address);
             break;
+            case 'ChangeStatus':
+                $Status = 4;
+                $IdPayment = $_POST['IdOder'];
+                $TotalAmount=$_POST['TotalAmount'];
+                $InformationController=new  InformationController();
+                $InformationController->UpdateStatus($IdPayment,$Status, $TotalAmount);
+            exit();
 
         default:
             echo "Hành động không hợp lệ!";
