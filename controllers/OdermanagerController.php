@@ -21,6 +21,11 @@ class OdermanagerController extends BaseController
     
     public function index()
 {
+    $Role=$this->takeRole();
+        if($Role==0){
+            header("Location: /");
+            $_SESSION['error'] = "You do not have a management role";
+        }
 
     $StatusPayment = 5; 
             if (isset($_GET['id']) && $_GET['id'] !== '') {

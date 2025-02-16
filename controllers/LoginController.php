@@ -22,14 +22,22 @@ class LoginController extends BaseController {
             exit();
         } elseif ($temp->role == 0) {
             $_SESSION['AccountID'] = $temp->userID;
+            $_SESSION['Role'] = $temp->role;
             $_SESSION['message'] = "Login successfully!";
-            header("Location: /"); // Chuyển hướng đến trang chủ
+            header("Location: /");
             exit();
         }
+        elseif ($temp->role == 1) {
+            $_SESSION['AccountID'] = $temp->userID;
+            $_SESSION['Role'] = $temp->role;
+            $_SESSION['message'] = "Login successfully!";
+            header("Location: /?controller=homeManager"); 
+            exit();
+        }
+
     }
 }
 
-// Xử lý yêu cầu POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'] ?? null;
 

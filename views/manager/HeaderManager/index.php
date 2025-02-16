@@ -62,7 +62,19 @@
                         <option value="5">The order has not been completed yet</option>
                         <option value="4">Order has been completed</option>
                     </select>
-                </div>                
+                </div>     
+                <div class="col-12 col-md-2 text-white">
+                    <select id="paymentType" name="paymentType" required class="bg-gray-800 text-gray-500 mt-1 block w-full text-white p-2 rounded-md" onchange="">
+                        <option value="" disabled selected>Users Manager</option>
+                        <option value="1">List Users</option>
+                        <option value="2">Edit Users</option>
+                    </select>
+                </div>             
+                <div
+                onclick="window.location='?controller=Headermanager&action=logout'"
+                class="col-12 rounded col-md-1 text-white p-2 mt-1 hover:bg-red-500">
+                    Logout
+                </div>   
                
             </div>
         </div>

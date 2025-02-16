@@ -73,6 +73,7 @@ class InformationController extends BaseController
 }
     public function logout(){
         $_SESSION['AccountID'] = "";
+        $_SESSION['Role'] ="";
         $_SESSION['message'] = "Log out successfully!";
         header("Location: /");
         exit();

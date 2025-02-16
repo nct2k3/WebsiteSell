@@ -11,5 +11,13 @@ class HeadermanagerController extends BaseController
     {
         $this->view('manager.HeaderManager.index');
     }
+    public function logout(){
+        $_SESSION['AccountID'] = "";
+        $_SESSION['Role'] ="";
+        $_SESSION['message'] = "Log out successfully!";
+        header("Location: /");
+        exit();
+    }
+
     
 }
