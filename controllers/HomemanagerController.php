@@ -11,7 +11,12 @@ class HomemanagerController extends BaseController
     }
  
     public function index(){
-        
+
+        $Role=$this->takeRole();
+        if($Role==0){
+            header("Location: /");
+            $_SESSION['error'] = "You do not have a management role";
+        }
         $data = $this->ProductModel->getAllProduct();
         $dataLineProduct=$this->ProductModel->getLineProduct();
         $this->view('manager.HomeManager.index',['dataLineProduct'=>$dataLineProduct,'data'=>$data]);

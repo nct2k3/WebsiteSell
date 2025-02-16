@@ -27,6 +27,15 @@ protected function takeIDAccount(){
        return;
     }
 }
+protected function takeRole(){
+    if (isset($_SESSION['Role'])) {
+        $accountID = $_SESSION['Role'];
+        return $accountID;
+    } else {
+       return;
+    }
+}
+
 protected function takeIDProduct(){
     if (isset($_SESSION['IdProduct'])) {
         $IdProduct = $_SESSION['IdProduct'];
