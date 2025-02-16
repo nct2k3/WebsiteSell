@@ -68,6 +68,18 @@ $controller->index();
       <?php endforeach; ?>
     </div>
   </div>
+    <div class="w-full flex justify-end px-8">
+        <div>
+            <div class="w-full">
+                <select id="color" name="color" required class="text-black  border text-sm mt-1 block w-full  p-2 rounded-md ">
+                        <option value="" disabled selected>Sort</option>
+                        <option value="black">Price high to low</option>
+                        <option value="white">Price low to high</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
   <div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-0 p-0">
         <?php foreach ($products as $productData): ?>

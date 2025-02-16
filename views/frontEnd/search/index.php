@@ -31,7 +31,7 @@ $controller->index();
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-600">
+<body class="bg-gray-600 ">
     <div id="search" class="px-8 text-white">
         <div class="text-center font-bold text-2xl my-2">Search Product</div>
         <form action="?controller=search" method="POST" class="space-y-4">
@@ -43,9 +43,38 @@ $controller->index();
                 </button>
             </div>
         </form>
+            <div class=" row ">
+                <div class="col-2"></div>
+                <div class="col-6 flex flex-wrap gap-2 p-2">
+                    <div class="text-sm border px-4 py-2 rounded-md">iPhone</div>
 
-        <?php if (!empty($data)): ?>
-            <?php foreach ($data as $product): ?>
+                    <div class="text-sm border px-4 py-2 rounded-md">From:10000000</div>
+                    
+                    <div class="text-sm border px-4 py-2 rounded-md">To:10000000</div>
+
+                    <div class="text-sm border px-4 py-2 rounded-md hover:text-red-500 ">Clean all</div>
+                </div>
+                <button id="btnSearchWithConditions" class=" text-sm col-3 btn btn-primary m-2">Search with conditions</button>
+            </div>
+
+            <div id="SearchWithConditions" class=" w-full hidden ">   
+                <div class="  flex flex-wrap ">
+                    <select id="color" name="color" required  class=" mx-2 text-black border text-sm block  px-4 py-2 rounded-md ">
+                        <option value="" disabled selected>Line Product</option>
+                        <?php foreach($dataLineProduct as $items): ?>
+                            <option value="<?php echo $items->ProductLineID ?>"><?php echo $items->ProductLineName ?></option>
+                        <?php endforeach ?>
+                    </select>
+                    <input required class=" mx-2 text-black h-10 border text-sm px-4 py-2 rounded-md w-1/3" type="text" placeholder="From" />
+                    <input required class=" mx-2 text-black h-10 border text-sm px-4 py-2 rounded-md w-1/3"  type="text" placeholder="To" />
+                    <button type="submit" class="mx-2 btn h-10 btn-primary px-6 text-white bg-blue-600 hover:bg-blue-700 rounded-md">
+                        Accept
+                    </button>
+                </div>
+            </div>
+            
+        <?php if (!empty($dataPrd)): ?>
+            <?php foreach ($dataPrd as $product): ?>
             <div
             onclick="window.location='?controller=DetailProduct&items=<?php echo $product->productID; ?>'"
              class="mt-2 p-2">
@@ -70,7 +99,19 @@ $controller->index();
         <?php endif; ?>
     </div>
 </body>
+<script>
+
+    const btnSearchWithConditions = document.getElementById('btnSearchWithConditions');
+    const searchConditionsDiv = document.getElementById('SearchWithConditions');
+
+  
+    btnSearchWithConditions.addEventListener('click', function () {
+        if (searchConditionsDiv.classList.contains('hidden')) {
+            searchConditionsDiv.classList.remove('hidden'); 
+        } else {
+            searchConditionsDiv.classList.toggle('hidden'); 
+        }
+    });
+</script>
+
 </html>
-<?php
-require_once './views/footer.php';
-?>

@@ -11,12 +11,13 @@ class SearchController extends BaseController
     }
 
     public function index() {
-    
-        $this->view('frontEnd.search.index');
+
+        $dataLineProduct=$this->ProductModel->getLineProduct();
+        $this->view('frontEnd.search.index',['dataLineProduct'=>$dataLineProduct]);
     }
     public function searchProduct($string) {
         $data = $this->getAllProduct();
-        
+        $dataLineProduct=$this->ProductModel->getLineProduct();
         $productDataSearch = [];
         foreach ($data as $items) {
             if (stripos($items->productName, $string) !== false) {
@@ -26,7 +27,7 @@ class SearchController extends BaseController
         if (count($productDataSearch) == 0) {
             $_SESSION['error'] = "There are no products found.";
         }
-        $this->view('frontEnd.search.index',['data'=>$productDataSearch]);
+        $this->view('frontEnd.search.index',['dataPrd'=>$productDataSearch,'dataLineProduct'=>$dataLineProduct]);
     }
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
