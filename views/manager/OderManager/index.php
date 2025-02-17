@@ -49,6 +49,8 @@ $controller->index();
                         <p><strong>Date: </strong><?php echo $payment['invoice']->paymentType; ?></p>
                         <p><strong>Date: </strong><?php echo $payment['invoice']->invoiceDate; ?></p>
                         <p><strong>End price: </strong><?php echo $payment['invoice']->totalAmount; ?></p>
+                        <p><strong class="text-green-500">Estimated delivery date: </strong><?php echo $payment['invoice']->DateDelivery; ?></p>
+                        <p><strong class="text-green-500">Note: </strong><?php echo $payment['invoice']->Note; ?></p>
                         <p class="text-red-500"><strong>Status: </strong><?php echo $payment['status']; ?> </p>
                         <form action="?controller=OderManager" method="POST" class="space-y-4">
                         <input type="hidden" name="action" value="ChangeStatus">

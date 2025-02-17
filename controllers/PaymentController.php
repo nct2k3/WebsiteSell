@@ -122,7 +122,7 @@ class PaymentController extends BaseController
         }
         $this->index(); 
     }
-    public function PaymentNormal($loyaltyPoints) {
+    public function PaymentNormal($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note) {
         $userID = $this->takeIDAccount();
         $dataUser = $this->UserModel->getUserByID($userID);
         $dataCart = $this->CartModel->getCart($userID);
@@ -150,11 +150,23 @@ class PaymentController extends BaseController
         $loyaltyPoints = floatval($loyaltyPoints);
         $endTotal = ($loyaltyPoints > 0) ? $total - $loyaltyPoints : $total;
     
-        // Kiểm tra nếu dữ liệu người dùng tồn tại
         if (!$dataUser) {
             $_SESSION['error'] = "User data not found.";
             header("Location: /?controller=information&user=$userID");
             return;
+        }
+    
+        $PhoneNumberend=$dataUser->PhoneNumber;
+        if($PhoneNumber!=''){
+            $PhoneNumberend=$PhoneNumber;
+        }
+        $addressend=$dataUser->Address;
+        if($address!=''){
+            $addressend=$address;
+        }
+        $NodeEnd='';
+        if($Note!=''){
+            $NodeEnd=$Note;
         }
     
         $invoice = new Invoice(
@@ -164,8 +176,10 @@ class PaymentController extends BaseController
             $endTotal,
             0,
             'normal',
-            $dataUser->PhoneNumber,
-            $dataUser->Address 
+            $PhoneNumberend,
+            $addressend,
+            $dateDelivery,
+            $NodeEnd
         );
     
         $invoiceId = $this->InvoiceModel->createInvoice($invoice);
@@ -190,7 +204,7 @@ class PaymentController extends BaseController
         }
     }
 
-    public function PaymentOne($loyaltyPoints) {
+    public function PaymentOne($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note) {
         $userID = $this->takeIDAccount();
         $dataUser = $this->UserModel->getUserByID($userID);
         $idProduct=$this->takeIDProduct();
@@ -212,11 +226,23 @@ class PaymentController extends BaseController
         $loyaltyPoints = floatval($loyaltyPoints);
         $endTotal = ($loyaltyPoints > 0) ? $total - $loyaltyPoints : $total;
     
-        // Kiểm tra nếu dữ liệu người dùng tồn tại
+       
         if (!$dataUser) {
             $_SESSION['error'] = "User data not found.";
             header("Location: /?controller=information&user=$userID");
             return;
+        }
+        $PhoneNumberend=$dataUser->PhoneNumber;
+        if($PhoneNumber!=''){
+            $PhoneNumberend=$PhoneNumber;
+        }
+        $addressend=$dataUser->Address;
+        if($address!=''){
+            $addressend=$address;
+        }
+        $NodeEnd='';
+        if($Note!=''){
+            $NodeEnd=$Note;
         }
     
         $invoice = new Invoice(
@@ -226,10 +252,12 @@ class PaymentController extends BaseController
             $endTotal,
             0,
             'normal',
-            $dataUser->PhoneNumber,
-            $dataUser->Address 
+            $PhoneNumberend,
+            $addressend,
+            $dateDelivery,
+            $NodeEnd
         );
-    
+
         $invoiceId = $this->InvoiceModel->createInvoice($invoice);
         if ($invoiceId) {
       
@@ -239,11 +267,7 @@ class PaymentController extends BaseController
                     $idProduct,
                     1
                 );
-            
                 $this->InvoiceDetailModel->createInvoice($invoiceDetail);
-            
-            
-            // Xóa giỏ hàng
             $this->CartModel->deleteById($userID);
             $_SESSION['message'] = "Payment successfully!";
             header("Location: /?controller=information&user=$userID");
@@ -260,10 +284,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         case 'payment':
             $loyaltyPoints = $_POST['LoyaltyPoints'] ?? null;
             $paymentType = $_POST['paymentType'] ?? null;
+            $dateDelivery = $_POST['DateDelivery'] ?? null;
+            $PhoneNumber = $_POST['PhoneNumber'] ?? null;
+            $address = $_POST['address'] ?? null;
+            $Note = $_POST['Note'] ?? null;
+
 
             if ($paymentType) {
                 $paymentcontroller= new PaymentController;
-                $paymentcontroller->PaymentNormal($loyaltyPoints );
+                $paymentcontroller->PaymentNormal($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note);
                 if ($paymentType === 'credit_card') {
                     $cardName = $_POST['cardName'] ?? null;
                     $cardNumber = $_POST['cardNumber'] ?? null;
@@ -286,10 +315,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             case 'payOne':
                 $loyaltyPoints = $_POST['LoyaltyPoints'] ?? null;
                 $paymentType = $_POST['paymentType'] ?? null;
+                $dateDelivery = $_POST['DateDelivery'] ?? null;
+                $PhoneNumber = $_POST['PhoneNumber'] ?? null;
+                $address = $_POST['address'] ?? null;
+                $Note = $_POST['Note'] ?? null;
+
     
                 if ($paymentType) {
                     $paymentcontroller= new PaymentController;
-                    $paymentcontroller->PaymentOne($loyaltyPoints );
+                    $paymentcontroller->PaymentOne($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note);
                     if ($paymentType === 'credit_card') {
                         $cardName = $_POST['cardName'] ?? null;
                         $cardNumber = $_POST['cardNumber'] ?? null;

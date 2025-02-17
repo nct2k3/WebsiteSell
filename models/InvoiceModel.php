@@ -14,6 +14,8 @@ class InvoiceModel extends BaseModel
             'PaymentType' => $Invoice->paymentType,
             'NumberPhone'=>$Invoice->NumberPhone,
             'Address'=> $Invoice->Address,
+            'DateDelivery'=>$Invoice->DateDelivery
+            ,'Note'=>$Invoice->Note
         ];
         return $this->createReturnID('invoices', $invoiceData);
     }
@@ -33,7 +35,9 @@ class InvoiceModel extends BaseModel
             $data['status']    ,
             $data['PaymentType'] ,
             $data['NumberPhone'],
-            $data['Address']
+            $data['Address'],
+            $data['DateDelivery'],
+            $data['Note']
         );
     }
         return $Invoice;
@@ -61,7 +65,9 @@ class InvoiceModel extends BaseModel
             $data['status']    ,
             $data['PaymentType'] ,
             $data['NumberPhone'],
-            $data['Address']
+            $data['Address'],
+            $data['DateDelivery'],
+            $data['Note']
         );
     }
         return $Invoice;
