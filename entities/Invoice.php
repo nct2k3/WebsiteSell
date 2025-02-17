@@ -11,9 +11,12 @@ class Invoice {
 
     public $Address;
 
-    // Constructor
+    public $DateDelivery;
+
+    public $Note;
+
     public function __construct($invoiceID, $userID, $invoiceDate,
-     $totalAmount, $status, $paymentType,$NumberPhone,$Address) {
+     $totalAmount, $status, $paymentType,$NumberPhone,$Address,$DateDelivery ,$Note) {
         $this->invoiceID = $invoiceID;
         $this->userID = $userID;
         $this->invoiceDate = $invoiceDate;
@@ -22,6 +25,8 @@ class Invoice {
         $this->paymentType = $paymentType;
         $this->NumberPhone = $NumberPhone;
         $this->Address = $Address;
+        $this->DateDelivery = $DateDelivery;
+        $this->Note = $Note;
     }
 
 }

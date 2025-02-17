@@ -373,6 +373,70 @@ public function getCapacityByTow($Producttype,$Color) {
     return $data; 
 }
 
+
+public function getProductDelete()
+{
+    $sql = "SELECT p.*
+            FROM products p
+            LEFT JOIN invoicedetails id ON p.ProductID = id.ProductID
+            WHERE id.ProductID IS NULL ";
+    
+    $result = $this->_query($sql);
+    if ($result === false) {
+        die("SQL Error: " . mysqli_error($this->connect)); 
+    }
+    $Product = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $Product[] = new Product(
+            $row['ProductID'], 
+            $row['ProductLineID'],     
+            $row['ProductType'], 
+            $row['ProductModel'], 
+            $row['ProductName'],      
+            $row['Price'],
+            $row['OriginalPrice'],
+            $row['Stock'],
+            $row['Img'],
+            $row['Capacity'],
+            $row['Color']
+        );
+    }
+
+    return $Product; 
+}
+
+public function getProductDeleteWithLine($id)
+{
+    $sql = "SELECT p.*
+            FROM products p
+            LEFT JOIN invoicedetails id ON p.ProductID = id.ProductID
+            WHERE id.ProductID IS NULL and ProductLineID=$id";
+    
+    $result = $this->_query($sql);
+    if ($result === false) {
+        die("SQL Error: " . mysqli_error($this->connect)); 
+    }
+    $Product = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $Product[] = new Product(
+            $row['ProductID'], 
+            $row['ProductLineID'],     
+            $row['ProductType'], 
+            $row['ProductModel'], 
+            $row['ProductName'],      
+            $row['Price'],
+            $row['OriginalPrice'],
+            $row['Stock'],
+            $row['Img'],
+            $row['Capacity'],
+            $row['Color']
+        );
+    }
+
+    return $Product; 
+}
+
+
 public function getColorByTow($Producttype,$Capacity) {
 
     $sql = "SELECT DISTINCT Color FROM products WHERE Capacity='$Capacity' and ProductType = '" . mysqli_real_escape_string($this->connect, $Producttype)."'";
@@ -500,6 +564,13 @@ public function CheclIsEmpty($product){
     $data=$this->getOneCustome($sql);
     return $data;
 
+}
+
+// delete
+
+public function deleteProduct($id) {
+  
+    $this->deleteID('products', $id,'ProductID');
 }
 
 

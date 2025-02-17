@@ -23,12 +23,26 @@ $controller->index();
             <input type="hidden" name="action" value="<?php echo $dataAction ?>">
             <div class="mb-4">
                 <label for="address" class="block text-sm font-medium text-gray-100">Shipping Address</label>
-                <input type="text" id="address" name="address" readonly  class="mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200" placeholder="<?php echo $dataUser->Address ?>">
+                <input type="text" id="address" name="address"   class="mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200" placeholder="<?php echo $dataUser->Address ?>">
             </div>
             <div class="mb-4">
                 <label for="PhomeNumber" class="block text-sm font-medium text-gray-100">Phone Number</label>
-                <input type="text" id="PhoneNumber" name="PhoneNumber" readonly  class="mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200" placeholder="<?php echo $dataUser->PhoneNumber ?>">
+                <input type="number" id="PhoneNumber" name="PhoneNumber"   class="mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200" placeholder="<?php echo $dataUser->PhoneNumber ?>">
             </div>
+            <div class="mb-4">
+                <label for="PhomeNumber" class="block text-sm font-medium text-gray-100">Delivery date</label>
+                <input
+                required
+                type="date" id="DateDelivery" name="DateDelivery"
+                    class="mt-1 block w-full text-black p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+                    placeholder="<?php echo $dataUser->PhoneNumber ?>" 
+                    min="<?php echo date('Y-m-d', strtotime('+5 days')); ?>">
+            </div>
+            <div class="mb-4">
+                <label for="Note" class="block text-sm font-medium text-gray-100">Note</label>
+                <input type="text" id="Note" name="Note"   class="mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200" placeholder="Note....">
+            </div>
+
             <div class="mb-4">
                     <label for="LoyaltyPoints" class="block text-sm font-medium text-gray-100">Loyalty Points Max: <?php echo  number_format($dataUser->LoyaltyPoints, 0, ',', '.') . '₫';?></label>
                     <input type="number" id="LoyaltyPoints" name="LoyaltyPoints" class="mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200" placeholder="Enter the number of points you want to use" min="0" max="<?php echo $dataUser->LoyaltyPoints?>">

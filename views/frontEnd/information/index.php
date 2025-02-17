@@ -88,9 +88,11 @@ $controller->index();
                         <p class=""><strong>Number Phone: </strong><?php echo $payment['invoice']->NumberPhone; ?> </p>
                         <p class=""><strong>Address: </strong><?php echo $payment['invoice']->Address; ?> </p>
                         <div class="flex justify-between ">
-                            <p><strong>Date:</strong><?php echo $payment['invoice']->invoiceDate; ?></p>
+                            <p><strong>Date: </strong><?php echo $payment['invoice']->invoiceDate; ?></p>
                             <p><strong>End price: </strong><?php echo $payment['invoice']->totalAmount; ?></p>
                         </div>
+                        <p><strong class="text-green-500">Estimated delivery date: </strong><?php echo $payment['invoice']->DateDelivery; ?></p>
+                        <p><strong class="text-green-500">Note: </strong><?php echo $payment['invoice']->Note; ?></p>
                         <?php if ($payment['status']=='delivered'): ?>
                             <form action="?controller=information" method="POST" class="space-y-4">
                                 <input type="hidden" name="action" value="ChangeStatus">
