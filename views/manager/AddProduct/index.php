@@ -131,8 +131,6 @@ $controller->index();
                         <option value="yellow">Gold</option>
                         <option value="pink">Pink</option>
                         
-
-
                     </select>
                 </div>
             </div>

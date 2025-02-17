@@ -29,13 +29,35 @@ class SearchController extends BaseController
         }
         $this->view('frontEnd.search.index',['dataPrd'=>$productDataSearch,'dataLineProduct'=>$dataLineProduct]);
     }
+
+    public function searchWithConditions($ProductLines,$From,$To) {
+
+        $data = $this->getAllProduct();
+        $dataLineProduct=$this->ProductModel->getLineProduct();
+        $productDataSearch = [];
+        foreach ($data as $items) {
+            if ($items->productLineID == $ProductLines&& $items->price<=$To && $items->price>=$To ) {
+                $productDataSearch[] = $items;
+            }
+        }
+        if (count($productDataSearch) == 0) {
+            $_SESSION['error'] = "There are no products found.";
+        }
+        $this->view('frontEnd.search.index',['dataPrd'=>$productDataSearch,'dataLineProduct'=>$dataLineProduct]);
+ 
+
+
+
+
+
+    }
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'] ?? null;
-
+    $searchController = new SearchController();
     switch ($action) {
         case 'search':
-            $searchController = new SearchController();
+           
             $string = $_POST['string'] ?? null;
             if ($string) {
                
@@ -46,6 +68,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $searchController->index();
                 exit;
             }
+        case 'searchWithConditions':
+            $ProductLine=$_POST['ProductLine'];
+            $From=$_POST['From'];
+            $To=$_POST['To'];
+            $searchController->searchWithConditions($ProductLine,$From,$To);
+
+
+            exit();
+
+
            
         default:
             echo "Hành động không hợp lệ!";

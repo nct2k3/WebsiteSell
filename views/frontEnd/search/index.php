@@ -57,20 +57,23 @@ $controller->index();
                 <button id="btnSearchWithConditions" class=" text-sm col-3 btn btn-primary m-2">Search with conditions</button>
             </div>
 
-            <div id="SearchWithConditions" class=" w-full hidden ">   
+            <div id="SearchWithConditions" class=" w-full  ">   
+            <form action="?controller=search" method="POST" class="space-y-4">
+            <input type="hidden" name="action" value="searchWithConditions">
                 <div class="  flex flex-wrap ">
-                    <select id="color" name="color" required  class=" mx-2 text-black border text-sm block  px-4 py-2 rounded-md ">
+                    <select id="ProductLine" name="ProductLine" required  class=" mx-2 text-black border text-sm block  px-4 py-2 rounded-md ">
                         <option value="" disabled selected>Line Product</option>
                         <?php foreach($dataLineProduct as $items): ?>
                             <option value="<?php echo $items->ProductLineID ?>"><?php echo $items->ProductLineName ?></option>
                         <?php endforeach ?>
                     </select>
-                    <input required class=" mx-2 text-black h-10 border text-sm px-4 py-2 rounded-md w-1/3" type="text" placeholder="From" />
-                    <input required class=" mx-2 text-black h-10 border text-sm px-4 py-2 rounded-md w-1/3"  type="text" placeholder="To" />
+                    <input required name="From" class=" mx-2 text-black h-10 border text-sm px-4 py-2 rounded-md w-1/3" type="number" placeholder="From" min="1" />
+                    <input required name="To" class=" mx-2 text-black h-10 border text-sm px-4 py-2 rounded-md w-1/3"  type="number" placeholder="To" min="1" />
                     <button type="submit" class="mx-2 btn h-10 btn-primary px-6 text-white bg-blue-600 hover:bg-blue-700 rounded-md">
                         Accept
                     </button>
                 </div>
+            </from>
             </div>
             
         <?php if (!empty($dataPrd)): ?>
