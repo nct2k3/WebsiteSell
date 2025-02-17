@@ -20,13 +20,12 @@ $controller->index();
         }
 
         body {
-            overflow-y: auto; /* Đảm bảo có thanh cuộn dọc */
+            overflow-y: auto;
         }
 
       
     </style>
 
-    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
@@ -46,22 +45,29 @@ $controller->index();
             <div class=" row ">
                 <div class="col-2"></div>
                 <div class="col-6 flex flex-wrap gap-2 p-2">
-                    <div class="text-sm border px-4 py-2 rounded-md">iPhone</div>
-
-                    <div class="text-sm border px-4 py-2 rounded-md">From:10000000</div>
-                    
-                    <div class="text-sm border px-4 py-2 rounded-md">To:10000000</div>
-
-                    <div class="text-sm border px-4 py-2 rounded-md hover:text-red-500 ">Clean all</div>
+                    <?php if(isset($productLineName)&& $productLineName!=''):?>
+                    <div class="text-sm border px-4 py-2 rounded-md"><?php echo $productLineName['ProductLineName']?></div>
+                    <?php endif?>
+                    <?php if(isset($FromAdd)&& $FromAdd!=''):?>
+                    <div class="text-sm border px-4 py-2 rounded-md">From:<?php echo number_format($FromAdd, 0, ',', '.') . '₫' ?> </div>
+                    <?php endif?>
+                    <?php if(isset($ToAdd)&& $ToAdd!=''):?>
+                    <div class="text-sm border px-4 py-2 rounded-md">To:<?php echo number_format($ToAdd, 0, ',', '.') . '₫' ?></div>
+                    <?php endif?>
+                    <?php if(isset($FromAdd)&& $FromAdd!=''):?>
+                    <div 
+                    onclick="window.location='?controller=search&action=CleanAll'"
+                    class="text-sm border px-4 py-2 rounded-md hover:text-red-500 ">Clean all</div>
+                    <?php endif?>
                 </div>
                 <button id="btnSearchWithConditions" class=" text-sm col-3 btn btn-primary m-2">Search with conditions</button>
             </div>
 
-            <div id="SearchWithConditions" class=" w-full  ">   
+            <div id="SearchWithConditions" class=" w-full hidden ">   
             <form action="?controller=search" method="POST" class="space-y-4">
             <input type="hidden" name="action" value="searchWithConditions">
                 <div class="  flex flex-wrap ">
-                    <select id="ProductLine" name="ProductLine" required  class=" mx-2 text-black border text-sm block  px-4 py-2 rounded-md ">
+                    <select id="ProductLine" name="ProductLine"   class=" mx-2 text-black border text-sm block  px-4 py-2 rounded-md ">
                         <option value="" disabled selected>Line Product</option>
                         <?php foreach($dataLineProduct as $items): ?>
                             <option value="<?php echo $items->ProductLineID ?>"><?php echo $items->ProductLineName ?></option>
