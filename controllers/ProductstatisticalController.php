@@ -32,16 +32,17 @@ class ProductstatisticalController extends BaseController {
         $EndData = [];
         $productQuantities = [];
 
+     
+
         foreach ($dataInvoice as $item) {
-        
+            
             $product = $this->ProductModel->getProductByID($item->productID);
-            
-            
+        
             if (isset($productQuantities[$item->productID])) {
-      
+               
                 $productQuantities[$item->productID]['Quantity'] += $item->quantity;
             } else {
-         
+            
                 $productQuantities[$item->productID] = [
                     'ProductID' => $item->productID,
                     'ProductName' => $product->productName,
@@ -50,10 +51,16 @@ class ProductstatisticalController extends BaseController {
                 ];
             }
         }
+
         foreach ($productQuantities as $productID => $productData) {
             $productData['Percent'] = ($productData['Quantity'] / $total) * 100; 
-            $EndData[] = $productData;
+            $EndData[] = $productData; 
         }
+
+        
+        usort($EndData, function($a, $b) {
+            return $b['Percent'] <=> $a['Percent']; 
+        });
         $this->view('manager.ProductStatistical.index',
         [
         'data'=>$EndData
