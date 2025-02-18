@@ -42,6 +42,31 @@ class InvoiceModel extends BaseModel
     }
         return $Invoice;
     }
+    public function getInvoiceBystatus($status) {
+        $datas = $this->getListById('invoices', $status, 'status');
+        if (empty($datas)) {
+            return null; 
+        }
+        $Invoice = [];
+
+        foreach ($datas as $data) {
+        $Invoice[] = new Invoice(
+            $data['InvoiceID'],
+            $data['UserID'],
+            $data['InvoiceDate'],
+            $data['TotalAmount'],
+            $data['status']    ,
+            $data['PaymentType'] ,
+            $data['NumberPhone'],
+            $data['Address'],
+            $data['DateDelivery'],
+            $data['Note']
+        );
+    }
+        return $Invoice;
+    }
+
+
     public function getInvoiceAll($status) {
         $sql="";
         if ($status == 5) {
