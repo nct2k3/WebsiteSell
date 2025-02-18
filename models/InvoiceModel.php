@@ -72,6 +72,39 @@ class InvoiceModel extends BaseModel
     }
         return $Invoice;
     }
+    public function getInvoicewithDate($status,$DateFrom,$DateTo) {
+
+        $sql="";
+        if ($status == 5) {
+        $sql="SELECT * FROM invoices WHERE  status!=4 and InvoiceDate BETWEEN '$DateFrom' And '$DateTo'";
+        }
+        else if ($status == 4) {
+            $sql="SELECT * FROM invoices WHERE status=$status and InvoiceDate BETWEEN '$DateFrom' And '$DateTo'";
+        }
+        $datas = $this->getCustome($sql);
+        if (empty($datas)) {
+            return null; 
+        }
+        $Invoice = [];
+
+        foreach ($datas as $data) {
+        $Invoice[] = new Invoice(
+            $data['InvoiceID'],
+            $data['UserID'],
+            $data['InvoiceDate'],
+            $data['TotalAmount'],
+            $data['status']    ,
+            $data['PaymentType'] ,
+            $data['NumberPhone'],
+            $data['Address'],
+            $data['DateDelivery'],
+            $data['Note']
+        );
+    }
+        return $Invoice;
+    }
+
+
     public function UpdateStatus($invoiceId,$Vaule) {
         $sql="UPDATE invoices SET status=$Vaule WHERE InvoiceID=$invoiceId";
        $this->UpdateCustome($sql);

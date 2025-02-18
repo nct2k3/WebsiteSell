@@ -21,11 +21,22 @@ $controller->index();
         <?php if ($donestatus==4): ?>
             <p class="text-blue-500 font-bold text-center text-xl">The order has been received</p>
         <?php endif?>
-        <!-- Thông tin đơn hàng -->
+        
+        <div class="p-2">
+            <form action="?controller=OderManager&id=<?php echo $donestatus ?>" method="POST" class="space-y-4">
+            <input type="hidden" name="action" value="Fillter">
+            <input  type="hidden" name="Status" value="<?php echo $donestatus; ?>">
+                <strong class="">Fillter white date From : </strong>
+                <input required id="DateFrom" name="DateFrom" type="date" >
+                <strong class="">To : </strong>
+                <input required id="DateTo" name="DateTo" type="date" >
+                <button type="submit" class="bg-blue-500 text-white p-2 rounded-lg text-sm">Fillter</button>
+            </form>
+        </div>
+
         <div class="w-full  px-4 py-2 bg-gray-200 mt-2 rounded-lg grid  md:grid-cols-3">
-            
             <?php foreach ($dataPament as $payment): ?>
-                <div class="p-3 rounded bg-gray-100 m-2 hover:bg-gray-200">
+                <div class="p-3 rounded bg-gray-100 m-2 hover:bg-gray-300">
                     <div class="font-bold text-center my-2">Shopping Information ID: <?php echo $payment['invoice']->invoiceID; ?></div>
                     <div class="font-bold text-center my-2">User ID: <?php echo $payment['invoice']->userID; ?></div>
 
@@ -54,7 +65,7 @@ $controller->index();
                         <p class="text-red-500"><strong>Status: </strong><?php echo $payment['status']; ?> </p>
                         <form action="?controller=OderManager" method="POST" class="space-y-4">
                         <input type="hidden" name="action" value="ChangeStatus">
-                        <?php if ($donestatus==5): ?>
+                        <?php if ($donestatus==5||$_GET['id']==5): ?>
                             
                         <input type="hidden" name="IdPayment" value="<?php echo $payment['invoice']->invoiceID; ?>">
                             <select onchange="this.form.submit()" id="Status" name="Status" required class="text-white bg-green-500 border  mt-1 block w-full  p-2 rounded-md ">

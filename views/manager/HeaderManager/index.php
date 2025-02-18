@@ -53,6 +53,7 @@
                         <option value="" disabled selected>Product Manager</option>
                         <option value="1">List Product</option>
                         <option value="2">Add New Product</option>
+                        <option value="3">Delete Product</option>
                        
                     </select>
                 </div>
@@ -113,6 +114,10 @@
         else
         if(value==2){
             window.location =`?controller=AddProduct`;
+        }
+        else
+        if(value==3){
+            window.location =`?controller=DeleteProduct`;
         }
 
     }

@@ -115,6 +115,57 @@ class OdermanagerController extends BaseController
 
 
     }
+
+    public function Fillter($status,$DateFrom,$DateTo)
+    {
+        $Role=$this->takeRole();
+            if($Role==0){
+                header("Location: /");
+                $_SESSION['error'] = "You do not have a management role";
+            }
+    
+        $dataInvoice = $this->InvoiceModel->getInvoicewithDate($status,$DateFrom,$DateTo);
+    
+        $dataPament = [];
+        if ($dataInvoice!=null) {
+            foreach ($dataInvoice as $items) {
+                $products = [];
+                $dataInvoiceDetail = $this->InvoiceDetailModel->getInvoiceDetailByIDUser($items->invoiceID);
+                
+                foreach ($dataInvoiceDetail as $item) {
+                    $products[] = [
+                        'product' => $this->ProductModel->getProductByID($item->productID),
+                        'quantity' => $item->quantity,
+                    ];
+                }
+                $status="wait for confirmation";
+                if($items->status == 1) {
+                    $status="confirmed";
+                }
+                else if($items->status == 2) {
+                    $status="being transported";
+                }
+                else if($items->status == 3) {
+                    $status="delivered";
+                }
+                else if($items->status == 4) {
+                    $status="complete";
+                }
+                
+                $dataPament[] = [
+                    'products' => $products,
+                    'invoice' => $items,
+                    'status'=>$status,
+        
+                ];
+            }        
+            
+        }
+        
+        $this->view('manager.OderManager.index', [
+            'dataPament'=>$dataPament,'donestatus'=>$status
+        ]);
+    }
     
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -127,6 +178,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $OdermanagerController=new  OdermanagerController();
             $OdermanagerController->UpdateStatus($IdPayment,$Status);
         exit();
+
+        case 'Fillter':
+            $DateFrom = $_POST['DateFrom'];
+            $DateTo = $_POST['DateTo'];
+            $Status = $_POST['Status'];
+            $OdermanagerController=new  OdermanagerController();
+           $OdermanagerController->Fillter($Status,$DateFrom,$DateTo);
+           exit();
         
 
         default:
