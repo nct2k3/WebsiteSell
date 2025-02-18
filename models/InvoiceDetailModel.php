@@ -41,4 +41,24 @@ class InvoiceDetailModel extends BaseModel
         }
         return $InvoiceDetail; 
 }
+
+public function getInvoiceDetailAll()
+{
+    
+    $data = $this->getAll('invoicedetails');
+        $InvoiceDetail = [];
+
+        foreach ($data as $row) {
+            $InvoiceDetail[] = new InvoiceDetail(
+                $row['DetailID'], 
+                $row['InvoiceID'],     
+                $row['ProductID'], 
+                $row['Quantity']
+            );
+        }
+        return $InvoiceDetail; 
+}
+
+
+
 }

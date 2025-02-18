@@ -71,12 +71,22 @@
                         <option value="2">Edit Users</option>
                     </select>
                 </div>             
+                
+
+                <div class="col-12 col-md-2 text-white">
+                    <select id="paymentType" onchange="handleSelectionStatiscal(this)" name="paymentType" required class="bg-gray-800 text-gray-500 mt-1 block w-full text-white p-2 rounded-md ">
+                        <option value="" disabled selected>Statistical</option>
+                        <option value="1">Order statistics</option>
+                        <option value="2">Products statistics</option>
+                        <option value="3">Revenue report</option>
+                       
+                    </select>
+                </div>
                 <div
                 onclick="window.location='?controller=Headermanager&action=logout'"
                 class="col-12 rounded col-md-1 text-white p-2 mt-1 hover:bg-red-500">
                     Logout
                 </div>   
-               
             </div>
         </div>
         <div class=" bg-gray-900 h-16 p-2 flex">
@@ -114,6 +124,21 @@
         else
         if(value==2){
             window.location =`?controller=AddProduct`;
+        }
+        else
+        if(value==3){
+            window.location =`?controller=DeleteProduct`;
+        }
+
+    }
+    function handleSelectionStatiscal(select) {
+        const value = select.value;
+        if (value==1) {
+            window.location = `?controller=Oderstatistical`;
+        }
+        else
+        if(value==2){
+            window.location =`?controller=Productstatistical`;
         }
         else
         if(value==3){
