@@ -21,31 +21,30 @@ class ProductstatisticalController extends BaseController {
     }
 
     public function index() {
-
         $dataInvoice = $this->InvoiceDetailModel->getInvoiceDetailAll();
-        $EndData=[];
-        $total=0;
-        foreach($dataInvoice as $item){
-            $total+=$item->quantity;
-        }
-
         $EndData = [];
-        $productQuantities = [];
-
-     
-
+        $total = 0;
+    
+    
         foreach ($dataInvoice as $item) {
-            
+            $total += $item->quantity;
+        }
+    
+        $productQuantities = [];
+    
+    
+        foreach ($dataInvoice as $item) {
             $product = $this->ProductModel->getProductByID($item->productID);
-        
+    
             if (isset($productQuantities[$item->productID])) {
-               
+   
                 $productQuantities[$item->productID]['Quantity'] += $item->quantity;
+                $productQuantities[$item->productID]['Price'] += $product->price * $item->quantity;
             } else {
-            
                 $productQuantities[$item->productID] = [
                     'ProductID' => $item->productID,
                     'ProductName' => $product->productName,
+                    'Price' => $product->price * $item->quantity,
                     'img' => $product->img,
                     'Quantity' => $item->quantity,
                 ];
@@ -56,17 +55,19 @@ class ProductstatisticalController extends BaseController {
             $productData['Percent'] = ($productData['Quantity'] / $total) * 100; 
             $EndData[] = $productData; 
         }
+    
+        $totalAmount = 0;
+        foreach ($EndData as $data) {
+            $totalAmount += $data['Price'];
+        }
 
-        
         usort($EndData, function($a, $b) {
             return $b['Percent'] <=> $a['Percent']; 
         });
-        $this->view('manager.ProductStatistical.index',
-        [
-        'data'=>$EndData
+        $this->view('manager.ProductStatistical.index', [
+            'data' => $EndData,
+            'totalAmount' => $totalAmount
         ]);
-    
-    
     }
 
 }

@@ -24,6 +24,7 @@ $controller->index();
                     </div>
                 </div>
             </div>
+            
 
             <?php foreach ($data as $items): ?>
             <div class="flex flex-col space-y-4 p-2">
@@ -42,6 +43,8 @@ $controller->index();
                 </div>
             </div>
             <?php endforeach; ?>
+       
+        <div class="font-bold text-red-500 mt-2 w-full rounded flex justify-end border-b border-t ">Total revenue :   <?php echo   number_format($totalAmount, 0, ',', '.') . ' Đ'; ?></div>
         </div>
     </div>
 </body>
