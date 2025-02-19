@@ -8,6 +8,7 @@ class OdermanagerController extends BaseController
     private $UserModel;
     private $InvoiceModel;
     private $InvoiceDetailModel;
+    private $NotificationManagerModel;
     public function __construct()
     {
         $this->AccountsModel = $this->loadModel("AccountsModel");
@@ -16,6 +17,7 @@ class OdermanagerController extends BaseController
         $this->UserModel = $this->loadModel("UserModel");
         $this->InvoiceModel = $this->loadModel("InvoiceModel");
         $this->InvoiceDetailModel = $this->loadModel("InvoiceDetailModel");
+        $this->NotificationManagerModel = $this->loadModel("NotificationManagerModel");
     }
     
     
@@ -107,8 +109,22 @@ class OdermanagerController extends BaseController
         exit();
 
     }
-    public function UpdateStatus($Id,$value){
+    public function UpdateStatus($Id,$value,$UserID){
 
+        if($value==3){
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+            $currentTime = date('Y-m-d H:i:s');
+            $Notification =new Notification(
+                '',
+                $UserID,
+                $Id,
+                'Giao hang thanh cong',
+                1,
+                $currentTime,
+    
+            );    
+            $this->NotificationManagerModel->createNotification($Notification);
+        }
         $this->InvoiceModel->UpdateStatus($Id,$value);
         $_SESSION['message'] = "Change successfully!";
         $this->index();
@@ -175,8 +191,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         case 'ChangeStatus':
             $Status = $_POST['Status'];
             $IdPayment = $_POST['IdPayment'];
+            $IdUser = $_POST['IdUser'];
             $OdermanagerController=new  OdermanagerController();
-            $OdermanagerController->UpdateStatus($IdPayment,$Status);
+            $OdermanagerController->UpdateStatus($IdPayment,$Status,$IdUser);
         exit();
 
         case 'Fillter':

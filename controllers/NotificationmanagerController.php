@@ -33,6 +33,7 @@ class NotificationManagerController extends BaseController {
         $Notification =new Notification(
             '',
             $UserID,
+            $OderID,
             $Content,
             0,
             $currentTime,
@@ -40,6 +41,7 @@ class NotificationManagerController extends BaseController {
         );   
         $this->InvoiceModel->deleteInvoice($OderID);   
         $this->NotificationManagerModel->createNotification($Notification);
+        
         $temp= $_SESSION['AccountID'] ;
         $loginmanager = new LoginManager(
             '',

@@ -68,6 +68,9 @@ $controller->index();
                         <?php if ($donestatus==5||$_GET['id']==5): ?>
                             
                         <input type="hidden" name="IdPayment" value="<?php echo $payment['invoice']->invoiceID; ?>">
+                        <input type="hidden" name="IdUser" value="<?php echo $payment['invoice']->userID;?>">
+
+                        
                             <select onchange="this.form.submit()" id="Status" name="Status" required class="text-white bg-green-500 border  mt-1 block w-full  p-2 rounded-md ">
                                 <option value="" disabled selected>Change status</option>
                                 <option value="1">confirmed</option>
