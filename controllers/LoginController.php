@@ -2,12 +2,15 @@
 ob_start(); // Bắt đầu output buffering
 require_once __DIR__ . '/../entities/Account.php';
 require_once __DIR__ . '/../controllers/BaseController.php';
+require_once __DIR__ . '/../entities/LoginManager.php';
 
 class LoginController extends BaseController {
     private $AccountsModel;
+    private $LoginManagerModel;
 
     public function __construct() {
         $this->AccountsModel = $this->loadModel("AccountsModel");
+        $this->LoginManagerModel = $this->loadModel("LoginManagerModels");
     }
 
     public function index() {
@@ -31,6 +34,16 @@ class LoginController extends BaseController {
             $_SESSION['AccountID'] = $temp->userID;
             $_SESSION['Role'] = $temp->role;
             $_SESSION['message'] = "Login successfully!";
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+            $currentTime = date('Y-m-d H:i:s');
+
+            $loginmanager = new LoginManager(
+                '',
+                $temp->userID,
+                $currentTime,
+                'Login'
+            );
+            $this->LoginManagerModel->createLoginManager($loginmanager);
             header("Location: /?controller=homeManager"); 
             exit();
         }

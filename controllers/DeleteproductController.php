@@ -3,11 +3,13 @@ class DeleteproductController extends BaseController
 {
     private $CartModel;
     private $ProductModel;
+    private $LoginManagerModel;
 
     public function __construct()
     {
         $this->CartModel = $this->loadModel("CartModel");
         $this->ProductModel = $this->loadModel("ProductModel");
+        $this->LoginManagerModel = $this->loadModel("LoginManagerModels");
     }
  
     public function index(){
@@ -54,6 +56,17 @@ class DeleteproductController extends BaseController
             $this->index(); 
             exit;
         } else {
+            $temp= $_SESSION['AccountID'] ;
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+            $currentTime = date('Y-m-d H:i:s');
+            $loginmanager = new LoginManager(
+                '',
+                $temp,
+                $currentTime,
+                'Delete'
+            );
+            $this->LoginManagerModel->createLoginManager($loginmanager);
+
             $this->ProductModel->deleteProduct($id);
             $_SESSION['messages'] = "Delete success!";
             $this->index();
