@@ -11,6 +11,7 @@ class NotificationManagerModel extends BaseModel
             $Notification[] = new Notification(
                 $row['ID'], 
                 $row['UserID'], 
+                $row['InvoiceID'],
                 $row['Content'],
                 $row['Status'] ,
                 $row['Time'],
@@ -28,6 +29,7 @@ class NotificationManagerModel extends BaseModel
             $Notification[] = new Notification(
                 $row['ID'], 
                 $row['UserID'], 
+                $row['InvoiceID'],
                 $row['Content'],
                 $row['Status'] ,
                 $row['Time'],
@@ -37,10 +39,10 @@ class NotificationManagerModel extends BaseModel
     }
     public function createNotification($Notification) {
 
-        print_r($Notification);
         $Notification = [
             'ID' => $Notification->ID,
             'UserID'=> $Notification->UserID,
+            'InvoiceID' => $Notification->InvoiceID,
             'Content' => $Notification->Content, 
             'Status' => $Notification->Status,
             'Time' => $Notification->Time,

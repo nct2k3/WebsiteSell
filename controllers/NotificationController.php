@@ -21,6 +21,11 @@ class NotificationController extends BaseController {
    
         $idUser = $this->takeIDAccount();
         $data = $this->NotificationManagerModel->getNotificationWithId($idUser);
+     
+        usort($data, function($a, $b) {
+            return strtotime($b->Time) - strtotime($a->Time); 
+        });
+        
         $this->view('frontEnd.Notification.index', [
             'data' => $data,
         ]);

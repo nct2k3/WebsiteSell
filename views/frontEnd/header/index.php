@@ -97,6 +97,7 @@
                         </a>
                         <div class=" d-flex align-items-center justify-content-center mt-2 mt-md-0">
                         <img class="h-8 bg-gray-900 hover:bg-gray-400 p-1 rounded-full mx-2"
+                        onclick="window.location='?controller=Notification'"
                             src="https://img.icons8.com/?size=100&id=ftMXZGFfen2R&format=png&color=ffffff" alt="Icon">
                         <img class="h-8 bg-gray-900 hover:bg-gray-400 p-1 rounded-full mx-2"
                             onclick="window.location='?controller=cart&user=<?php echo $userID; ?>'"
