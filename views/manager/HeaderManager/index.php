@@ -142,7 +142,7 @@
         }
         else
         if(value==3){
-            window.location =`?controller=DeleteProduct`;
+            window.location =`?controller=Revenuestatistical`;
         }
 
     }

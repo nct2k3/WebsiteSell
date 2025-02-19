@@ -51,8 +51,6 @@ class OderstatisticalController extends BaseController {
 
 
 
-    
-
         $this->view('manager.OderStatistical.index',
         ['PercentWaitingConfirm'=>$PercentWaitingConfirm,
         'PercentConfirmed'=>$PercentConfirmed,
