@@ -129,6 +129,56 @@ class InvoiceModel extends BaseModel
         return $Invoice;
     }
 
+    public function getInvoiceByyearAndMoth($Year,$Moth) {
+        $Sql="SELECT * FROM invoices WHERE YEAR(InvoiceDate)=$Year AND MONTH(InvoiceDate)=$Moth";
+        $datas = $this->getCustome($Sql);
+        if (empty($datas)) {
+            return null; 
+        }
+        $Invoice = [];
+
+        foreach ($datas as $data) {
+        $Invoice[] = new Invoice(
+            $data['InvoiceID'],
+            $data['UserID'],
+            $data['InvoiceDate'],
+            $data['TotalAmount'],
+            $data['status']    ,
+            $data['PaymentType'] ,
+            $data['NumberPhone'],
+            $data['Address'],
+            $data['DateDelivery'],
+            $data['Note']
+        );
+    }
+        return $Invoice;
+    }
+
+    public function getInvoiceByYear($Year) {
+        $Sql="SELECT * FROM invoices WHERE YEAR(InvoiceDate)=$Year";
+        $datas = $this->getCustome($Sql);
+        if (empty($datas)) {
+            return null; 
+        }
+        $Invoice = [];
+
+        foreach ($datas as $data) {
+        $Invoice[] = new Invoice(
+            $data['InvoiceID'],
+            $data['UserID'],
+            $data['InvoiceDate'],
+            $data['TotalAmount'],
+            $data['status']    ,
+            $data['PaymentType'] ,
+            $data['NumberPhone'],
+            $data['Address'],
+            $data['DateDelivery'],
+            $data['Note']
+        );
+    }
+        return $Invoice;
+    }
+
 
     public function UpdateStatus($invoiceId,$Vaule) {
         $sql="UPDATE invoices SET status=$Vaule WHERE InvoiceID=$invoiceId";

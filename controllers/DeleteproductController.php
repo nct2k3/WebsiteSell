@@ -12,11 +12,11 @@ class DeleteproductController extends BaseController
  
     public function index(){
 
-        // $Role=$this->takeRole();
-        // if($Role==0){
-        //     header("Location: /");
-        //     $_SESSION['error'] = "You do not have a management role";
-        // }
+        $Role=$this->takeRole();
+        if($Role==0){
+            header("Location: /");
+            $_SESSION['error'] = "You do not have a management role";
+        }
         $data = $this->ProductModel->getProductDelete();
         $dataLineProduct=$this->ProductModel->getLineProduct();
         $this->view('manager.Deleteproduct.index',['dataLineProduct'=>$dataLineProduct,'data'=>$data]);
