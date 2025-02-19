@@ -24,7 +24,7 @@ $controller->index();
             <div class="p-2 ml-1 w-full flex justify-end"> 
                 <button id="filterButton" class="btn btn-primary"> Fillter </button>
             </div>
-            <div id="dateFilter" class="p-2 ml-1 w-full flex justify-end hidden"> ">
+            <div id="dateFilter" class="p-2 ml-1 w-full flex justify-end hidden">
                     <form action="/?controller=PurchasePayment" method="POST" class="space-y-4">
                     <input type="hidden" name="action" value="DateFillter"> 
                         <input required id="date" name="date" type="date" >

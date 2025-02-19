@@ -76,8 +76,14 @@ $controller->index();
                             </select>
                         </form>
                         <?php endif?>
-                        
-                        
+                        <?php if ($donestatus==5||$_GET['id']==5): ?>
+                            <div 
+                            onclick="window.location.href='?controller=NotificationManager&idOder=<?php echo $payment['invoice']->invoiceID; ?>&idUser=<?php echo $payment['invoice']->userID; ?>'"
+                            class=" mt-1 rounded bg-red-500 hover:bg-red-700 w-full p-1 text-center text-white ">
+                                Delete Oder</div>
+                        <?php endif?>
+
+                    
                     </div>
                 </div>
             <?php endforeach; ?>

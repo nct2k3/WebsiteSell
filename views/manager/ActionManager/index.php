@@ -40,7 +40,10 @@ $controller->index();
                                     echo 'text-blue-500 font-bold';
                                 } elseif ($items->Action === 'Delete') {
                                     echo 'text-red-500 font-bold';
+                                }elseif ($items->Action === 'Delete Oder') {
+                                    echo 'text-red-500 font-bold';
                                 }
+
                             ?>">
                             <?php echo $items->Action ?>
                         </td>
