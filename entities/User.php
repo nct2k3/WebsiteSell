@@ -7,7 +7,7 @@ class User
     public  $PhoneNumber;
     public $Address;
     public $LoyaltyPoints;
-
+    
     public function __construct($userId, $fullName, $phoneNumber = null, $address = null,$loyaltyPoints = 0)
     {
         $this->userID = $userId;
