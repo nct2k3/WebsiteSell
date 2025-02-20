@@ -86,6 +86,14 @@ $controller->index();
                                 Delete Oder</div>
                         <?php endif?>
 
+                        <form action="?controller=OderManager&id=5" method="POST" class="space-y-4">
+                            <input type="hidden" name="action" value="CreateInvoice">
+                            <input type="hidden" name="IdPayment" value="<?php echo $payment['invoice']->invoiceID; ?>">
+                            <input type="hidden" name="IdUser" value="<?php echo $payment['invoice']->userID;?>">
+                            <button type="submit" class=" mt-1 rounded bg-blue-500 hover:bg-blue-700 w-full p-1 text-center text-white ">Create invoice file word</button>
+                        </form>
+                        
+
                     
                     </div>
                 </div>

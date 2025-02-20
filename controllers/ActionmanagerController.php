@@ -1,11 +1,7 @@
 <?php
 
-
-
 class ActionManagerController extends BaseController {
  
-
-    
     private $LoginManagerModel;
 
     public function __construct()

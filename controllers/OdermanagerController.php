@@ -1,4 +1,11 @@
 <?php
+require_once __DIR__ . '/../vendor/autoload.php';
+
+
+
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\IOFactory;
+
 class OdermanagerController extends BaseController
 {
   
@@ -9,6 +16,7 @@ class OdermanagerController extends BaseController
     private $InvoiceModel;
     private $InvoiceDetailModel;
     private $NotificationManagerModel;
+    private $LinkInvoicesModel;
     public function __construct()
     {
         $this->AccountsModel = $this->loadModel("AccountsModel");
@@ -18,6 +26,9 @@ class OdermanagerController extends BaseController
         $this->InvoiceModel = $this->loadModel("InvoiceModel");
         $this->InvoiceDetailModel = $this->loadModel("InvoiceDetailModel");
         $this->NotificationManagerModel = $this->loadModel("NotificationManagerModel");
+        $this->LinkInvoicesModel= $this->loadModel('LinkInvoicesModel');
+
+
     }
     
     
@@ -182,6 +193,84 @@ class OdermanagerController extends BaseController
             'dataPament'=>$dataPament,'donestatus'=>$status
         ]);
     }
+
+  
+        function createInvoiceFile($InvoiceId,$UserID) {
+
+            $dataUser = $this->UserModel->getUserByID($UserID);
+            $dataInvoice = $this->InvoiceModel->getInvoiceByID($InvoiceId);
+            $dataInvoiceDetail = $this->InvoiceDetailModel->getInvoiceDetailByIDUser($InvoiceId);
+            $products = [];
+            $stt=1;
+            foreach ($dataInvoiceDetail as $item) {
+                $products[] = [
+                    'STT' => $stt,
+                    'ProductName' => $this->ProductModel->getProductByID($item->productID)->productName,
+                    'Quantity' => $item->quantity,
+                    'UnitPrice' => $this->ProductModel->getProductByID($item->productID)->price,
+                    'Total' => $item->quantity * $this->ProductModel->getProductByID($item->productID)->price,
+                ];
+                $stt++;
+            }
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+            $currentTime = date('Y-m-d H:i:s');
+
+         
+            $phpWord = new PhpWord();
+            $section = $phpWord->addSection();
+        
+            $section->addTitle('HÓA ĐƠN', 1);
+            $section->addText('Ngày hóa đơn: '.$currentTime);
+        
+            $section->addText('Người bán: Công ty Iphone Store');
+            $section->addText('Tên người bán: Trần Công');
+            $section->addText('Địa chỉ: 192,Tân Thới nhất, Quận 12, TP.Hồ Chí Minh');
+            $section->addText('Điện thoại:0368731585');
+            $section->addText('Email:nguyennrdz@gmail.com');
+            $section->addTextBreak();
+        
+            $section->addText('Người mua: ' . $dataUser->FullName);
+            $section->addText('Địa chỉ: ' . $dataUser->Address);
+            $section->addText('Điện thoại: ' . $dataUser->PhoneNumber);
+            $section->addTextBreak(); 
+        
+            $table = $section->addTable();
+            $table->addRow();
+            $table->addCell(2000)->addText('STT');
+            $table->addCell(4000)->addText('Tên sản phẩm');
+            $table->addCell(2000)->addText('Số lượng');
+            $table->addCell(2000)->addText('Đơn giá');
+            $table->addCell(2000)->addText('Thành tiền');
+        
+            foreach ($products as $item) {
+                $table->addRow();
+                $table->addCell(2000)->addText($item['STT']);
+                $table->addCell(4000)->addText($item['ProductName']);
+                $table->addCell(2000)->addText($item['Quantity']);
+                $table->addCell(2000)->addText(number_format($item['UnitPrice'], 0, ',', '.') . ' Đ');
+                $table->addCell(2000)->addText(number_format($item['Total'], 0, ',', '.') . 'Đ');
+            }
+        
+            $section->addTextBreak(); 
+            $section->addText('Sản phẩm được đổi trả trong vòng 7 ngày, không hỗ trợ đổi trả khi sản phẩm bị hỏng do người dùng');
+            $section->addText('Sản phẩm được bảo hành 12 tháng kể từ ngày sản xuất');
+
+            $section->addText('Tổng tiền: ' .number_format($dataInvoice->totalAmount, 0, ',', '.') . ' Đ');
+            $fileName = 'ID_'.$InvoiceId.'_Name_'.$dataUser->FullName.'_hoadon.docx';
+            $filePath ='C:/xampp/htdocs/WebsiteSells/public/bill/' . $fileName; 
+            $writer = IOFactory::createWriter($phpWord, 'Word2007');
+            $writer->save($filePath);
+            $check=  $this->LinkInvoicesModel->createLinkInvoice($InvoiceId,$filePath);
+            if($check==0){
+                $_SESSION['error'] = "Invoice already exists!";
+                $this->index();
+            }
+            else{
+            $_SESSION['message'] = " successfully!";
+            $this->index();
+            }
+
+        }
     
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -202,6 +291,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $Status = $_POST['Status'];
             $OdermanagerController=new  OdermanagerController();
            $OdermanagerController->Fillter($Status,$DateFrom,$DateTo);
+           exit();
+        case 'CreateInvoice':
+            
+            $IdPayment = $_POST['IdPayment'];
+            $IdUser = $_POST['IdUser'];
+            $OdermanagerController=new  OdermanagerController();
+            $OdermanagerController->createInvoiceFile($IdPayment,$IdUser);
            exit();
         
 
