@@ -79,7 +79,7 @@ $controller->index();
             </div>
             <h2 class="text-xl font-semibold mb-4">Product Summary</h2>
         
-        <!-- Product Image -->
+
         <div class="bg-gray-600 shadow-md rounded px-4 pt-6 pb-8 my-4">
             <div class="overflow-x-auto">
                 <table class="table-auto w-full text-white text-sm sm:text-base">
@@ -111,7 +111,7 @@ $controller->index();
                                 </td>
                                 <td class="py-2 px-2">
                                     <?php if($dataAction == 'payOne'): ?>
-                                        <span class="text-gray-500">Delete</span> <!-- Hiển thị dưới dạng văn bản không có liên kết -->
+                                        <span class="text-gray-500">Delete</span> 
                                     <?php else: ?>
                                         <a href="#" class="text-red-500 hover:text-red-600"
                                         onclick="window.location='?controller=payment&action=Delete&user=<?php echo $userID; ?>&product=<?php echo $item['item']->productID; ?>'">Delete</a>

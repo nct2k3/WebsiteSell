@@ -15,8 +15,6 @@
             animation: fadeOut 0.5s forwards;
         }
     </style>
-
-    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
@@ -40,7 +38,6 @@
 
         <div class="container-fluid w-full">
             <div id="content" class="row bg-gray-800 p-3 fixed z-40 top-0 w-full hidden md:flex md:flex-row flex-col">
-                <!-- Logo -->
                 <div  onclick="window.location='/'"
                 class="col-12 col-md-2 d-flex align-items-center justify-content-center">
                     <img class="h-8" src="https://img.icons8.com/?size=100&id=17843&format=png&color=42A5F5" alt="Logo">
@@ -48,7 +45,6 @@
                         IPHONE
                     </h1>
                 </div>
-                <!-- Menu items -->
                 <div onclick="window.location='?controller=product&items=1'"
                  class="col-12 col-md-1 d-flex align-items-center justify-content-center text-white font-bold text-sm hover:bg-gray-400 p-2">
                     <img class="h-6 mx-1" src="https://img.icons8.com/?size=100&id=11409&format=png&color=ffffff" alt="Icon">
@@ -80,14 +76,13 @@
                     <a >Watch</a>
                 </div>
                 
-                 <!-- Search bar -->
                  <div  id="searchButton"
                  onclick="window.location='?controller=search'"
                  class="bg-gray-500 col-12 col-md-1 rounded-full hover:bg-gray-400 ">
                     <img class="h-8 mx-1 mt-1 p-1" src="https://img.icons8.com/?size=100&id=7695&format=png&color=ffffff" alt="Icon">
                     
                 </div>
-                <!-- Login -->
+               
                 <div 
                  class="col-12 col-md-3 d-flex align-items-center justify-content-center text-white font-bold text-sm mt-2 mt-md-0">
                     <img class="h-8 w-8 bg-white rounded-full mx-2" src="https://img.icons8.com/?size=100&id=99268&format=png&color=000000" alt="Login">

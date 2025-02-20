@@ -19,7 +19,7 @@ $controller->index();
     <?php foreach ($products as $productInfo): ?>
         <?php $product = $productInfo['item']; ?>
 
-        <!-- Header -->
+      
         <div class="text-center bg-dark py-3">
             <div class="flex w-full justify-center p-2">
                 <img class="h-10" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
@@ -27,9 +27,8 @@ $controller->index();
             </div>
         </div>
 
-        <!-- Banner Section -->
+        
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
-            <!-- Carousel -->
             <div id="carouselExampleControls" class="carousel slide px-16" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
@@ -52,13 +51,10 @@ $controller->index();
                 </a>
             </div>
 
-            <!-- Product Details -->
             <div class="w-full">
                 <div class="max-w-lg mx-auto bg-gray-800 rounded-lg p-6 shadow-lg">
                     <h1 class="text-2xl font-bold mb-2"><?php echo htmlspecialchars($product->productName); ?></h1>
                     <p class="text-gray-400">Giá và khuyến mãi tại: Hồ Chí Minh</p>
-
-                    <!-- Capacities -->
                     <div class="mt-4">
                         <h2 class="font-semibold mb-2">Dung lượng</h2>
                         <div class="flex space-x-4">
@@ -71,8 +67,6 @@ $controller->index();
                             <?php endforeach; ?>
                         </div>
                     </div>
-
-                    <!-- Colors -->
                     <div class="mt-4">
                         <h2 class="font-semibold mb-2">Màu:</h2>
                         <div class="flex space-x-2">
@@ -87,19 +81,15 @@ $controller->index();
                         </div>
                     </div>
 
-                    <!-- Pricing -->
                     <div class="mt-6">
                         <h2 class="text-lg font-bold">Online Giá Rẻ Quá</h2>
                         <p class="text-2xl font-bold text-orange-500"><?php echo htmlspecialchars($product->price); ?>đ</p>
                         <s class="text-gray-400"><?php echo htmlspecialchars($product->originalPrice); ?>đ</s>
                     </div>
 
-                    <!-- Progress Bar -->
                     <div class="mt-4 bg-gray-600 rounded-full">
                         <div class="bg-orange-500 rounded-full h-2" style="width: 80%;"></div>
                     </div>
-
-                    <!-- Action Buttons -->
                     <div class="flex">   
                     <?php if ($product->stock == 0): ?>
                     
@@ -121,7 +111,6 @@ $controller->index();
 <?php endif; ?>
                     </div>
 
-                    <!-- Additional Info -->
                     <div class="mt-4 text-gray-400">
                         <p>Kết thúc vào: 23:59 / 28/01</p>
                         <p>Tại Hồ Chí Minh</p>
@@ -129,8 +118,6 @@ $controller->index();
                 </div>
             </div>
         </div>
-
-        <!-- Other Products Section -->
         <div class="w-full bg-gray-500 p-8">
             <div class="text-xl font-bold text-black p-4 text-white">Other Products</div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-0 p-0">
@@ -151,8 +138,6 @@ $controller->index();
 <?php else: ?>
     <p class="text-center font-bold mt-4 text-2xl">There are no products you are looking for</p>
 <?php endif; ?>
-
-<!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
