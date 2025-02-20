@@ -6,6 +6,8 @@ require_once __DIR__ . '/../entities/Product.php';
 
 class InvoiceDetailModel extends BaseModel
 {
+
+    // creatcreat
     public function createInvoice($Invoice) {
         $invoiceData = [
            
@@ -15,50 +17,40 @@ class InvoiceDetailModel extends BaseModel
         ];
         $productModel= new ProductModel();
         $product = $productModel->getProductByID($Invoice->productID);
-
         $endQuantity= $product->stock - $Invoice->quantity;
-
         $sql="UPDATE products SET Stock = $endQuantity WHERE ProductID = $Invoice->productID";
         print_r($sql);
         $this->UpdateCustome($sql);
-    
         $this->create('invoicedetails', $invoiceData); 
-       
     }
+    // get
     public function getInvoiceDetailByIDUser($InvoiceID)
-{
-    
-    $data = $this->getListById('invoicedetails', $InvoiceID, 'InvoiceID');
-        $InvoiceDetail = [];
+    {
+        $data = $this->getListById('invoicedetails', $InvoiceID, 'InvoiceID');
+            $InvoiceDetail = [];
+            foreach ($data as $row) {
+                $InvoiceDetail[] = new InvoiceDetail(
+                    $row['DetailID'], 
+                    $row['InvoiceID'],     
+                    $row['ProductID'], 
+                    $row['Quantity']
+                );
+            }
+            return $InvoiceDetail; 
+    }
 
-        foreach ($data as $row) {
-            $InvoiceDetail[] = new InvoiceDetail(
-                $row['DetailID'], 
-                $row['InvoiceID'],     
-                $row['ProductID'], 
-                $row['Quantity']
-            );
-        }
-        return $InvoiceDetail; 
-}
-
-public function getInvoiceDetailAll()
-{
-    
-    $data = $this->getAll('invoicedetails');
-        $InvoiceDetail = [];
-
-        foreach ($data as $row) {
-            $InvoiceDetail[] = new InvoiceDetail(
-                $row['DetailID'], 
-                $row['InvoiceID'],     
-                $row['ProductID'], 
-                $row['Quantity']
-            );
-        }
-        return $InvoiceDetail; 
-}
-
-
-
+    public function getInvoiceDetailAll()
+    {
+        $data = $this->getAll('invoicedetails');
+            $InvoiceDetail = [];
+            foreach ($data as $row) {
+                $InvoiceDetail[] = new InvoiceDetail(
+                    $row['DetailID'], 
+                    $row['InvoiceID'],     
+                    $row['ProductID'], 
+                    $row['Quantity']
+                );
+            }
+            return $InvoiceDetail; 
+    }
 }

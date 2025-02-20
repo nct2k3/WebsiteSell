@@ -20,16 +20,12 @@ $controller->index();
     </style>
 </head>
 <body class="bg-dark text-light">
-
-  <!-- Header -->
   <div class="text-center bg-dark py-3">
       <div class="flex w-full justify-center p-2">
             <img class="h-10" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
             <div class="text-3xl text-center font-bold text-white">Iphone</div>
       </div>
   </div>
-
-  <!-- Banner Section -->
   <div id="carouselExampleControls" class="carousel slide px-20" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
@@ -52,8 +48,6 @@ $controller->index();
         <span class="sr-only">Next</span>
     </a>
   </div>
-
-  <!-- Footer Navigation -->
   <div class="mx-8 mt-2">
     <div class="container flex-wrap d-flex gap-3">
       <button
@@ -105,15 +99,8 @@ $controller->index();
                 <p class="text-orange-500 font-semibold mt-2">Online giá rẻ quá</p>
             </div>
         <?php endforeach; ?>
-
-          
     </div>
   </div>
- 
-
-
-
-  <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

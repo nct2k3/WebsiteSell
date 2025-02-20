@@ -2,9 +2,9 @@
 require_once __DIR__ . '/../entities/Invoice.php';
 require_once __DIR__ .'./InvoiceDetailModel.php';
 require_once __DIR__ .'./ProductModel.php';
-
 class InvoiceModel extends BaseModel
 {
+    // creat
     public function createInvoice($Invoice) {
         $invoiceData = [
             'UserID' => $Invoice->userID,
@@ -19,13 +19,13 @@ class InvoiceModel extends BaseModel
         ];
         return $this->createReturnID('invoices', $invoiceData);
     }
+    //get
     public function getInvoiceByIDUser($UserID) {
         $datas = $this->getListById('invoices', $UserID, 'UserID');
         if (empty($datas)) {
             return null; 
         }
         $Invoice = [];
-
         foreach ($datas as $data) {
         $Invoice[] = new Invoice(
             $data['InvoiceID'],
@@ -88,8 +88,6 @@ class InvoiceModel extends BaseModel
     }
         return $Invoice[0];
     }
-
-
     public function getInvoiceAll($status) {
         $sql="";
         if ($status == 5) {
@@ -151,7 +149,6 @@ class InvoiceModel extends BaseModel
     }
         return $Invoice;
     }
-
     public function getInvoiceByyearAndMoth($Year,$Moth) {
         $Sql="SELECT * FROM invoices WHERE YEAR(InvoiceDate)=$Year AND MONTH(InvoiceDate)=$Moth";
         $datas = $this->getCustome($Sql);
@@ -176,7 +173,6 @@ class InvoiceModel extends BaseModel
     }
         return $Invoice;
     }
-
     public function getInvoiceByYear($Year) {
         $Sql="SELECT * FROM invoices WHERE YEAR(InvoiceDate)=$Year";
         $datas = $this->getCustome($Sql);
@@ -202,13 +198,13 @@ class InvoiceModel extends BaseModel
         return $Invoice;
     }
 
-
+    // update 
     public function UpdateStatus($invoiceId,$Vaule) {
         $sql="UPDATE invoices SET status=$Vaule WHERE InvoiceID=$invoiceId";
        $this->UpdateCustome($sql);
     }
 
-
+    // delete
     public function deleteInvoice($InvoiceId) {
         $InvoiceDetailmodel=new InvoiceDetailModel();
         $InvoiceDetail= $InvoiceDetailmodel->getInvoiceDetailByIDUser($InvoiceId);
@@ -220,7 +216,6 @@ class InvoiceModel extends BaseModel
             print_r($sql);
             $this->UpdateCustome($sql);
         }
-
          $this->deleteID('invoices', $InvoiceId,'InvoiceID');
 
     }
