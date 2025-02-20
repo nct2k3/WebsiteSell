@@ -24,14 +24,11 @@ class ProductstatisticalController extends BaseController {
         $dataInvoice = $this->InvoiceDetailModel->getInvoiceDetailAll();
         $EndData = [];
         $total = 0;
-    
-    
         foreach ($dataInvoice as $item) {
             $total += $item->quantity;
         }
     
         $productQuantities = [];
-    
     
         foreach ($dataInvoice as $item) {
             $product = $this->ProductModel->getProductByID($item->productID);
