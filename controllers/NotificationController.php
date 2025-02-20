@@ -79,11 +79,17 @@ function downloadFile($file) {
         readfile($filePath);
         $_SESSION['message'] = "Take file successfully!";
         $this->index();
-        exit;
     } else {
         echo "File không tồn tại.";
     }
 }
+    function  deleteNotification($id){
+        $this->NotificationManagerModel->deleteNotification($id);
+        $_SESSION['message'] = "Delete successfully!";
+        $this->index();
+        
+    }
+
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -94,6 +100,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $URl = $_POST['URL'];
             $NotificationController = new NotificationController();
             $NotificationController->downloadFile($URl);
+            exit();
+        case 'Delete':
+            $id = $_POST['IdDelete'];
+            $NotificationController = new NotificationController();
+            $NotificationController->deleteNotification($id);
             exit();
         default:
             echo "Hành động không hợp lệ!";
