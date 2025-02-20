@@ -15,7 +15,7 @@ $controller->index();
 
 <div class="container mx-auto p-5">
     <div class="w-full ">
-            <div class="bg-gray-600 rounded-lg shadow-md py-6 px-2">
+            <div class="bg-gray-600 rounded-lg shadow-md py-6 p-4">
                 <h2 class="text-xl font-semibold mb-2 text-center font-bold">Customer Information</h2>
                 <div class="w-full flex justify-center">
 
@@ -68,8 +68,8 @@ $controller->index();
     <div class="grid md:grid-cols-2">
 
         <!-- Thông tin đơn hàng hang cho-->
-        <div class="w-full md: p-4 bg-gray-600 mt-2 rounded-lg">
-        <h2 class="text-xl font-semibold mb-2 font-bold text-center">Shopping Information</h2>
+        <div class="w-full   bg-gray-600 mt-2 rounded-l-lg">
+        <h2 class="text-xl font-semibold mb-2 font-bold text-center">Incomplete order</h2>
        
             <?php foreach ($dataPament as $payment): ?>
                 <div class="p-3 rounded bg-gray-800 m-2 hover:bg-gray-700">
@@ -128,8 +128,8 @@ $controller->index();
             <?php endforeach; ?>
         </div>
         <!-- Thông tin đơn hàng hang da dat-->
-        <div class="w-full md: p-4 bg-gray-600 mt-2 rounded-lg">
-        <h2 class="text-xl font-semibold mb-2 font-bold text-center">Shopping Information</h2>
+        <div class="w-full  bg-gray-600 mt-2 rounded-r-lg">
+        <h2 class="text-xl font-semibold mb-2 font-bold text-center">Order completed</h2>
        
             <?php foreach ($dataWasPayment as $payment): ?>
                 <div class="p-3 rounded bg-gray-800 m-2 hover:bg-gray-700">

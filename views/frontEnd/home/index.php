@@ -61,7 +61,6 @@ $controller->index();
             </div>
             <?php endforeach; ?>
         </div>
-<!-- macbock -->
         <div class="flex w-full justify-center p-2 my-2">
             <img class="h-8" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
             <div class=" text-2xl text-center font-bold text-white">Macbook </div>
@@ -81,7 +80,6 @@ $controller->index();
             </div>
             <?php endforeach; ?>
         </div>
-<!-- ipad -->
         <div class="flex w-full justify-center p-2 my-2">
             <img class="h-8" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
             <div class=" text-2xl text-center font-bold text-white">Ipad </div>
@@ -101,7 +99,6 @@ $controller->index();
             </div>
             <?php endforeach; ?>
         </div>
-<!-- Watch -->
         <div class="flex w-full justify-center p-2 my-2">
             <img class="h-8" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
             <div class=" text-2xl text-center font-bold text-white">Watch </div>
