@@ -3,13 +3,11 @@ class CartController extends BaseController
 {
     private $CartModel;
     private $ProductModel;
-
     public function __construct()
     {
         $this->CartModel = $this->loadModel("CartModel");
         $this->ProductModel = $this->loadModel("ProductModel");
     }
-    
     public function index()
     {
         $userID =$this->takeIDAccount();
@@ -36,6 +34,7 @@ class CartController extends BaseController
         $this->view('frontEnd.cart.index', ['products' => $products, 'total' => $total, 'userID' => $userID]);
     }
 
+    // xóa giỏ hànghàng
     public function delete()
     {
         if (isset($_GET['user']) && isset($_GET['product'])) {
@@ -44,13 +43,13 @@ class CartController extends BaseController
             $data=$this->CartModel->delete($userID, $productID); 
             if ($data==1) {
                 $_SESSION['message'] = "Xóa thành công!";
-
             }
             $this->index(); 
         } else {
             echo "Invalid user or product ID.";
         }
     }
+    // thay đổi số lượng giỏ hàng
     public function ChangeQuantity(){
         $userId= $this->takeIDAccount();
         if($userId==""){
@@ -70,7 +69,6 @@ class CartController extends BaseController
             $_SESSION['error'] = "Excess inventory cannot be added!";
             $this->index(); 
             return;
-
         }
         $cart= new Cart(
             '',
@@ -81,7 +79,6 @@ class CartController extends BaseController
         $data=$this->CartModel->createCart($cart);
         if ($data==1) {
             $_SESSION['message'] = "Change successfully!";
-
         }
         $this->index(); 
     }
