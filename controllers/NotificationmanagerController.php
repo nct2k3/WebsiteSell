@@ -1,33 +1,23 @@
 <?php
 require_once __DIR__ . '/../entities/Notification.php';
-
 class NotificationManagerController extends BaseController {
- 
-   
     private $NotificationManagerModel;
-
     private $InvoiceModel;
-
     private $LoginManagerModel;
-
     public function __construct()
     {
-        
         $this->NotificationManagerModel = $this->loadModel("NotificationManagerModel");
         $this->InvoiceModel = $this->loadModel("InvoiceModel");
         $this->LoginManagerModel = $this->loadModel("LoginManagerModels");
         
     }
     public function index() {
-
         $IdOder=$_GET['idOder'];
         $IdUser=$_GET['idUser'];
-   
         $this->view('manager.NotificationManager.index',['IdOder'=>$IdOder,'IdUser'=>$IdUser  ] );
     }
-
+    // xóa hoá đơn
     public function DeleteOder($OderID,$UserID,$Content) {
-
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $currentTime = date('Y-m-d H:i:s');
         $Notification =new Notification(
@@ -41,7 +31,6 @@ class NotificationManagerController extends BaseController {
         );   
         $this->InvoiceModel->deleteInvoice($OderID);   
         $this->NotificationManagerModel->createNotification($Notification);
-        
         $temp= $_SESSION['AccountID'] ;
         $loginmanager = new LoginManager(
             '',

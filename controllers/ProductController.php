@@ -3,13 +3,11 @@ class ProductController extends BaseController
 {
     private $ProductModel;
     private $BannerModel;
-
     public function __construct()
     {
         $this->ProductModel = $this->loadModel("ProductModel");
         $this->BannerModel = $this->loadModel("BannerModel");
     }
-
     public function index()
     {
         $id = $_GET['items'];
@@ -28,6 +26,7 @@ class ProductController extends BaseController
         $this->view('frontEnd.product.index', 
         ['products' => $products,'Model'=>$Model,'Banner'=> $Banner,'items'=>$id]);
     }
+    // lây sản phẩm theo đơn line
     public function productModel()
     {
         $id = $_GET['items'];
@@ -47,9 +46,8 @@ class ProductController extends BaseController
         $this->view('frontEnd.product.index', 
         ['products' => $products,'Model'=>$Model,'Banner'=> $Banner,'items'=>$id]);
     }
-
+    // lấy dung lượng
     public function getCapacity($productType) {
-        // Gọi hàm trong ProductModel để lấy capacity dựa trên productType
         $capacity = $this->ProductModel->getCapacity($productType);
         return $capacity;
     }
