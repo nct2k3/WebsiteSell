@@ -3,23 +3,14 @@ require_once __DIR__ . '/../entities/Account.php';
 require_once __DIR__ .'/../entities/User.php';
 require_once __DIR__ . '/../controllers/BaseController.php';
 
-
 class ProductstatisticalController extends BaseController {
- 
-
-
     private $ProductModel;
-    private $InvoiceModel;
     private $InvoiceDetailModel;
     public function __construct()
     {
-        
-        
-        $this->InvoiceModel = $this->loadModel("InvoiceModel");
         $this->InvoiceDetailModel = $this->loadModel("InvoiceDetailModel");
         $this->ProductModel = $this->loadModel("ProductModel");
     }
-
     public function index() {
         $dataInvoice = $this->InvoiceDetailModel->getInvoiceDetailAll();
         $EndData = [];
@@ -27,14 +18,10 @@ class ProductstatisticalController extends BaseController {
         foreach ($dataInvoice as $item) {
             $total += $item->quantity;
         }
-    
         $productQuantities = [];
-    
         foreach ($dataInvoice as $item) {
             $product = $this->ProductModel->getProductByID($item->productID);
-    
             if (isset($productQuantities[$item->productID])) {
-   
                 $productQuantities[$item->productID]['Quantity'] += $item->quantity;
                 $productQuantities[$item->productID]['Price'] += $product->price * $item->quantity;
             } else {
@@ -47,17 +34,14 @@ class ProductstatisticalController extends BaseController {
                 ];
             }
         }
-
         foreach ($productQuantities as $productID => $productData) {
             $productData['Percent'] = ($productData['Quantity'] / $total) * 100; 
             $EndData[] = $productData; 
         }
-    
         $totalAmount = 0;
         foreach ($EndData as $data) {
             $totalAmount += $data['Price'];
         }
-
         usort($EndData, function($a, $b) {
             return $b['Percent'] <=> $a['Percent']; 
         });
