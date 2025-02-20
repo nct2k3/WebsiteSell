@@ -3,15 +3,10 @@ require_once __DIR__ ."/../entities/Product.php";
 
 class AddProductController extends BaseController
 {
-
-
     private $ProductModel;
-    
-
     public function __construct()
     {
         $this->ProductModel = $this->loadModel("ProductModel");
-      
     }
     public function index()
     {
@@ -22,6 +17,7 @@ class AddProductController extends BaseController
         $dataLineProduct=$this->ProductModel->getLineProduct();
         $this->view('manager.AddProduct.index',['Url'=>$Url,'dataLineProduct'=>$dataLineProduct]);
     }
+    // lẤy model tu dtb 
     public function productModel($id){
         $Url='';
         if (isset($_SESSION['UrlProduct'])) {
@@ -33,6 +29,7 @@ class AddProductController extends BaseController
         $NameLine=$this->ProductModel-> getnameLine($id);
         $this->view('manager.AddProduct.index',['Url'=>$Url,'NameLine'=>$NameLine,'dataModelProduct'=>$dataModelProduct,'dataLineProduct'=>$dataLineProduct]);
     }
+    // lẤy type tu dtb
     public function productType($id){
         $Url='';
         if (isset($_SESSION['UrlProduct'])) {
@@ -47,8 +44,8 @@ class AddProductController extends BaseController
         $_SESSION['TypeId'] = $id;
         $this->view('manager.AddProduct.index',['Url'=>$Url,'NameModel'=>$NameModel,'NameLine'=>$NameLine,'dataTypeProduct'=>$dataTypeProduct,'dataModelProduct'=>$dataModelProduct,'dataModelProduct'=>$dataModelProduct,'dataLineProduct'=>$dataLineProduct]);
     }
+    // thêm sản phẩm
     public function AddProduct($productType,$productName,$originalPrice,$price,$stock,$capacity,$color){
-
         $Url = '';
         $Idline = '';
         $IdType = '';
@@ -116,24 +113,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
 
         case 'upload':
-                    if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
-                        $file = $_FILES['file'];
-                        $fileName = time() . '_' . basename($file['name']);
-                        $filePath = 'public/img/' . $fileName;
-                        if (move_uploaded_file($file['tmp_name'], $filePath)) {
-                            $fullPath = $filePath; 
-                            $_SESSION['UrlProduct'] = $fullPath;
-                            $AddProductController= new AddProductController();
-                            $AddProductController->index();
-                        } else {
+            if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+                $file = $_FILES['file'];
+                $fileName = time() . '_' . basename($file['name']);
+                $filePath = 'public/img/' . $fileName;
+                if (move_uploaded_file($file['tmp_name'], $filePath)) {
+                    $fullPath = $filePath; 
+                    $_SESSION['UrlProduct'] = $fullPath;
+                    $AddProductController= new AddProductController();
+                    $AddProductController->index();
+                    } else {
                             echo "Lỗi khi tải tệp lên.";
-                        }
+                    }
                     } else {
                         echo "Không có tệp nào được tải lên hoặc có lỗi xảy ra.";
                     }
                     exit();
             
-        default:
+            default:
             echo "Hành động không hợp lệ!";
             break;
     }
