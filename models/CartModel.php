@@ -2,9 +2,9 @@
 require_once __DIR__ . '/../entities/Cart.php';
 class CartModel extends BaseModel
 {
+    //getget
     public function getcart($userID) {
         $data = $this->getListById('cart', $userID, 'UserID');
-        
         if (empty($data)) {
             return null; 
         }
@@ -20,30 +20,25 @@ class CartModel extends BaseModel
         }
         return $carts; 
     }
-    public function delete($userID, $productID) {
-        
+    // deletedelete
+    public function delete($userID, $productID) {      
        return $this->deleteTowID('cart','UserID','ProductID', $userID, $productID);
-
     }
     public function deleteById($userID) {
-      
         return $this->deleteID('cart', $userID,'UserID');
- 
-     }
+    }
+    // creatcreat
     public function createCart($Cart) {
-        // Kiểm tra xem các thuộc tính có hợp lệ không
         if (empty($Cart->UserID) || empty($Cart->ProductID) || $Cart->Quantity <= 0) {
             throw new InvalidArgumentException('Invalid cart data.');
         }
-       
         $userID = intval($Cart->UserID);
         $productID = intval($Cart->ProductID);
         $quantity = intval($Cart->Quantity);
         $sql = "SELECT * FROM cart WHERE UserID = $userID AND ProductID = $productID";
         $existingCartItem = $this->getOneCustome($sql);
-    
         if ($existingCartItem) {
-            return $this->updateTowId('cart',$userID,$productID,'UserID','ProductID','Quantity',$quantity); // Sử dụng hàm update
+            return $this->updateTowId('cart',$userID,$productID,'UserID','ProductID','Quantity',$quantity);
         } else {
             $data = [
                 'UserID' => $userID,

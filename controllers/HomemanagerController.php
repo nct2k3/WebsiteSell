@@ -1,17 +1,12 @@
 <?php
 class HomemanagerController extends BaseController
 {
-    private $CartModel;
     private $ProductModel;
-
     public function __construct()
     {
-        $this->CartModel = $this->loadModel("CartModel");
         $this->ProductModel = $this->loadModel("ProductModel");
     }
- 
     public function index(){
-
         $Role=$this->takeRole();
         if($Role==0){
             header("Location: /");
@@ -21,14 +16,13 @@ class HomemanagerController extends BaseController
         $dataLineProduct=$this->ProductModel->getLineProduct();
         $this->view('manager.HomeManager.index',['dataLineProduct'=>$dataLineProduct,'data'=>$data]);
     }
- 
-
+    //  lọc sản phâm
     public function FilterProduct($id){
-        
         $data = $this->ProductModel->getProductManager($id);
         $dataLineProduct=$this->ProductModel->getLineProduct();
         $this->view('manager.HomeManager.index',['dataLineProduct'=>$dataLineProduct,'data'=>$data]);
     }
+    // tìm kiếm sản phẩm
     public function searchProduct($string) {
         $data = $this->getAllProduct();
         
