@@ -108,7 +108,11 @@ $controller->index();
                             <button  readonly class="opacity-50 p-2 w-full rounded bg-yellow-500  hover:bg-yellow-600 my-2 font-bold">The order is being processed</button>
                         <?php endif?>
                         <?php if ($payment['status']=='complete'): ?>
-                            <button  readonly class="opacity-50 p-2 w-full rounded bg-gray-600   my-2 font-bold">Complete the order</button>
+                            <form action="?controller=information" method="POST">
+                                <input type="hidden" name="action" value="Reorder">
+                                <input type="hidden" name="InvoiceID" value="<?php echo $payment['invoice']->invoiceID; ?>">
+                                <button type="submit" class=" p-2 w-full rounded bg-purple-600 hover:bg-purple-400   my-2 font-bold">Reorder</button>
+                            </form>
                         <?php endif?>
                         <?php if ($payment['status']=='wait for confirmation'): ?>
                             <button 

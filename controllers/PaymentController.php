@@ -122,7 +122,7 @@ class PaymentController extends BaseController
         }
         $this->index(); 
     }
-    public function PaymentNormal($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note) {
+    public function PaymentNormal($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,$StattusTypePay) {
         $userID = $this->takeIDAccount();
         $dataUser = $this->UserModel->getUserByID($userID);
         $dataCart = $this->CartModel->getCart($userID);
@@ -174,7 +174,7 @@ class PaymentController extends BaseController
             $userID,
             date('Y-m-d H:i:s'),
             $endTotal,
-            0,
+            $StattusTypePay,
             'normal',
             $PhoneNumberend,
             $addressend,
@@ -204,7 +204,7 @@ class PaymentController extends BaseController
         }
     }
 
-    public function PaymentOne($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note) {
+    public function PaymentOne($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,$StattusTypePay) {
         $userID = $this->takeIDAccount();
         $dataUser = $this->UserModel->getUserByID($userID);
         $idProduct=$this->takeIDProduct();
@@ -250,14 +250,13 @@ class PaymentController extends BaseController
             $userID,
             date('Y-m-d H:i:s'),
             $endTotal,
-            0,
+            $StattusTypePay,
             'normal',
             $PhoneNumberend,
             $addressend,
             $dateDelivery,
             $NodeEnd
         );
-
         $invoiceId = $this->InvoiceModel->createInvoice($invoice);
         if ($invoiceId) {
       
@@ -282,18 +281,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'] ?? null;
     switch ($action) {
         case 'payment':
+    
             $loyaltyPoints = $_POST['LoyaltyPoints'] ?? null;
             $paymentType = $_POST['paymentType'] ?? null;
             $dateDelivery = $_POST['DateDelivery'] ?? null;
             $PhoneNumber = $_POST['PhoneNumber'] ?? null;
             $address = $_POST['address'] ?? null;
             $Note = $_POST['Note'] ?? null;
-
+            $paymentcontroller= new PaymentController;
+            
 
             if ($paymentType) {
-                $paymentcontroller= new PaymentController;
-                $paymentcontroller->PaymentNormal($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note);
-                if ($paymentType === 'credit_card') {
+                if ($paymentType == 1) {
+                  
+                   $paymentcontroller->PaymentNormal($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,0);
+                }
+                else
+                if ($paymentType == 2) {
+                   
+                   $paymentcontroller->PaymentNormal($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,4);
+                }
+                if ($paymentType == 3) {
                     $cardName = $_POST['cardName'] ?? null;
                     $cardNumber = $_POST['cardNumber'] ?? null;
                     $expiry = $_POST['expiry'] ?? null;
@@ -309,7 +317,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             } else {
                 $_SESSION['error'] = "Error!";
-                $paymentcontroller->index(); 
+                 $paymentcontroller->index(); 
             }
             break;
             case 'payOne':
@@ -319,12 +327,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $PhoneNumber = $_POST['PhoneNumber'] ?? null;
                 $address = $_POST['address'] ?? null;
                 $Note = $_POST['Note'] ?? null;
+                $paymentcontroller= new PaymentController;
+                print_r($paymentType  );
 
-    
                 if ($paymentType) {
-                    $paymentcontroller= new PaymentController;
-                    $paymentcontroller->PaymentOne($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note);
-                    if ($paymentType === 'credit_card') {
+                    if ($paymentType == 1) {
+                      $paymentcontroller->PaymentOne($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,0);
+                    }
+                    else
+                    if ($paymentType == 2) {
+                       $paymentcontroller->PaymentOne($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,4);
+                    }
+                    else
+                    if ($paymentType == 3) {
                         $cardName = $_POST['cardName'] ?? null;
                         $cardNumber = $_POST['cardNumber'] ?? null;
                         $expiry = $_POST['expiry'] ?? null;
