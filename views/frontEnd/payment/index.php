@@ -51,8 +51,9 @@ $controller->index();
                 <label for="paymentType" class="block text-sm font-medium text-gray-100">Payment Type</label>
                 <select id="paymentType" name="paymentType" required class=" text-gray-500 mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200">
                     <option value="" disabled selected>Select payment method</option>
-                    <option value="credit_card">Credit Card</option>
-                    <option value="paypal">Payment upon receipt</option>
+                    <option value="1">Order and pay upon receipt</option>
+                    <option value="2">Pay now</option>
+                    <option value="3">Oder with Credit Card</option>
                 </select>
             </div>
             <div id="creditCardFields" class="hidden">
@@ -129,7 +130,7 @@ $controller->index();
             </div>
         </div>
 
-            <button type="submit" class="w-full bg-indigo-600 text-white p-2 rounded-md button-animation hover:bg-indigo-700">Pay Now</button>
+            <button type="submit" class="w-full bg-indigo-600 text-white p-2 rounded-md button-animation hover:bg-indigo-700">Transaction Completed</button>
         </form>
     </div>
     
@@ -138,7 +139,7 @@ $controller->index();
 <script>
     document.getElementById('paymentType').addEventListener('change', function() {
         const creditCardFields = document.getElementById('creditCardFields');
-        if (this.value === 'credit_card') {
+        if (this.value == 3) {
             creditCardFields.classList.remove('hidden'); 
         } else {
             creditCardFields.classList.add('hidden'); 

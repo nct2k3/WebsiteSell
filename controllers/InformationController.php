@@ -120,6 +120,26 @@ class InformationController extends BaseController
 
 
     }
+
+    public function BuyAgain($InvoiceID){
+        print_r($InvoiceID);
+        $idUser=$this->takeIDAccount();
+        $this->CartModel->deleteById($idUser);
+        $dataInvoiceDetail = $this->InvoiceDetailModel->getInvoiceDetailByIDUser($InvoiceID);
+        foreach ($dataInvoiceDetail as $item) {
+            $Cart = new Cart(
+                '',
+                 $this->takeIDAccount(),
+                $item->productID,
+                $item->quantity,
+                
+            );
+            $this->CartModel->createCart($Cart);
+        }
+        header('Location: /?controller=payment');
+
+
+    }
     
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -142,6 +162,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $InformationController=new  InformationController();
                 $InformationController->UpdateStatus($IdPayment,$Status, $TotalAmount);
             exit();
+
+            case 'Reorder':
+                $IdPayment = $_POST['InvoiceID'];
+                $InformationController=new  InformationController();
+                $InformationController->BuyAgain($IdPayment);
+
 
         default:
             echo "Hành động không hợp lệ!";
