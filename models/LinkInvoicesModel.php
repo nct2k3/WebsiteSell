@@ -1,9 +1,9 @@
 
 <?php
 require_once __DIR__ . '/../entities/LinkInvoices.php';
-
 class LinkInvoicesModel extends BaseModel
 {
+    //get
     public function getLinkInvoicesAll()
     {
         $data = $this->getAll('linkinvoices'); 
@@ -12,13 +12,11 @@ class LinkInvoicesModel extends BaseModel
             $LinkInvoices[] = new LinkInvoices(
                 $row['LinkID'], 
                 $row['InvoiceID'], 
-                $row['URL'] ,
-                
+                $row['URL'] ,         
             );
         }
         return $LinkInvoices;
     }
-
     public function getLinkInvoicesWithId($id)
     {
         $data = $this->getListById('linkinvoices',$id, 'InvoiceID' ); 
@@ -28,11 +26,11 @@ class LinkInvoicesModel extends BaseModel
                 $row['LinkID'], 
                 $row['InvoiceID'], 
                 $row['URL'] ,
-             
             );
         }
         return $LinkInvoices;
     }
+    // create
     public function createLinkInvoice($ID,$LinkInvoices) {
 
         $check =$this->getLinkInvoicesWithId($ID);

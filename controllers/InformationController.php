@@ -1,7 +1,6 @@
 <?php
 class InformationController extends BaseController
 {
-  
     private $AccountsModel;
     private $ProductModel;
     private $CartModel;
@@ -17,8 +16,6 @@ class InformationController extends BaseController
         $this->InvoiceModel = $this->loadModel("InvoiceModel");
         $this->InvoiceDetailModel = $this->loadModel("InvoiceDetailModel");
     }
-    
-    
     public function index()
     {
         $id = $this->takeIDAccount();
@@ -42,7 +39,6 @@ class InformationController extends BaseController
                         'quantity' => $item->quantity,
                     ];
                 }
-    
                 if ($items->status == 1) {
                     $status = "confirmed";
                 } else if ($items->status == 2) {
@@ -56,13 +52,11 @@ class InformationController extends BaseController
                 } else {
                     $status = "wait for confirmation";
                 }
-    
                 $paymentData = [
                     'products' => $products,
                     'invoice' => $items,
                     'status' => $status,
                 ];
-    
                 if ($items->status != 4) {
                     $dataPament[] = $paymentData;
                 } else {
@@ -70,15 +64,14 @@ class InformationController extends BaseController
                 }
             }
         }
-        
-  
-    $this->view('frontEnd.information.index', [
-        'dataUser' => $dataUser,
-        'Email' => $dataAccount->email,
-        'dataPament'=>$dataPament,
-        'dataWasPayment'=>$dataWasPayment,
-    ]);
-}
+        $this->view('frontEnd.information.index', [
+            'dataUser' => $dataUser,
+            'Email' => $dataAccount->email,
+            'dataPament'=>$dataPament,
+            'dataWasPayment'=>$dataWasPayment,
+        ]);
+    }
+    // đăng xuấtxuất
     public function logout(){
         $_SESSION['AccountID'] = "";
         $_SESSION['Role'] ="";
@@ -86,15 +79,15 @@ class InformationController extends BaseController
         header("Location: /");
         exit();
     }
+    // xóa mua hànghàng
     public function CancalOder(){
         $InvoiceId = $_GET['ID'];
         $this->InvoiceModel->deleteInvoice($InvoiceId);
         $_SESSION['message'] = "Cancel successfully!";
         $this->index();
-
     }
+    // đổi thông tin
     public function change($FullName,$NumberPhone,$Address){
-
         $id = $this->takeIDAccount();
         $dataUser = $this->UserModel->getUserByID($id);
         $dataFullName=$FullName;
@@ -109,14 +102,12 @@ class InformationController extends BaseController
         if($Address== ''){
             $dataAddress=$dataUser->Address;
         }
-
         $this->UserModel->updateInformation($dataFullName,$dataNumberPhone,$dataAddress,$id);
         $_SESSION['message'] = "Change successfully!";
-
         $this->index();
         exit();
-
     }
+    // thay đổi trạng thái mua hàng
     public function UpdateStatus($IdInvoices,$value,$TotalAmount){
         $this->InvoiceModel->UpdateStatus($IdInvoices,$value);
         $id = $this->takeIDAccount();
@@ -126,9 +117,8 @@ class InformationController extends BaseController
         $_SESSION['message'] = "Change successfully!";
         $this->index();
 
-
     }
-
+    // mua lại hàng
     public function BuyAgain($InvoiceID){
         print_r($InvoiceID);
         $idUser=$this->takeIDAccount();
@@ -140,13 +130,10 @@ class InformationController extends BaseController
                  $this->takeIDAccount(),
                 $item->productID,
                 $item->quantity,
-                
             );
             $this->CartModel->createCart($Cart);
         }
         header('Location: /?controller=payment');
-
-
     }
     
 }
@@ -155,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     switch ($action) {
         case 'change':
-            $FullName = $_POST['fullName'] ?? ''; // Đảm bảo có giá trị mặc định
+            $FullName = $_POST['fullName'] ?? ''; 
             $NumberPhone = $_POST['phone'] ?? '';
             $Address = $_POST['address'] ?? '';
             
