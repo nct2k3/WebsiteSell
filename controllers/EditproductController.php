@@ -3,15 +3,10 @@ require_once __DIR__ ."/../entities/Product.php";
 
 class EditProductController extends BaseController
 {
-
-
     private $ProductModel;
-    
-
     public function __construct()
     {
         $this->ProductModel = $this->loadModel("ProductModel");
-      
     }
     public function index()
     {
@@ -24,6 +19,7 @@ class EditProductController extends BaseController
         $dataLineProduct=$this->ProductModel->getLineProduct();
         $this->view('manager.EditProduct.index',['ProductEdit'=>$ProductEdit,'Url'=>$Url,'dataLineProduct'=>$dataLineProduct]);
     }
+    // hiên thi nhung voi dk idid
     public function indexHaveId($id)
     {
         $Url='';
@@ -34,16 +30,13 @@ class EditProductController extends BaseController
         $dataLineProduct=$this->ProductModel->getLineProduct();
         $this->view('manager.EditProduct.index',['ProductEdit'=>$ProductEdit,'Url'=>$Url,'dataLineProduct'=>$dataLineProduct]);
     }
-   
-  
+   // sửa sản phẩmphẩm
     public function EditProduct($id,$productName, $originalPrice, $price, $stock, $capacity, $color) {
-        
         $ProductEdit = $this->ProductModel->getProductByID($id);
         
         if ($ProductEdit === null) {
             die("Error: Product not found.");
         }
-    
         $Url = isset($_SESSION['UrlProductEdit']) && !empty($_SESSION['UrlProductEdit']) ? $_SESSION['UrlProductEdit'] : $ProductEdit->img;
     
         $productNameNew = !empty($productName) ? $productName : $ProductEdit->productName;
@@ -52,7 +45,6 @@ class EditProductController extends BaseController
         $stockNew = !empty($stock) ? $stock : $ProductEdit->stock;
         $capacityNew = !empty($capacity) ? $capacity : $ProductEdit->capacity;
         $colorNew = !empty($color) ? $color : $ProductEdit->color;
-    
         $productData = new Product(
             $id,
             '',
@@ -72,7 +64,6 @@ class EditProductController extends BaseController
         $this->indexHaveId($id);
         exit();
        }
- 
        else{
         $data = $this->ProductModel->UpdateProduct($productData);
          $_SESSION['message'] = "Update successfully!";
@@ -85,7 +76,6 @@ class EditProductController extends BaseController
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'] ?? null;
-
     switch ($action) {
         case 'add':
             $id=$_POST['IdProduct'];
@@ -101,25 +91,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $EditProductController= new EditProductController();
             $EditProductController->EditProduct($id, $productName,$originalPrice,$Price,$stock,$capacity,$color);
             exit();
-
         case 'uploadEdit':
-                    if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
-                        $file = $_FILES['file'];
-                        $fileName = time() . '_' . basename($file['name']);
-                        $filePath = 'public/img/' . $fileName;
-                        if (move_uploaded_file($file['tmp_name'], $filePath)) {
-                            $fullPath = $filePath; 
-                            $_SESSION['UrlProductEdit'] = $fullPath;
-                            $EditProductController= new EditProductController();
-                            $EditProductController->index();
-                        } else {
+            if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+                $file = $_FILES['file'];
+                $fileName = time() . '_' . basename($file['name']);
+                $filePath = 'public/img/' . $fileName;
+                 if (move_uploaded_file($file['tmp_name'], $filePath)) {
+                        $fullPath = $filePath; 
+                        $_SESSION['UrlProductEdit'] = $fullPath;
+                        $EditProductController= new EditProductController();
+                        $EditProductController->index();
+                } else {
                             echo "Lỗi khi tải tệp lên.";
                         }
-                    } else {
+                 } else {
                         echo "Không có tệp nào được tải lên hoặc có lỗi xảy ra.";
-                    }
-                    exit();
-            
+                 }
+                exit();
         default:
             echo "Hành động không hợp lệ!";
             break;
