@@ -2,12 +2,11 @@
 require_once __DIR__ . '/../entities/User.php';
 
 class UserModel extends BaseModel {
+    //creat
     public function create($table, $data) {
         return parent::create($table, $data);
     }
-
     public function createUser($user) {
-
         $userData = [
             'FullName' => $user->FullName,
             'PhoneNumber' => $user->PhoneNumber,
@@ -17,6 +16,7 @@ class UserModel extends BaseModel {
         ];
         return $this->createReturnID('users', $userData);
     }
+    //update
     public function updateInformation($fullName, $phoneNumber, $address,$idUser) {
         $sql = "UPDATE users SET `FullName`='$fullName',`PhoneNumber`='$phoneNumber',`Address`='$address' WHERE UserID=$idUser";
         $result = $this->UpdateCustome($sql);
@@ -27,13 +27,10 @@ class UserModel extends BaseModel {
         }
     }
     public function UpdateLoyaltyPoints($idUser,$data) {
-
         $this->updateString('users','LoyaltyPoints',$data,$idUser,'UserID');
-
     }
+    //get
     public function getUserByID($UserID) {
-
-        
             $data = $this->getById('users', $UserID, '	UserID');
             if (empty($data)) {
                 return null; 
@@ -46,6 +43,5 @@ class UserModel extends BaseModel {
                 $data['LoyaltyPoints'],        
             );
             return $User;
-            
     }
 }
