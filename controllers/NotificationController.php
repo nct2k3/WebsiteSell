@@ -1,24 +1,13 @@
 <?php
-
-
 class NotificationController extends BaseController {
- 
-   
-    
     private $NotificationManagerModel;
-
     private $LinkInvoicesModel;
-
     private $InvoiceModel;
-
     public function __construct()
     {
-        
         $this->NotificationManagerModel = $this->loadModel("NotificationManagerModel");
         $this->InvoiceModel = $this->loadModel("InvoiceModel");
-        $this->LinkInvoicesModel = $this->loadModel("LinkInvoicesModel");
-       
-        
+        $this->LinkInvoicesModel = $this->loadModel("LinkInvoicesModel"); 
     }
     public function index() {
         $idUser = $this->takeIDAccount();
@@ -43,55 +32,50 @@ class NotificationController extends BaseController {
                     
                     $url = $linkInvoices->URL ?? '';
                 }
-
                 $DataInvoice[] = [
                     'Data' => $item,
                     'Link' => $url
                 ];
             }
         }
-    
         $this->view('frontEnd.Notification.index', [
             'data' => $DataBasic,
             'DataInvoice' => $DataInvoice
-           
         ]);
     }
-
-function downloadFile($file) {
-    $filePath = "public/bill/" . basename($file);
-
-    if (file_exists($filePath)) {
-        $fileInfo = pathinfo($file);
-        $timestamp = date('Y-m-d_H-i-s');
-        $newFilename = $fileInfo['filename'] . '_' . $timestamp . '.' . $fileInfo['extension'];
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $mimeType = finfo_file($finfo, $filePath);
-        finfo_close($finfo);
-        header('Content-Description: File Transfer');
-        header('Content-Type: ' . $mimeType);
-        header('Content-Disposition: attachment; filename="' . $newFilename . '"'); // Changed to use newFilename with timestamp
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate');
-        header('Pragma: public');
-        header('Content-Length: ' . filesize($filePath));
-        
-        readfile($filePath);
-        $_SESSION['message'] = "Take file successfully!";
-        $this->index();
-    } else {
-        echo "File không tồn tại.";
+    // tải file về máy
+    function downloadFile($file) {
+        $filePath = "public/bill/" . basename($file);
+        if (file_exists($filePath)) {
+            $fileInfo = pathinfo($file);
+            $timestamp = date('Y-m-d_H-i-s');
+            $newFilename = $fileInfo['filename'] . '_' . $timestamp . '.' . $fileInfo['extension'];
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeType = finfo_file($finfo, $filePath);
+            finfo_close($finfo);
+            header('Content-Description: File Transfer');
+            header('Content-Type: ' . $mimeType);
+            header('Content-Disposition: attachment; filename="' . $newFilename . '"'); // Changed to use newFilename with timestamp
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($filePath));
+            readfile($filePath);
+            $_SESSION['message'] = "Take file successfully!";
+            $this->index();
+        } else {
+            echo "File không tồn tại.";
+        }
     }
-}
+    // xóa thông báo
     function  deleteNotification($id){
         $this->NotificationManagerModel->deleteNotification($id);
-        $_SESSION['message'] = "Delete successfully!";
-        $this->index();
-        
+            $_SESSION['message'] = "Delete successfully!";
+            $this->index();
+            
+        }
+
     }
-
-}
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'] ?? null;
 

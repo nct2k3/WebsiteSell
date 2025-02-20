@@ -2,27 +2,17 @@
 require_once __DIR__ . '/../entities/Account.php';
 require_once __DIR__ .'/../entities/User.php';
 require_once __DIR__ . '/../controllers/BaseController.php';
-
-
 class OderstatisticalController extends BaseController {
- 
-
-
     private $ProductModel;
     private $InvoiceModel;
-    private $InvoiceDetailModel;
     public function __construct()
     {
-        
-        
         $this->InvoiceModel = $this->loadModel("InvoiceModel");
-        $this->InvoiceDetailModel = $this->loadModel("InvoiceDetailModel");
         $this->ProductModel = $this->loadModel("ProductModel");
     }
 
     public function index() {
-
-    
+        // lấy đơn hàng theo trạng tháithái
     $waitingConfirm = $this->InvoiceModel->getInvoiceBystatus(0);
     $confirmed = $this->InvoiceModel->getInvoiceBystatus(1);
     $inDelivery = $this->InvoiceModel->getInvoiceBystatus(3);
@@ -30,7 +20,7 @@ class OderstatisticalController extends BaseController {
 
     $ProductNotsoldProductNotsold = $this->ProductModel->getProductDelete();
     $AllProduct = $this->ProductModel->getAllProduct();
-
+    // lấy số lượng + chía %
     $numWaitingConfirm = is_array($waitingConfirm) ? count($waitingConfirm) : 0;
     $numConfirmed = is_array($confirmed) ? count($confirmed) : 0;
     $numInDelivery = is_array($inDelivery) ? count($inDelivery) : 0;
@@ -40,16 +30,14 @@ class OderstatisticalController extends BaseController {
     $numProductSold=$numAllProductAllProduct-$numProductNotSold;
     
     $total=$numWaitingConfirm+$numConfirmed+$numInDelivery+$numCompleted;
-
+    // tính %
     $PercentWaitingConfirm=($numWaitingConfirm/$total)*100;
     $PercentConfirmed=($numConfirmed/$total)*100;
     $PercentInDelivery=($numInDelivery/$total)*100;
     $PercentCompleted=($numCompleted/$total)*100;
-
+    // tính % sản phẩm bán đc
     $PercentProductSold=($numProductSold/$numAllProductAllProduct)*100;
     $PercentProductNotSold=($numProductNotSold/$numAllProductAllProduct)*100;
-
-
 
         $this->view('manager.OderStatistical.index',
         ['PercentWaitingConfirm'=>$PercentWaitingConfirm,
@@ -67,7 +55,6 @@ class OderstatisticalController extends BaseController {
         'numProductNotSold'=>$numProductNotSold,
         'numAllProductAllProduct'=>$numAllProductAllProduct
         ]);
-    
     
     }
 

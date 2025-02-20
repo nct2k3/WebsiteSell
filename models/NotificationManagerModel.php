@@ -3,6 +3,7 @@ require_once __DIR__ . '/../entities/Notification.php';
 
 class NotificationManagerModel extends BaseModel
 {
+    // get
     public function getNotificationAll()
     {
         $data = $this->getAll('notifications'); 
@@ -15,7 +16,6 @@ class NotificationManagerModel extends BaseModel
                 $row['Content'],
                 $row['Status'] ,
                 $row['Time'],
-               
             );
         }
         return $Notification;
@@ -37,6 +37,7 @@ class NotificationManagerModel extends BaseModel
         }
         return $Notification;
     }
+    //create
     public function createNotification($Notification) {
 
         $Notification = [
@@ -49,7 +50,7 @@ class NotificationManagerModel extends BaseModel
         ];
         return $this->createReturnID('notifications', $Notification);
     }
-
+    // delete
     public function deleteNotification($id){
         return $this->delete('notifications', $id);
     }

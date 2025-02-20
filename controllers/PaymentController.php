@@ -2,7 +2,6 @@
 class PaymentController extends BaseController
 {
     private $ProductModel;
-
     private $CartModel;
     private $UserModel;
     private $InvoiceModel;
@@ -15,7 +14,6 @@ class PaymentController extends BaseController
         $this->InvoiceModel = $this->loadModel("InvoiceModel");
         $this->InvoiceDetailModel = $this->loadModel("InvoiceDetailModel");
     }
-    
     public function index()
     {
         $userID =$this->takeIDAccount();
@@ -43,6 +41,7 @@ class PaymentController extends BaseController
         $dataAction='payment';
         $this->view('frontEnd.payment.index', ['dataAction'=>$dataAction,'products' => $products, 'total' => $total, 'userID' => $userID,'dataUser'=>$dataUser,]);
     }
+    // mua 1 sản phẩm 
     public function buyOne()
     {
         $userID =$this->takeIDAccount();
@@ -70,7 +69,7 @@ class PaymentController extends BaseController
         $dataAction='payOne';
         $this->view('frontEnd.payment.index', ['dataAction'=>$dataAction,'products' => $products, 'total' => $total, 'userID' => $userID,'dataUser'=>$dataUser]);
     }
-
+    // xóa  spsp
 
     public function Delete()
     {
@@ -87,6 +86,7 @@ class PaymentController extends BaseController
             echo "Invalid user or product ID.";
         }
     }
+    // thay đổi sl sản phẩmphẩm
     public function ChangeQuantity(){
         $userId= $this->takeIDAccount();
         if($userId==""){
@@ -94,7 +94,6 @@ class PaymentController extends BaseController
             $this->index(); 
             return;
         }
-        
         $id = $_GET['product'];
         $quantity = $_GET['quantity'];
         if(number_format($quantity)<=0){
@@ -107,7 +106,6 @@ class PaymentController extends BaseController
             $_SESSION['error'] = "Excess inventory cannot be added!";
             $this->index(); 
             return;
-
         }
         $cart= new Cart(
             '',
@@ -118,16 +116,15 @@ class PaymentController extends BaseController
         $data=$this->CartModel->createCart($cart);
         if ($data==1) {
             $_SESSION['message'] = "Change successfully!";
-
         }
         $this->index(); 
     }
+    // thanh toán bình thương với giỏ hànghàng
     public function PaymentNormal($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,$StattusTypePay) {
         $userID = $this->takeIDAccount();
         $dataUser = $this->UserModel->getUserByID($userID);
         $dataCart = $this->CartModel->getCart($userID);
         $products = [];
-    
         if (is_array($dataCart) && count($dataCart) > 0) {
             foreach ($dataCart as $item) {
                 if (isset($item->ProductID)) {
@@ -141,21 +138,17 @@ class PaymentController extends BaseController
                 }
             }
         }
-    
         $total = 0;
         foreach ($products as $product) {
             $total += $product['item']->price * $product['quantity'];
         }
-    
         $loyaltyPoints = floatval($loyaltyPoints);
         $endTotal = ($loyaltyPoints > 0) ? $total - $loyaltyPoints : $total;
-    
         if (!$dataUser) {
             $_SESSION['error'] = "User data not found.";
             header("Location: /?controller=information&user=$userID");
             return;
         }
-    
         $PhoneNumberend=$dataUser->PhoneNumber;
         if($PhoneNumber!=''){
             $PhoneNumberend=$PhoneNumber;
@@ -168,7 +161,6 @@ class PaymentController extends BaseController
         if($Note!=''){
             $NodeEnd=$Note;
         }
-    
         $invoice = new Invoice(
             '',
             $userID,
@@ -181,7 +173,6 @@ class PaymentController extends BaseController
             $dateDelivery,
             $NodeEnd
         );
-    
         $invoiceId = $this->InvoiceModel->createInvoice($invoice);
         if ($invoiceId) {
             foreach ($products as $product) {
@@ -193,8 +184,6 @@ class PaymentController extends BaseController
                 );
                 $this->InvoiceDetailModel->createInvoice($invoiceDetail);
             }
-            
-            // Xóa giỏ hàng
             $this->CartModel->deleteById($userID);
             $_SESSION['message'] = "Payment successfully!";
             header("Location: /?controller=information&user=$userID");
@@ -203,7 +192,7 @@ class PaymentController extends BaseController
             header("Location: /?controller=information&user=$userID");
         }
     }
-
+    // THANH TOÁN VỚI 1 sản phẩm
     public function PaymentOne($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,$StattusTypePay) {
         $userID = $this->takeIDAccount();
         $dataUser = $this->UserModel->getUserByID($userID);
@@ -211,7 +200,6 @@ class PaymentController extends BaseController
         $products = [];
         if (isset($idProduct)) {
                     $product = $this->ProductModel->getProductByID($idProduct);
-
                     if ($product) {
                         $products[] = [
                             'item' => $product,
@@ -225,8 +213,6 @@ class PaymentController extends BaseController
         }
         $loyaltyPoints = floatval($loyaltyPoints);
         $endTotal = ($loyaltyPoints > 0) ? $total - $loyaltyPoints : $total;
-    
-       
         if (!$dataUser) {
             $_SESSION['error'] = "User data not found.";
             header("Location: /?controller=information&user=$userID");
@@ -244,7 +230,6 @@ class PaymentController extends BaseController
         if($Note!=''){
             $NodeEnd=$Note;
         }
-    
         $invoice = new Invoice(
             '',
             $userID,
@@ -259,7 +244,6 @@ class PaymentController extends BaseController
         );
         $invoiceId = $this->InvoiceModel->createInvoice($invoice);
         if ($invoiceId) {
-      
                 $invoiceDetail = new InvoiceDetail(
                     '',
                     $invoiceId,
@@ -281,7 +265,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'] ?? null;
     switch ($action) {
         case 'payment':
-    
             $loyaltyPoints = $_POST['LoyaltyPoints'] ?? null;
             $paymentType = $_POST['paymentType'] ?? null;
             $dateDelivery = $_POST['DateDelivery'] ?? null;
@@ -290,7 +273,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $Note = $_POST['Note'] ?? null;
             $paymentcontroller= new PaymentController;
             
-
             if ($paymentType) {
                 if ($paymentType == 1) {
                   

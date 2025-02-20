@@ -3,6 +3,7 @@ require_once __DIR__ . '/../entities/LoginManager.php';
 
 class LoginManagerModels extends BaseModel
 {
+    //get
     public function getLoginManagerAll()
     {
         $data = $this->getAll('loginmanager'); 
@@ -17,7 +18,6 @@ class LoginManagerModels extends BaseModel
         }
         return $LoginManager;
     }
-
     public function getLoginManagerWithId($id)
     {
         $data = $this->getListById('loginmanager',$id, 'UserID' ); 
@@ -32,6 +32,7 @@ class LoginManagerModels extends BaseModel
         }
         return $LoginManager;
     }
+    // create
     public function createLoginManager($LoginManager) {
         $LoginManager = [
             'ID' => $LoginManager->ID,
