@@ -20,55 +20,63 @@ class InformationController extends BaseController
     
     
     public function index()
-{
-    $id = $this->takeIDAccount();
-    $dataUser = $this->UserModel->getUserByID($id);
-    $dataAccount = $this->AccountsModel->getAccountByIDUser($id);
-    $dataInvoice = $this->InvoiceModel->getInvoiceByIDUser($id);
-    $dataPament = [];
-    if ($dataInvoice!=null) {
-        foreach ($dataInvoice as $items) {
-            $products = [];
-            $dataInvoiceDetail = $this->InvoiceDetailModel->getInvoiceDetailByIDUser($items->invoiceID);
-            
-            foreach ($dataInvoiceDetail as $item) {
-                $products[] = [
-                    'product' => $this->ProductModel->getProductByID($item->productID),
-                    'quantity' => $item->quantity,
+    {
+        $id = $this->takeIDAccount();
+        $dataUser = $this->UserModel->getUserByID($id);
+        $dataAccount = $this->AccountsModel->getAccountByIDUser($id);
+        $dataInvoice = $this->InvoiceModel->getInvoiceByIDUser($id);
+        usort($dataInvoice, function($a, $b) {
+                return  $b->invoiceID - $a->invoiceID;
+        });
+        $dataPament = [];
+        $dataWasPayment = [];
+    
+        if ($dataInvoice != null) {
+            foreach ($dataInvoice as $items) {
+                $products = [];
+                $dataInvoiceDetail = $this->InvoiceDetailModel->getInvoiceDetailByIDUser($items->invoiceID);
+                
+                foreach ($dataInvoiceDetail as $item) {
+                    $products[] = [
+                        'product' => $this->ProductModel->getProductByID($item->productID),
+                        'quantity' => $item->quantity,
+                    ];
+                }
+    
+                if ($items->status == 1) {
+                    $status = "confirmed";
+                } else if ($items->status == 2) {
+                    $status = "being transported";
+                } else if ($items->status == 3) {
+                    $status = "delivered";
+                } else if ($items->status == 4) {
+                    $status = "complete";
+                } else if ($items->status == 5) {
+                    $status = "complete the order";
+                } else {
+                    $status = "wait for confirmation";
+                }
+    
+                $paymentData = [
+                    'products' => $products,
+                    'invoice' => $items,
+                    'status' => $status,
                 ];
+    
+                if ($items->status != 4) {
+                    $dataPament[] = $paymentData;
+                } else {
+                    $dataWasPayment[] = $paymentData;
+                }
             }
-            $status="wait for confirmation";
-            if($items->status == 1) {
-                $status="confirmed";
-            }
-            else if($items->status == 2) {
-                $status="being transported";
-            }
-            else if($items->status == 3) {
-                $status="delivered";
-            }
-            else if($items->status == 4) {
-                $status="complete";
-            }
-            else if($items->status == 5) {
-                $status="complete the order";
-            }
-            
-            
-            
-            $dataPament[] = [
-                'products' => $products,
-                'invoice' => $items,
-                'status'=>$status
-            ];
-        }        
+        }
         
-    }
-    //print_r($dataPament);
+  
     $this->view('frontEnd.information.index', [
         'dataUser' => $dataUser,
         'Email' => $dataAccount->email,
-        'dataPament'=>$dataPament
+        'dataPament'=>$dataPament,
+        'dataWasPayment'=>$dataWasPayment,
     ]);
 }
     public function logout(){

@@ -39,8 +39,8 @@ $controller->index();
                     </form>
             </div>
             <p class="text-gray-700 mb-2 "><?php echo $items['Data']->Content?>
-            <form action="?controller=Notification" method="POST">
-                <input type="hidden" name="action" value="TakeFile">
+            <form action="?controller=information" method="POST">
+                <input type="hidden" name="action" value="BuyAgain">
                 <input type="hidden" name="URL" value="<?php echo $items['Link'] ?>">
                 <button type="submit"  class="bg-green-500 p-2 rounded text-white text-sm hover:bg-green-600 mb-2">Dow your file invoice</button>
             </form>
