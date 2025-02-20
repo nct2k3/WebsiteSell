@@ -49,4 +49,8 @@ class NotificationManagerModel extends BaseModel
         ];
         return $this->createReturnID('notifications', $Notification);
     }
+
+    public function deleteNotification($id){
+        return $this->delete('notifications', $id);
+    }
 }

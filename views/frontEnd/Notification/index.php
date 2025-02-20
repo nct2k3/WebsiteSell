@@ -31,7 +31,12 @@ $controller->index();
                     ?>
                     order code: <?php echo $items['Data']->InvoiceID?>
                     </h1>
-                <a href="#" class="bg-<?php echo $color?>-500 text-sm text-white font-bold py-1 px-4 rounded hover:bg-<?php echo $color?>-700 transition duration-200">Delete Notification</a>
+                    <form action="?controller=Notification" method="POST">
+                    <input type="hidden" name="action" value="Delete">
+                    <input type="hidden" name="IdDelete" value="<?php echo $items['Data']->InvoiceID?>">
+                        <button type="submit"  class="bg-<?php echo $color?>-500 text-sm text-white font-bold py-1 px-4 rounded hover:bg-<?php echo $color?>-700 transition duration-200">
+                        Delete Notification</button>
+                    </form>
             </div>
             <p class="text-gray-700 mb-2 "><?php echo $items['Data']->Content?>
             <form action="?controller=Notification" method="POST">
@@ -63,7 +68,13 @@ $controller->index();
                     
                     order code: <?php echo $items->InvoiceID?>
                     </h1>
-                <a href="#" class="bg-<?php echo $color?>-500 text-sm text-white font-bold py-1 px-4 rounded hover:bg-<?php echo $color?>-700 transition duration-200">Delete Notification</a>
+                    <form action="?controller=Notification" method="POST">
+                    <input type="hidden" name="action" value="Delete">
+                    <input type="hidden" name="IdDelete" value="<?php echo $items->ID?>">
+                        <button type="submit"  class="bg-<?php echo $color?>-500 text-sm text-white font-bold py-1 px-4 rounded hover:bg-<?php echo $color?>-700 transition duration-200">
+                        Delete Notification</button>
+                    </form>
+                
             </div>
             <p class="text-gray-700 mb-2"><?php echo $items->Content?></p>
             <p class="text-gray-100 bg-<?php echo $color?>-500 text-sm ">Time: <?php echo $items->Time?></p>
