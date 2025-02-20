@@ -259,6 +259,9 @@ class OdermanagerController extends BaseController
             $fileName = 'ID_'.$InvoiceId.'_Name_'.$dataUser->FullName.'_hoadon.docx';
             $filePath ='C:/xampp/htdocs/WebsiteSells/public/bill/' . $fileName; 
             $writer = IOFactory::createWriter($phpWord, 'Word2007');
+
+
+            
             $writer->save($filePath);
             $check=  $this->LinkInvoicesModel->createLinkInvoice($InvoiceId,$filePath);
             if($check==0){
@@ -266,6 +269,18 @@ class OdermanagerController extends BaseController
                 $this->index();
             }
             else{
+                date_default_timezone_set('Asia/Ho_Chi_Minh');
+            $currentTime = date('Y-m-d H:i:s');
+            $Notification =new Notification(
+                '',
+                $UserID,
+                $InvoiceId,
+                'Send invoice word file',
+                2,
+                $currentTime,
+
+            );   
+            $this->NotificationManagerModel->createNotification($Notification);
             $_SESSION['message'] = " successfully!";
             $this->index();
             }
