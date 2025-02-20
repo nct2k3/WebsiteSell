@@ -3,27 +3,16 @@ require_once __DIR__ . '/../entities/Account.php';
 require_once __DIR__ .'/../entities/User.php';
 require_once __DIR__ . '/../controllers/BaseController.php';
 
-
 class RevenuestatisticalController extends BaseController {
  
-
-
-    private $ProductModel;
     private $InvoiceModel;
-    private $InvoiceDetailModel;
+    
     public function __construct()
     {
-        
-        
         $this->InvoiceModel = $this->loadModel("InvoiceModel");
-        $this->InvoiceDetailModel = $this->loadModel("InvoiceDetailModel");
-        $this->ProductModel = $this->loadModel("ProductModel");
     }
-
     public function index() {
-        
         $year=2025;
-        
         $dataInvoice = $this->InvoiceModel->getInvoiceByYear($year);
         $totalAmount=0;
         $totalOrder=count($dataInvoice);
@@ -66,9 +55,8 @@ class RevenuestatisticalController extends BaseController {
                         
     
     }
-
+    // doanh thu theo nămm
     public function RevenueYear($year) {
-        
         $dataInvoice = $this->InvoiceModel->getInvoiceByYear($year);
         if (empty($dataInvoice)) {
             $_SESSION['error'] = "There are no invoices in this year.";
@@ -118,7 +106,6 @@ class RevenuestatisticalController extends BaseController {
     }
 
 }
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'] ?? null;
 
