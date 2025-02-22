@@ -1,7 +1,6 @@
 <?php
 class HeadermanagerController extends BaseController
 {
-
     private $LoginManagerModel;
     public function __construct()
     {
@@ -15,7 +14,6 @@ class HeadermanagerController extends BaseController
         $temp= $_SESSION['AccountID'] ;
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $currentTime = date('Y-m-d H:i:s');
-
         $loginmanager = new LoginManager(
             '',
             $temp,
@@ -29,6 +27,4 @@ class HeadermanagerController extends BaseController
         header("Location: /");
         exit();
     }
-
-    
 }

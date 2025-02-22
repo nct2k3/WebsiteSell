@@ -8,8 +8,6 @@ class Notification
     public $Content	;
     public $Status;
     public $Time;
-
-
     public function __construct($ID, $UserID,$InvoiceID , $Content, $Status, $Time)
     {
         $this->ID = $ID;
