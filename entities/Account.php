@@ -7,7 +7,6 @@ class Account
     public $password;
     public $role;
     public $userID;
-
     public function __construct($accountID, $email, $password, $role, $userID)
     {
         $this->accountID = $accountID;

@@ -6,8 +6,6 @@ class LoginManager
     public $UserID ;
     public $TimeLogin	;
     public $Action;
-
-
     public function __construct($ID, $UserID, $TimeLogin, $Action)
     {
         $this->ID = $ID;

@@ -15,8 +15,6 @@
             animation: fadeOut 0.5s forwards;
         }
     </style>
-
-    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
@@ -54,6 +52,7 @@
                         <option value="1">List Product</option>
                         <option value="2">Add New Product</option>
                         <option value="3">Delete Product</option>
+                        <option value="4">Add Detail Product</option>
                        
                     </select>
                 </div>
@@ -129,6 +128,10 @@
         else
         if(value==3){
             window.location =`?controller=DeleteProduct`;
+        }
+        else
+        if(value==4){
+            window.location =`?controller=Adddetailproduct`;
         }
 
     }

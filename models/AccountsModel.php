@@ -45,8 +45,6 @@ class AccountsModel extends BaseModel
     }
 
     public function getAccountByIDUser($UserID) {
-
-        
         $data = $this->getById('Accounts', $UserID, 'UserID');
         if (empty($data)) {
             return null; 

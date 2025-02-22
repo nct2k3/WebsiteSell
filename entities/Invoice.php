@@ -1,5 +1,4 @@
 <?php
-
 class Invoice {
     public $invoiceID;
     public $userID;
@@ -8,13 +7,9 @@ class Invoice {
     public $status;
     public $paymentType;
     public $NumberPhone;
-
     public $Address;
-
     public $DateDelivery;
-
     public $Note;
-
     public function __construct($invoiceID, $userID, $invoiceDate,
      $totalAmount, $status, $paymentType,$NumberPhone,$Address,$DateDelivery ,$Note) {
         $this->invoiceID = $invoiceID;

@@ -3,7 +3,6 @@ class Product {
     public $productID;
     public $productLineID;
     public $productType;
-
     public $productModel;
     public $productName;
     public $price;
@@ -12,8 +11,6 @@ class Product {
     public $img;
     public $capacity;
     public $color;
-
-    // Constructor
     public function __construct($productID, $productLineID, $productType,$productModel, $productName, $price, $originalPrice, $stock, $img, $capacity, $color) {
         $this->productID = $productID;
         $this->productLineID = $productLineID;

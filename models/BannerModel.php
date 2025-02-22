@@ -14,7 +14,6 @@ class BannerModel extends BaseModel
                 $row['ProductLineID'] 
             );
         }
-
         return $Banners;
     }
 }

@@ -53,6 +53,49 @@ class ProductModel extends BaseModel
     private function _query($sql) {
         return mysqli_query($this->connect, $sql);
     }
+    public function addProductModels($productModelName,$productLineID){
+
+        $sql ="SELECT * FROM `productmodel` WHERE ProductModelName = '$productModelName' and ProductLine = $productLineID ";
+        $checkData= $this->getCustome($sql);
+        if($checkData!=null){
+           return 1;
+        }
+        $Data = [
+            'ProductModelID'=>'',
+            'ProductModelName' =>  $productModelName,
+            'ProductLine' => $productLineID, 
+        ];
+        return $this->createReturnID('productmodel', $Data);
+    }
+    public function addProductTypes($productTypeName,$productModel){
+        $sql ="SELECT * FROM `producttype` WHERE ProductTypeName = '$productModel' and ProductModelID = $productTypeName ";
+        $checkData= $this->getCustome($sql);
+        if($checkData!=null){
+           return 1;
+        }
+        $Data = [
+            'ProductTypeName' => $productModel,
+            'ProductModelID' => $productTypeName, 
+        ];
+        return $this->createReturnID('producttype', $Data);
+    }
+    public function addProductDetails($Url,$ProductType){
+        $Data = [
+            'ProductDetaiID'=>'',
+            'ProductType' => $ProductType,
+            'Img' => $Url, 
+        ];
+        return $this->createReturnID('productdetails', $Data);
+    }
+    public function addBanner($Url,$ProductLineID){
+        $Data = [
+            'BannerID'=>'',
+            'Img' => $Url,
+            'ProductLineID' => $ProductLineID, 
+        ];
+        return $this->createReturnID('productdetails', $Data);
+    }
+
 
     // get
     public function getByProductLineID($table, $ProductLineID) {
@@ -435,6 +478,19 @@ class ProductModel extends BaseModel
     public function getModelProduct($ID)
     {
         $data = $this->getListById('productmodel', $ID, 'ProductLine');
+            $Product = [];
+            foreach ($data as $row) {
+                $Product[] = new ProductModels(
+                    $row['ProductModelID'], 
+                    $row['ProductModelName'],   
+                    $row['ProductLine'],
+                );
+            }
+            return $Product; 
+    }
+    public function getAllModel()
+    {
+        $data = $this->getAll('productmodel');
             $Product = [];
             foreach ($data as $row) {
                 $Product[] = new ProductModels(

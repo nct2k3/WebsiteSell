@@ -1,19 +1,14 @@
 <?php
 class DeleteproductController extends BaseController
 {
-    private $CartModel;
     private $ProductModel;
     private $LoginManagerModel;
-
     public function __construct()
     {
-        $this->CartModel = $this->loadModel("CartModel");
         $this->ProductModel = $this->loadModel("ProductModel");
         $this->LoginManagerModel = $this->loadModel("LoginManagerModels");
     }
- 
     public function index(){
-
         $Role=$this->takeRole();
         if($Role==0){
             header("Location: /");
@@ -23,14 +18,13 @@ class DeleteproductController extends BaseController
         $dataLineProduct=$this->ProductModel->getLineProduct();
         $this->view('manager.Deleteproduct.index',['dataLineProduct'=>$dataLineProduct,'data'=>$data]);
     }
- 
-
+    //lọc sản phẩm theo dòng
     public function FilterProduct($id){
-        
         $data = $this->ProductModel-> getProductDeleteWithLine($id);
         $dataLineProduct=$this->ProductModel->getLineProduct();
         $this->view('manager.Deleteproduct.index',['dataLineProduct'=>$dataLineProduct,'data'=>$data]);
     }
+    // tìm sản phẩm theo têntên
     public function searchProduct($string) {
         $data = $this->ProductModel->getProductDelete();
         
@@ -46,10 +40,9 @@ class DeleteproductController extends BaseController
         $dataLineProduct=$this->ProductModel->getLineProduct();
         $this->view('manager.Deleteproduct.index',['dataLineProduct'=>$dataLineProduct,'data'=>$productDataSearch ]);
     }
-
+    // Xóa sản phẩm nếu k bánbán
     public function deleteProduct()
     {
-       
         $id = $_POST['id'] ?? ''; 
         if ($id == '') {
             $_SESSION['error'] = "Invalid product.";
@@ -70,9 +63,9 @@ class DeleteproductController extends BaseController
             $this->ProductModel->deleteProduct($id);
             $_SESSION['messages'] = "Delete success!";
             $this->index();
+            }
         }
     }
-}
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'] ?? null;
     $DeleteproductController= new DeleteproductController();
@@ -98,7 +91,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                     $DeleteproductController->deleteProduct();
                     exit;
-      
         default:
            // echo "Hành động không hợp lệ!";
             break;
