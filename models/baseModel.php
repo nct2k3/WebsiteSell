@@ -105,7 +105,6 @@ class BaseModel extends Database {
         $columns = implode(", ", array_keys($escapedData));
         $values = implode("', '", array_values($escapedData));
         $sql = "INSERT INTO ${table} (${columns}) VALUES ('${values}')";
-        print_r($sql);
         if ($this->connect->query($sql) === TRUE) {
             return $this->connect->insert_id; 
         } else {
