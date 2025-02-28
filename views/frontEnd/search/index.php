@@ -36,7 +36,7 @@ $controller->index();
         <form action="?controller=search" method="POST" class="space-y-4">
             <input type="hidden" name="action" value="search">
             <div class="flex">
-                <input id="string" name="string" class="h-10  rounded-l-full p-2 text-black w-full" type="text">
+                <input id="string" name="string" required class="h-10  rounded-l-full p-2 text-black w-full" type="text">
                 <button class="bg-gray-500 h-10 w-16 rounded-r-full hover:bg-gray-800">
                     <img class="h-10 p-2" src="https://img.icons8.com/?size=100&id=7695&format=png&color=ffffff" alt="Icon">
                 </button>
@@ -48,13 +48,13 @@ $controller->index();
                     <?php if(isset($productLineName)&& $productLineName!=''):?>
                     <div class="text-sm border px-4 py-2 rounded-md"><?php echo $productLineName['ProductLineName']?></div>
                     <?php endif?>
-                    <?php if(isset($FromAdd)&& $FromAdd!=0):?>
+                    <?php if(isset($FromAdd)&& $FromAdd!=0&&$FromAdd!=''):?>
                     <div class="text-sm border px-4 py-2 rounded-md">From:<?php echo number_format($FromAdd, 0, ',', '.') . '₫' ?> </div>
                     <?php endif?>
-                    <?php if(isset($ToAdd)&& $ToAdd!=0):?>
+                    <?php if(isset($ToAdd)&& $ToAdd!=0 && $ToAdd!=''):?>
                     <div class="text-sm border px-4 py-2 rounded-md">To:<?php echo number_format($ToAdd, 0, ',', '.') . '₫' ?></div>
                     <?php endif?>
-                    <?php if(isset($FromAdd)&& $FromAdd!=0):?>
+                    <?php if(isset($FromAdd)&& $FromAdd!=0&&$FromAdd!=''):?>
                     <div 
                     onclick="window.location='?controller=search&action=CleanAll'"
                     class="text-sm border px-4 py-2 rounded-md hover:text-red-500 ">Clean all</div>

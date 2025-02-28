@@ -42,7 +42,9 @@
             <div  
                 class="col-12 col-md-3 d-flex align-items-center justify-content-center">
                     <img class="h-8" src="https://img.icons8.com/?size=100&id=17843&format=png&color=42A5F5" alt="Logo">
-                    <h1 class="font-bold bg-gradient-to-r from-blue-500 to-red-500 bg-clip-text text-transparent text-xl ml-2">
+                    <h1 
+                    onclick="window.location =`/`"
+                    class="font-bold bg-gradient-to-r from-blue-500 to-red-500 bg-clip-text text-transparent text-xl ml-2">
                         Iphone Manager
                     </h1>
                 </div>

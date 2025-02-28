@@ -86,20 +86,31 @@
                 <div 
                  class="col-12 col-md-3 d-flex align-items-center justify-content-center text-white font-bold text-sm mt-2 mt-md-0">
                     <img class="h-8 w-8 bg-white rounded-full mx-2" src="https://img.icons8.com/?size=100&id=99268&format=png&color=000000" alt="Login">
+                    
                     <?php if (isset($username)): ?>
-                        <a onclick="window.location='?controller=information&user=<?php echo $userID; ?>'" class="hover:text-yellow-500">
+                        <a 
+                            <?php if ($Role == 0): ?>
+                                onclick="window.location='?controller=information&user=<?php echo $userID; ?>'"
+                            <?php elseif ($Role == 1): ?>
+                                onclick="window.location='?controller=homeManager'"
+                            <?php endif; ?>
+                            class="hover:text-yellow-500">
                             <?php echo $username; ?>
                         </a>
-                        <div class=" d-flex align-items-center justify-content-center mt-2 mt-md-0">
-                        <img class="h-8 bg-gray-900 hover:bg-gray-400 p-1 rounded-full mx-2"
-                        onclick="window.location='?controller=Notification'"
-                            src="https://img.icons8.com/?size=100&id=ftMXZGFfen2R&format=png&color=ffffff" alt="Icon">
-                            <div class="text-red-500 text-sm mt-0 h-8" style="font-size:10px" > +<?php echo $NumNotification ?> </div>
+                        <div class="d-flex align-items-center justify-content-center mt-2 mt-md-0">
+                        <?php if ($Role == 0): ?>
                             <img class="h-8 bg-gray-900 hover:bg-gray-400 p-1 rounded-full mx-2"
-                            onclick="window.location='?controller=cart&user=<?php echo $userID; ?>'"
-                            src="https://img.icons8.com/?size=100&id=MuChNUVbFLwr&format=png&color=ffffff" alt="Icon">
+                                onclick="window.location='?controller=Notification'"
+                                src="https://img.icons8.com/?size=100&id=ftMXZGFfen2R&format=png&color=ffffff" alt="Notification Icon">
+                            <div class="text-red-500 text-sm mt-0 h-8" style="font-size:10px"> 
+                                +<?php echo $NumNotification; ?> 
+                            </div>
+
+                            <img class="h-8 bg-gray-900 hover:bg-gray-400 p-1 rounded-full mx-2"
+                                onclick="window.location='?controller=cart&user=<?php echo $userID; ?>'"
+                                src="https://img.icons8.com/?size=100&id=MuChNUVbFLwr&format=png&color=ffffff" alt="Cart Icon">
+                        <?php endif; ?>
                         </div>
-                       
                     <?php else: ?>
                         <a onclick="window.location='?controller=login'" class="hover:text-yellow-500">
                             Login
