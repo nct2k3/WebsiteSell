@@ -56,7 +56,9 @@ class SearchController extends BaseController
         }
         if (count($productDataSearch) == 0) {
             $_SESSION['error'] = "There are no products found.";
+            $productDataSearch=$data;
         }
+        
         $this->view('frontEnd.search.index',
         ['dataPrd'=>$productDataSearch,
         'dataLineProduct'=>$dataLineProduct,
@@ -88,6 +90,7 @@ class SearchController extends BaseController
         }
         if (count($productDataSearch) == 0) {
             $_SESSION['error'] = "There are no products found.";
+            $productDataSearch=$data;
         }
         $this->view('frontEnd.search.index', [
             'dataPrd' => $productDataSearch,
