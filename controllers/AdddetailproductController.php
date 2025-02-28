@@ -26,18 +26,30 @@ class AdddetailproductController extends BaseController
         }
     }
     function addType($IdModel,$Name,$List ){
-        $CheckData=  $this->ProductModel->addProductTypes($Name,$IdModel);
-     
+         $CheckData=  $this->ProductModel->addProductTypes($IdModel,$Name);
       if($CheckData==1){
         $_SESSION['error'] = "Add fail!";
         $this->index();
+        exit();
+        
       }
-      foreach($List as $item){
-        $Urlend= 'C:/xampp/htdocs/WebsiteSells/public/ImgType'.$item;
-        $this->ProductModel->addProductDetails($Urlend,$Name);
-      }
-      $_SESSION['message'] = "Add successfully!";
+      
+    if($CheckData!=1){
+
+        foreach ($List as $item) {
+            if($item){
+                if (is_array($item)) {
+                    $item = implode('_', $item);
+                }
+                $Urlend = '/public/ImgType/' . $item;
+             $this->ProductModel->addProductDetails($Urlend, $Name);
+                }
+        }
+        $_SESSION['message'] = "Add successfully!";
         $this->index();
+        exit();
+        
+    }
     }
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -50,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $AdddetailproductController->AddProductModel($productModel,$productName);
             exit();
         case'uploadType':
-                $Modelid=$_POST['productName'];
+                $NameType=$_POST['productName'];
                 $productType = $_POST['productType'];
                 if($_FILES['file']==null){
                 $AdddetailproductController= new AdddetailproductController();
@@ -59,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
                 }
                 $lisFile[]=[];
-                $uploadDir = 'C:/xampp/htdocs/WebsiteSells/public/ImgType/';
+                $uploadDir = 'public/ImgType/';
                 if (isset($_FILES['file'])) {
                     $fileCount = count($_FILES['file']['name']); 
                     for ($i = 0; $i < $fileCount; $i++) {
@@ -76,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                 }
                 $AdddetailproductController= new AdddetailproductController();
-                $AdddetailproductController->addType($Modelid,$productType,$lisFile);
+                $AdddetailproductController->addType($productType,$NameType,$lisFile);
                 exit();            
             default:
             echo "Hành động không hợp lệ!";

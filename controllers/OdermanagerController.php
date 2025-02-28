@@ -164,8 +164,14 @@ class OdermanagerController extends BaseController
             }        
             
         }
+        if(count($dataPament)==0){
+            $_SESSION['error'] = "Can't find";
+            $this->index();
+            exit();
+        }
+        $statusId=$_GET["id"];
         $this->view('manager.OderManager.index', [
-            'dataPament'=>$dataPament,'donestatus'=>$status
+            'dataPament'=>$dataPament,'donestatus'=>$statusId
         ]);
     }
     // tạo file hóa đơn work+ gởi thông báo

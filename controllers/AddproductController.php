@@ -80,7 +80,7 @@ class AddProductController extends BaseController
         );
         $data=$this->ProductModel->createProduct($productData);
         $_SESSION['message'] = "Add successfully!";
-        header("Location: /");
+        header("Location: /?controller=homeManager");
         exit();
         
     }

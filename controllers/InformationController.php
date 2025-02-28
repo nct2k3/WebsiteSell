@@ -22,9 +22,11 @@ class InformationController extends BaseController
         $dataUser = $this->UserModel->getUserByID($id);
         $dataAccount = $this->AccountsModel->getAccountByIDUser($id);
         $dataInvoice = $this->InvoiceModel->getInvoiceByIDUser($id);
-        usort($dataInvoice, function($a, $b) {
+        if (!empty($dataInvoice)) {
+            usort($dataInvoice, function($a, $b) {
                 return  $b->invoiceID - $a->invoiceID;
-        });
+            });
+        }
         $dataPament = [];
         $dataWasPayment = [];
     
