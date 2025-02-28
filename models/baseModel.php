@@ -2,14 +2,12 @@
 require_once __DIR__ . '/../core/database.php'; 
 class BaseModel extends Database {
     protected $connect;
-
     public function __construct() {
         $this->connect = $this->connect(); 
     }
     private function _query($sql) {
         return mysqli_query($this->connect, $sql);
     }
-
     // get
     public function getAll($table) {
         $sql = "SELECT * FROM ${table}";
@@ -95,7 +93,6 @@ class BaseModel extends Database {
         $escapedData = array_map(function($value) {
             return mysqli_real_escape_string($this->connect, $value); 
         }, $data);
-    
         $columns = implode(", ", array_keys($escapedData));
         $values = implode("', '", array_values($escapedData));
         $sql = "INSERT INTO ${table} (${columns}) VALUES ('${values}')";
@@ -105,7 +102,6 @@ class BaseModel extends Database {
         $escapedData = array_map(function($value) {
             return mysqli_real_escape_string($this->connect, $value); 
         }, $data);
-        
         $columns = implode(", ", array_keys($escapedData));
         $values = implode("', '", array_values($escapedData));
         $sql = "INSERT INTO ${table} (${columns}) VALUES ('${values}')";
@@ -116,7 +112,6 @@ class BaseModel extends Database {
             return 0;
         }
     }
-
     //delete
     public function delete($table, $id) {
         $sql = "DELETE FROM ${table} WHERE id = " . intval($id);

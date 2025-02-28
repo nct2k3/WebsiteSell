@@ -10,28 +10,23 @@ class AdddetailproductController extends BaseController
     }
     public function index()
     {
-       
         $dataLineProduct=$this->ProductModel->getLineProduct();
         $dataModelProduct=$this->ProductModel->getAllModel();
         $this->view('manager.AddDetailProduct.index',['dataModelProduct'=>$dataModelProduct, 'dataLineProduct'=>$dataLineProduct]);
     }
-    function AddProductModel($productModel,$productName){
-      
+    function AddProductModel($productModel,$productName){ 
         $CheckData=  $this->ProductModel->addProductModels($productName,$productModel);
         if ($CheckData==1) {
             $_SESSION['error'] = "Add fail!";
             $this->index();
-          
         }
         else{
         $_SESSION['message'] = "Add successfully!";
         $this->index();
         }
-
     }
     function addType($IdModel,$Name,$List ){
-
-       $CheckData=  $this->ProductModel->addProductTypes($Name,$IdModel);
+        $CheckData=  $this->ProductModel->addProductTypes($Name,$IdModel);
      
       if($CheckData==1){
         $_SESSION['error'] = "Add fail!";
@@ -43,17 +38,10 @@ class AdddetailproductController extends BaseController
       }
       $_SESSION['message'] = "Add successfully!";
         $this->index();
-
-
-
     }
-   
-   
-    
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'] ?? null;
-
     switch ($action) {
         case 'addModel':
             $productModel= $_POST['productModel'];
@@ -62,7 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $AdddetailproductController->AddProductModel($productModel,$productName);
             exit();
         case'uploadType':
-
                 $Modelid=$_POST['productName'];
                 $productType = $_POST['productType'];
                 if($_FILES['file']==null){
@@ -80,7 +67,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $fileName = $_FILES['file']['name'][$i];        
                         $uniqueFileName = uniqid() . '_' . $fileName;   
                         $filePath = $uploadDir . $uniqueFileName;
-        
                         if (move_uploaded_file($fileTmpPath, $filePath)) {
                             if (!isset($_SESSION['uploaded_files'])) {
                                 $lisFile[] = [];
@@ -91,10 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
                 $AdddetailproductController= new AdddetailproductController();
                 $AdddetailproductController->addType($Modelid,$productType,$lisFile);
-               
-                exit();
-           
-            
+                exit();            
             default:
             echo "Hành động không hợp lệ!";
             break;

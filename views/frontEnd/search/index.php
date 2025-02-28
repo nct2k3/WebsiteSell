@@ -48,13 +48,13 @@ $controller->index();
                     <?php if(isset($productLineName)&& $productLineName!=''):?>
                     <div class="text-sm border px-4 py-2 rounded-md"><?php echo $productLineName['ProductLineName']?></div>
                     <?php endif?>
-                    <?php if(isset($FromAdd)&& $FromAdd!=''):?>
+                    <?php if(isset($FromAdd)&& $FromAdd!=0):?>
                     <div class="text-sm border px-4 py-2 rounded-md">From:<?php echo number_format($FromAdd, 0, ',', '.') . '₫' ?> </div>
                     <?php endif?>
-                    <?php if(isset($ToAdd)&& $ToAdd!=''):?>
+                    <?php if(isset($ToAdd)&& $ToAdd!=0):?>
                     <div class="text-sm border px-4 py-2 rounded-md">To:<?php echo number_format($ToAdd, 0, ',', '.') . '₫' ?></div>
                     <?php endif?>
-                    <?php if(isset($FromAdd)&& $FromAdd!=''):?>
+                    <?php if(isset($FromAdd)&& $FromAdd!=0):?>
                     <div 
                     onclick="window.location='?controller=search&action=CleanAll'"
                     class="text-sm border px-4 py-2 rounded-md hover:text-red-500 ">Clean all</div>

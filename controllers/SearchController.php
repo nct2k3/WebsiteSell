@@ -20,18 +20,20 @@ class SearchController extends BaseController
         $this->view('frontEnd.search.index',['dataLineProduct'=>$dataLineProduct]);
     }
     // tìm theo têntên
-    public function searchProduct($string) {
+    public function searchProduct($string) 
+    {
         $data = $this->getAllProduct();
         $dataLineProduct=$this->ProductModel->getLineProduct();
         $productDataSearch = [];
         $productLineName='';
-        $ProductLineAdd = isset($_SESSION['ProductLineSearch']) ? $_SESSION['ProductLineSearch'] : ' ';
-        if($ProductLineAdd!==''){
-            $productLineName=$this->ProductModel-> getnameLine( $ProductLineAdd);
+        $ProductLineAdd = isset($_SESSION['ProductLineSearch']) ? $_SESSION['ProductLineSearch'] : '';
+        if($ProductLineAdd!=''){
+            $productLineName=$this->ProductModel->getnameLine( $ProductLineAdd);
         }
-        $FromAdd = isset($_SESSION['From']) ? $_SESSION['From'] : ' ';
-        $ToAdd = isset($_SESSION['To']) ? $_SESSION['To'] : ' ';
-        if( $ProductLineAdd!=''&& $FromAdd!=''&& $ToAdd!=''){
+        $FromAdd = isset($_SESSION['From']) ? $_SESSION['From'] : 0;
+        $ToAdd = isset($_SESSION['To']) ? $_SESSION['To'] : 0;
+        
+        if( $ProductLineAdd!=''&& $FromAdd!=0&& $ToAdd!=0){
             foreach ($data as $items) {
                 if (stripos($items->productName, $string) !== false&&$items->productLineID ==  $ProductLineAdd && $items->price >= $FromAdd && $items->price <= $ToAdd) {
                     $productDataSearch[] = $items;
@@ -39,7 +41,7 @@ class SearchController extends BaseController
             }
         }
         else
-        if( $ProductLineAdd==''&& $FromAdd!=''&& $ToAdd!=''){
+        if( $ProductLineAdd==''&& $FromAdd!=0&& $ToAdd!=0){
             foreach ($data as $items) {
                 if (stripos($items->productName, $string) !== false&& $items->price >= $FromAdd && $items->price <= $ToAdd) {
                     $productDataSearch[] = $items;
@@ -68,14 +70,14 @@ class SearchController extends BaseController
         $dataLineProduct = $this->ProductModel->getLineProduct();
         $productDataSearch = [];
         $productLineName='';
-        $ProductLineAdd = isset($_SESSION['ProductLineSearch']) ? $_SESSION['ProductLineSearch'] : ' ';
+        $ProductLineAdd = isset($_SESSION['ProductLineSearch']) ? $_SESSION['ProductLineSearch'] : '';
         if($ProductLineAdd!==''){
             $productLineName=$this->ProductModel-> getnameLine( $ProductLineAdd);
         }
-        $FromAdd = isset($_SESSION['From']) ? $_SESSION['From'] : ' ';
-        $ToAdd = isset($_SESSION['To']) ? $_SESSION['To'] : ' ';
+        $FromAdd = isset($_SESSION['From']) ? $_SESSION['From'] : 0;
+        $ToAdd = isset($_SESSION['To']) ? $_SESSION['To'] : 0;
         foreach ($data as $items) {
-            if ($ProductLines == '') {
+            if ($ProductLines == 0) {
                 if ($items->price >= $From && $items->price <= $To) {
                     $productDataSearch[] = $items;
                 }           
