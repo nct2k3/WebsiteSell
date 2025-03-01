@@ -171,7 +171,8 @@ class PaymentController extends BaseController
             $PhoneNumberend,
             $addressend,
             $dateDelivery,
-            $NodeEnd
+            $NodeEnd,
+            $loyaltyPoints
         );
         $invoiceId = $this->InvoiceModel->createInvoice($invoice);
         if ($invoiceId) {
@@ -240,7 +241,8 @@ class PaymentController extends BaseController
             $PhoneNumberend,
             $addressend,
             $dateDelivery,
-            $NodeEnd
+            $NodeEnd,
+            $loyaltyPoints
         );
         $invoiceId = $this->InvoiceModel->createInvoice($invoice);
         if ($invoiceId) {

@@ -65,11 +65,22 @@ $controller->index();
     <div class="w-full flex justify-end px-8">
         <div>
             <div class="w-full">
-                <select id="color" name="color" required class="text-black  border text-sm mt-1 block w-full  p-2 rounded-md ">
-                        <option value="" disabled selected>Sort</option>
-                        <option value="black">Price high to low</option>
-                        <option value="white">Price low to high</option>
+                <select id="sortSelect" name="sort" required class="text-black border text-sm mt-1 block w-full p-2 rounded-md" onchange="handleSort(this.value)">
+                    <option value="" disabled selected>Sort</option>
+                    <option value="0">Price high to low</option>
+                    <option value="1">Price low to high</option>
                 </select>
+
+                <script>
+                    function handleSort(value) {
+                        if (value === "0") {
+                            window.location.href = '?controller=product&action=indexSortHightToLow&items=<?php echo $items; ?>';
+                        } else if (value === "1") {
+                            window.location.href = '?controller=product&action=indexSortLowToHight&items=<?php echo $items; ?>';
+                        }
+                    }
+                </script>
+                
             </div>
         </div>
 
@@ -105,4 +116,5 @@ $controller->index();
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
