@@ -51,4 +51,53 @@ class ProductController extends BaseController
         $capacity = $this->ProductModel->getCapacity($productType);
         return $capacity;
     }
+
+    public function indexSortHightToLow()
+    {
+        $id = $_GET['items'];
+        $product = $this->ProductModel->getProduct($id);
+        if (!empty($product)) {
+            usort($product, function($a, $b) {
+                return  $b->price - $a->price;
+            });
+        }
+
+        $Model= $this->ProductModel->getModel($id);
+        $Banner= $this->BannerModel->getBanners($id);
+        $products = [];
+        foreach ($product as $items) {
+            $capacity = $this->getCapacity($items->productType);
+        
+            $products[] = [
+                'item' => $items,
+                'capacity' => $capacity
+            ];
+        }
+        $this->view('frontEnd.product.index', 
+        ['products' => $products,'Model'=>$Model,'Banner'=> $Banner,'items'=>$id]);
+    }
+    public function indexSortLowToHight()
+    {
+        $id = $_GET['items'];
+        $product = $this->ProductModel->getProduct($id);
+        if (!empty($product)) {
+            usort($product, function($a, $b) {
+                return  $a->price - $b->price;
+            });
+        }
+
+        $Model= $this->ProductModel->getModel($id);
+        $Banner= $this->BannerModel->getBanners($id);
+        $products = [];
+        foreach ($product as $items) {
+            $capacity = $this->getCapacity($items->productType);
+        
+            $products[] = [
+                'item' => $items,
+                'capacity' => $capacity
+            ];
+        }
+        $this->view('frontEnd.product.index', 
+        ['products' => $products,'Model'=>$Model,'Banner'=> $Banner,'items'=>$id]);
+    }
 }

@@ -16,6 +16,7 @@ class InvoiceModel extends BaseModel
             'Address'=> $Invoice->Address,
             'DateDelivery'=>$Invoice->DateDelivery
             ,'Note'=>$Invoice->Note
+            ,'UsePoints'=>$Invoice->UsePoints
         ];
         return $this->createReturnID('invoices', $invoiceData);
     }
@@ -37,7 +38,8 @@ class InvoiceModel extends BaseModel
             $data['NumberPhone'],
             $data['Address'],
             $data['DateDelivery'],
-            $data['Note']
+            $data['Note'],
+            $data['UsePoints']
         );
     }
         return $Invoice;
@@ -60,7 +62,8 @@ class InvoiceModel extends BaseModel
             $data['NumberPhone'],
             $data['Address'],
             $data['DateDelivery'],
-            $data['Note']
+            $data['Note'],
+            $data['UsePoints']
         );
     }
         return $Invoice;
@@ -83,7 +86,8 @@ class InvoiceModel extends BaseModel
             $data['NumberPhone'],
             $data['Address'],
             $data['DateDelivery'],
-            $data['Note']
+            $data['Note'],
+            $data['UsePoints']
         );
     }
         return $Invoice[0];
@@ -113,7 +117,9 @@ class InvoiceModel extends BaseModel
             $data['NumberPhone'],
             $data['Address'],
             $data['DateDelivery'],
-            $data['Note']
+            $data['Note'],
+            $data['UsePoints']
+
         );
     }
         return $Invoice;
@@ -144,7 +150,8 @@ class InvoiceModel extends BaseModel
             $data['NumberPhone'],
             $data['Address'],
             $data['DateDelivery'],
-            $data['Note']
+            $data['Note'],
+            $data['UsePoints']
         );
     }
         return $Invoice;
@@ -168,7 +175,8 @@ class InvoiceModel extends BaseModel
             $data['NumberPhone'],
             $data['Address'],
             $data['DateDelivery'],
-            $data['Note']
+            $data['Note'],
+            $data['UsePoints']
         );
     }
         return $Invoice;
@@ -192,7 +200,8 @@ class InvoiceModel extends BaseModel
             $data['NumberPhone'],
             $data['Address'],
             $data['DateDelivery'],
-            $data['Note']
+            $data['Note'],
+            $data['UsePoints']
         );
     }
         return $Invoice;

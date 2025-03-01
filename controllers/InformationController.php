@@ -112,9 +112,10 @@ class InformationController extends BaseController
     // thay đổi trạng thái mua hàng
     public function UpdateStatus($IdInvoices,$value,$TotalAmount){
         $this->InvoiceModel->UpdateStatus($IdInvoices,$value);
+        $InvoiceData= $this->InvoiceModel->getInvoiceByID($IdInvoices);
         $id = $this->takeIDAccount();
         $dataUser = $this->UserModel->getUserByID($id);
-        $EndTotal=$dataUser->LoyaltyPoints+$TotalAmount/100;
+        $EndTotal=($dataUser->LoyaltyPoints-$InvoiceData->UsePoints)+$TotalAmount/100;
         $this->UserModel->UpdateLoyaltyPoints($id,$EndTotal);
         $_SESSION['message'] = "Change successfully!";
         $this->index();

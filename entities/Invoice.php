@@ -10,8 +10,9 @@ class Invoice {
     public $Address;
     public $DateDelivery;
     public $Note;
+    public $UsePoints;
     public function __construct($invoiceID, $userID, $invoiceDate,
-     $totalAmount, $status, $paymentType,$NumberPhone,$Address,$DateDelivery ,$Note) {
+     $totalAmount, $status, $paymentType,$NumberPhone,$Address,$DateDelivery ,$Note, $UsePoints ) {
         $this->invoiceID = $invoiceID;
         $this->userID = $userID;
         $this->invoiceDate = $invoiceDate;
@@ -22,6 +23,7 @@ class Invoice {
         $this->Address = $Address;
         $this->DateDelivery = $DateDelivery;
         $this->Note = $Note;
+        $this->UsePoints = $UsePoints;
     }
 
 }
