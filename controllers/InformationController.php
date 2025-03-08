@@ -119,7 +119,6 @@ class InformationController extends BaseController
         $this->UserModel->UpdateLoyaltyPoints($id,$EndTotal);
         $_SESSION['message'] = "Change successfully!";
         $this->index();
-
     }
     // mua lại hàng
     public function BuyAgain($InvoiceID){
@@ -144,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'] ?? null;
 
     switch ($action) {
-        case 'change':
+            case 'change':
             $FullName = $_POST['fullName'] ?? ''; 
             $NumberPhone = $_POST['phone'] ?? '';
             $Address = $_POST['address'] ?? '';
@@ -154,11 +153,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $InformationController->change($FullName, $NumberPhone, $Address);
             break;
             case 'ChangeStatus':
+                if (!isset($_SESSION['form_submitted'])) {
                 $Status = 4;
                 $IdPayment = $_POST['IdOder'];
                 $TotalAmount=$_POST['TotalAmount'];
                 $InformationController=new  InformationController();
                 $InformationController->UpdateStatus($IdPayment,$Status, $TotalAmount);
+                $_SESSION['form_submitted'] = true;
+            }
+            else {
+                $InformationController=new  InformationController();
+                $InformationController->index();
+            }
             exit();
 
             case 'Reorder':
