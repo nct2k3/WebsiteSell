@@ -31,7 +31,8 @@ $controller->index();
             <input type="password" name="password" id="password" class="w-full p-3 h-10 border border-gray-700 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your password" required>
           </div>
           <div class="flex items-center justify-between mb-2">
-            <a href="#" class="text-sm text-blue-500 hover:underline">Forgot password?</a>
+            <a onclick="window.location='?controller=forgotPassword'"
+            href="#" class="text-sm text-blue-500 hover:underline">Forgot password?</a>
           </div>
           <?php if (isset($_SESSION['messages'])): ?>
               <div class="bg-red-500 text-white mb-2 p-2 rounded text-center"><?php echo $_SESSION['messages']; ?></div>

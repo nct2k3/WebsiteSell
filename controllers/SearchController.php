@@ -68,6 +68,7 @@ class SearchController extends BaseController
     }
     // tìm theo giá + line
     public function searchWithConditions($ProductLines, $From, $To) {
+
         $data = $this->getAllProduct();
         $dataLineProduct = $this->ProductModel->getLineProduct();
         $productDataSearch = [];

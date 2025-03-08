@@ -57,6 +57,20 @@ class AccountsModel extends BaseModel
             $data['UserID']     
         );
         return $Account;
+    }
+        public function getAccountByEmail($Email) {
+            $data = $this->getByString('Accounts', $Email, 'Email');
+            if (empty($data)) {
+                return null; 
+            }
+            $Account = new Account(
+                $data['AccountID'],
+                $data['Email'],
+                $data['Password'],
+                $data['Role'],
+                $data['UserID']     
+            );
+            return $Account;
         
 }
 }
