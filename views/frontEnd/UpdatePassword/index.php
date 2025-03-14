@@ -19,9 +19,9 @@ $controller->index();
         <img class="rounded-2xl" src="https://haloshop.vn/image/cache/catalog/products/apple/iphone/iphone16-16-plus/iphone_16_41-1400x1400.jpg" alt="Illustration">
       </div>
       <div class="w-full md:w-1/2 p-8">
-        <h2 class="text-2xl font-semibold text-center mb-4">Welcome to Apple Store</h2>
-        <form action="?controller=login" method="POST" class="space-y-4">
-          <input type="hidden" name="action" value="login">
+        <h2 class="text-2xl font-semibold text-center mb-4">Update your password</h2>
+        <form action="?controller=Updatepassword" method="POST" class="space-y-4">
+          <input type="hidden" name="action" value="Updatepassword">
           <div class="mb-2">
             <label for="email" class="block text-sm font-medium mb-2">Email address</label>
             <input type="email" name="email" id="email" class="w-full p-3 border h-10 border-gray-700 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your email" required>
@@ -30,17 +30,19 @@ $controller->index();
             <label for="password" class="block text-sm font-medium mb-2">Password</label>
             <input type="password" name="password" id="password" class="w-full p-3 h-10 border border-gray-700 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your password" required>
           </div>
+          <div class="mb-2">
+            <label for="password" class="block text-sm font-medium mb-2">New Password</label>
+            <input type="password" name="NewPassword" id="password" class="w-full p-3 h-10 border border-gray-700 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your password" required>
+          </div>
+          <div class="mb-2">
+            <label for="password" class="block text-sm font-medium mb-2">Confirm Password</label>
+            <input type="password" name="ConfirmPassword" id="password" class="w-full p-3 h-10 border border-gray-700 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your password" required>
+          </div>
           <div class="flex items-center justify-between mb-2">
             <a onclick="window.location='?controller=forgotPassword'"
             href="#" class="text-sm text-blue-500 hover:underline">Forgot password?</a>
-            <a onclick="window.location='?controller=updatepassword'"
-            href="#" class="text-sm text-blue-500 hover:underline">Update password?</a>
           </div>
-          <?php if (isset($_SESSION['messages'])): ?>
-              <div class="bg-red-500 text-white mb-2 p-2 rounded text-center"><?php echo $_SESSION['messages']; ?></div>
-              <?php unset($_SESSION['messages']); ?>
-          <?php endif; ?>
-          <button type="submit" class="w-full h-10 bg-blue-600 hover:bg-blue-700 text-white py-1 rounded-lg font-semibold">LOGIN</button>
+          <button type="submit" class="w-full h-10 bg-blue-600 hover:bg-blue-700 text-white py-1 rounded-lg font-semibold">UPDATE</button>
         </form>
         <div class="text-center mt-6">
           <span>Don't have an account? <a 

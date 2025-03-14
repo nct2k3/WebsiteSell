@@ -146,6 +146,7 @@ class BaseModel extends Database {
     }
     public function updateString($table, $data,$dataUpdate, $id,$where) {
         $sql = "UPDATE ${table} SET $data='$dataUpdate' WHERE $where = $id ";
+        print_r($sql);
         return $this->_query($sql);
     }
     public function UpdateCustome($sql) {
