@@ -93,7 +93,7 @@ $controller->index();
                         <p class=""><strong>Address: </strong><?php echo $payment['invoice']->Address; ?> </p>
                         <div class="flex justify-between ">
                             <p><strong>Date: </strong><?php echo $payment['invoice']->invoiceDate; ?></p>
-                            <p><strong>End price: </strong><?php echo $payment['invoice']->totalAmount; ?></p>
+                            <p><strong>End price: </strong><?php echo number_format($payment['invoice']->totalAmount); ?></p>
                         </div>
                         <p><strong class="text-green-500">Estimated delivery date: </strong><?php echo $payment['invoice']->DateDelivery; ?></p>
                         <p><strong class="text-green-500">Note: </strong><?php echo $payment['invoice']->Note; ?></p>
@@ -153,7 +153,7 @@ $controller->index();
                         <p class=""><strong>Address: </strong><?php echo $payment['invoice']->Address; ?> </p>
                         <div class="flex justify-between ">
                             <p><strong>Date: </strong><?php echo $payment['invoice']->invoiceDate; ?></p>
-                            <p><strong>End price: </strong><?php echo $payment['invoice']->totalAmount; ?></p>
+                            <p><strong>End price: </strong><?php echo number_format($payment['invoice']->totalAmount); ?></p>
                         </div>
                         <p><strong class="text-green-500">Estimated delivery date: </strong><?php echo $payment['invoice']->DateDelivery; ?></p>
                         <p><strong class="text-green-500">Note: </strong><?php echo $payment['invoice']->Note; ?></p>
