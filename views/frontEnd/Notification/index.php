@@ -11,13 +11,13 @@ $controller->index();
     <title>Thông Báo</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body >
+<body class="bg-gradient-to-r from-gray-600 to-black" >
 
     <div
     class="flex justify-center items-center h-20 bg-gray-700 text-white text-2xl"> Your Notification</div>
     <?php foreach($DataInvoice as $items): ?>
     <?php $color='blue'; ?>
-    <div class="flex  h-auto bg-gray-100 px-6 py-2">
+    <div class="flex  h-auto bg-gradient-to-r from-gray-600 to-black px-6 py-2">
         <div class="h-1/5 w-full bg-white border-l-4 border-<?php echo $color?>-500 pt-6 rounded shadow-md text-center">
             <div class="flex justify-between items-center px-6">
             <h1 class=" font-bold py-1">
