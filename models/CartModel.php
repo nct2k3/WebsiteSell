@@ -37,8 +37,10 @@ class CartModel extends BaseModel
         $quantity = intval($Cart->Quantity);
         $sql = "SELECT * FROM cart WHERE UserID = $userID AND ProductID = $productID";
         $existingCartItem = $this->getOneCustome($sql);
+
         if ($existingCartItem) {
-            return $this->updateTowId('cart',$userID,$productID,'UserID','ProductID','Quantity',$quantity);
+            $Endquantity = $existingCartItem['Quantity']+$quantity;
+            return $this->updateTowId('cart',$userID,$productID,'UserID','ProductID','Quantity',$Endquantity);
         } else {
             $data = [
                 'UserID' => $userID,

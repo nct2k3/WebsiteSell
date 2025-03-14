@@ -56,7 +56,7 @@ $controller->index();
             class="bg-gray-800 hover:bg-gray-500 rounded-xl shadow-lg p-6 max-w-xs text-white mx-auto mb-8 mt-22">
                 <img src="<?php  echo $items->img;  ?>" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
                 <h2 class="text-lg font-semibold mb-2"><?php  echo $items->productName;  ?></h2>
-                <h1 class="font-bold text-xl"><?php  echo $items->price;  ?>₫</h1>
+                <h1 class="font-bold text-xl"><?php  echo number_format($items->price); ?>₫</h1>
                 <h1 class="line-through text-gray-400 text-sm"><?php  echo $items->originalPrice;  ?>₫</h1>
             </div>
             <?php endforeach; ?>
@@ -72,7 +72,7 @@ $controller->index();
             class="bg-gray-800 hover:bg-gray-500 rounded-xl shadow-lg p-6 max-w-xs text-white mx-auto mb-8 mt-22">
                 <img src="<?php  echo $items->img;  ?>" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
                 <h2 class="text-lg font-semibold mb-2"><?php  echo $items->productName;  ?></h2>
-                <h1 class="font-bold text-xl"><?php  echo $items->price;  ?>₫</h1>
+                <h1 class="font-bold text-xl"><?php  echo number_format($items->price);  ?>₫</h1>
                 <h1 class="line-through text-gray-400 text-sm"><?php  echo $items->originalPrice;  ?>₫</h1>
                 <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
                     Buy now
@@ -110,7 +110,7 @@ $controller->index();
             class="bg-gray-800 hover:bg-gray-500 rounded-xl shadow-lg p-6 max-w-xs text-white mx-auto mb-8 mt-22">
                 <img src="<?php  echo $items->img;  ?>" alt="iPhone 16 Pro Max" class="w-full rounded-lg mb-4">
                 <h2 class="text-lg font-semibold mb-2"><?php  echo $items->productName;  ?></h2>
-                <h1 class="font-bold text-xl"><?php  echo $items->price;  ?>₫</h1>
+                <h1 class="font-bold text-xl"><?php echo number_format($items->price); ?>₫</h1>
                 <h1 class="line-through text-gray-400 text-sm"><?php  echo $items->originalPrice;  ?>₫</h1>
                 <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
                     Buy now
