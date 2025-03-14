@@ -37,7 +37,7 @@
 
 
         <div class="container-fluid w-full">
-            <div id="content" class="row bg-gray-800 p-3 fixed z-40 top-0 w-full hidden md:flex md:flex-row flex-col">
+            <div id="content" class="row bg-gradient-to-r from-gray-600 to-black p-3 fixed z-40 top-0 w-full hidden md:flex md:flex-row flex-col">
                 <div  onclick="window.location='/'"
                 class="col-12 col-md-2 d-flex align-items-center justify-content-center">
                     <img class="h-8" src="https://img.icons8.com/?size=100&id=17843&format=png&color=42A5F5" alt="Logo">

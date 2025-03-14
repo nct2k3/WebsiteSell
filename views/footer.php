@@ -24,7 +24,7 @@
     </div>
     <div>
       <div class="text-4xl mb-2">🔄</div>
-      <p>Exchangeable at Thegioididong and DienmayXANH</p>
+      <p>Exchangeable with Us/p>
     </div>
   </div>
 
@@ -34,9 +34,9 @@
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
         <!-- Logo and Contact -->
         <div>
-          <h2 class="text-lg font-bold mb-4">top<span class="text-pink-500">ZONE</span></h2>
-          <p class="mb-2">📞 Sales: <strong>1900.9696.42</strong> (8:00 - 21:30)</p>
-          <p class="mb-2">📞 Complaints: <strong>1900.9868.43</strong> (8:00 - 21:30)</p>
+          <h2 class="text-lg font-bold mb-4">top<span class="text-pink-500"> Iphone store</span></h2>
+          <p class="mb-2">📞 Sales: <strong># 84 368 731 585</strong> (8:00 - 21:30)</p>
+          <p class="mb-2">📞 Complaints: <strong># 84 368 731 585<</strong> (8:00 - 21:30)</p>
           <div class="flex space-x-3 mt-4">
             <a href="#" class="text-2xl">🌐</a>
             <a href="#" class="text-2xl">📺</a>
@@ -68,7 +68,7 @@
 
         <!-- About TopZone -->
         <div>
-          <h3 class="text-lg font-bold mb-4">About TopZone</h3>
+          <h3 class="text-lg font-bold mb-4">About Iphone store</h3>
           <ul class="space-y-2">
             <li><a href="#" class="hover:text-pink-500">VIP Gift Points</a></li>
             <li><a href="#" class="hover:text-pink-500">Introduction to TopZone</a></li>
