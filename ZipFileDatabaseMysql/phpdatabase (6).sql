@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th2 23, 2025 lúc 04:39 PM
+-- Thời gian đã tạo: Th3 14, 2025 lúc 12:02 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -42,7 +42,9 @@ CREATE TABLE `accounts` (
 INSERT INTO `accounts` (`AccountID`, `Email`, `Password`, `Role`, `UserID`) VALUES
 (4, 'nguyennrdz@gmail.com', '123', 0, 1),
 (11, 'meo@gmail.com', '1', 0, 14),
-(12, 'Admin@gmail.com', '123', 1, 15);
+(12, 'Admin@gmail.com', '123', 1, 15),
+(13, 'nguyennrdz123@gmail.com', '123', 0, 16),
+(14, 'meo1@gmail.com', '123', 0, 17);
 
 -- --------------------------------------------------------
 
@@ -80,6 +82,14 @@ CREATE TABLE `cart` (
   `ProductID` int(255) NOT NULL,
   `Quantity` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `cart`
+--
+
+INSERT INTO `cart` (`CartID`, `UserID`, `ProductID`, `Quantity`) VALUES
+(86, 1, 18, 3),
+(87, 1, 22, 1);
 
 -- --------------------------------------------------------
 
@@ -127,7 +137,12 @@ INSERT INTO `invoicedetails` (`DetailID`, `InvoiceID`, `ProductID`, `Quantity`) 
 (90, 86, 18, 1),
 (91, 86, 9, 1),
 (92, 87, 18, 1),
-(93, 88, 15, 1);
+(93, 88, 15, 1),
+(95, 90, 22, 1),
+(96, 91, 22, 1),
+(97, 92, 18, 1),
+(98, 93, 2, 1),
+(99, 94, 18, 1);
 
 -- --------------------------------------------------------
 
@@ -145,24 +160,51 @@ CREATE TABLE `invoices` (
   `NumberPhone` varchar(255) NOT NULL,
   `Address` varchar(255) NOT NULL,
   `DateDelivery` date NOT NULL,
-  `Note` varchar(255) NOT NULL
+  `Note` varchar(255) NOT NULL,
+  `UsePoints` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `invoices`
 --
 
-INSERT INTO `invoices` (`InvoiceID`, `UserID`, `InvoiceDate`, `TotalAmount`, `status`, `PaymentType`, `NumberPhone`, `Address`, `DateDelivery`, `Note`) VALUES
-(77, 14, '2025-02-06', 76000000, 4, 'normal', '0368731585', '129', '0000-00-00', 'xx'),
-(78, 14, '2025-02-06', 29000000, 3, 'normal', '0368731585', '129', '0000-00-00', 'xx'),
-(79, 1, '2025-02-15', 31000000, 4, 'normal', '0368731585', '129 tan thoi nhat', '0000-00-00', 'xx'),
-(80, 1, '2024-12-18', 24000000, 1, 'normal', '0368731585', '129 tan thoi nhat', '2025-02-24', ''),
-(83, 1, '2025-02-20', 66000000, 4, 'normal', '0368731585', '129 tan thoi nhat', '2025-02-27', ''),
-(84, 1, '2025-02-20', 70000000, 4, 'normal', '0368731585', '129 tan thoi nhat', '2025-02-26', ''),
-(85, 1, '2025-02-20', 51000000, 4, 'normal', '0368731585', '129 tan thoi nhat', '2025-02-27', ''),
-(86, 1, '2025-02-20', 64000000, 1, 'normal', '0368731585', '129 tan thoi nhat', '2025-02-26', ''),
-(87, 1, '2025-02-20', 29000000, 4, 'normal', '0368731585', '129 tan thoi nhat', '2025-02-26', ''),
-(88, 1, '2025-02-20', 30999997, 4, 'normal', '0368731585', '129 tan thoi nhat', '2025-02-26', '');
+INSERT INTO `invoices` (`InvoiceID`, `UserID`, `InvoiceDate`, `TotalAmount`, `status`, `PaymentType`, `NumberPhone`, `Address`, `DateDelivery`, `Note`, `UsePoints`) VALUES
+(77, 14, '2025-02-06', 76000000, 4, 'normal', '0368731585', '129', '0000-00-00', 'xx', 0),
+(78, 14, '2025-02-06', 29000000, 3, 'normal', '0368731585', '129', '0000-00-00', 'xx', 0),
+(79, 1, '2025-02-15', 31000000, 4, 'normal', '0368731585', '129 tan thoi nhat', '0000-00-00', 'xx', 0),
+(80, 1, '2024-12-18', 24000000, 3, 'normal', '0368731585', '129 tan thoi nhat', '2025-02-24', '', 0),
+(83, 1, '2025-02-20', 66000000, 4, 'normal', '0368731585', '129 tan thoi nhat', '2025-02-27', '', 0),
+(84, 1, '2025-02-20', 70000000, 4, 'normal', '0368731585', '129 tan thoi nhat', '2025-02-26', '', 0),
+(85, 1, '2025-02-20', 51000000, 4, 'normal', '0368731585', '129 tan thoi nhat', '2025-02-27', '', 0),
+(86, 1, '2025-02-20', 64000000, 1, 'normal', '0368731585', '129 tan thoi nhat', '2025-02-26', '', 0),
+(87, 1, '2025-02-20', 29000000, 4, 'normal', '0368731585', '129 tan thoi nhat', '2025-02-26', '', 0),
+(88, 1, '2025-02-20', 30999997, 4, 'normal', '0368731585', '129 tan thoi nhat', '2025-02-26', '', 0),
+(90, 1, '2025-02-28', 12000000, 4, 'normal', '0368731585', '129 tan thoi nhat', '2025-03-12', 'xxxxxxxxxxxxxxxxxxxx', 0),
+(91, 1, '2025-02-28', 12000000, 4, 'normal', '0368731585', '129 tan thoi nhat', '2025-03-06', 'xxxxxxxxxxxxxxxxxxxx', 0),
+(92, 1, '2025-02-28', 29000000, 4, 'normal', '0368731585', '129 tan thoi nhat', '2025-03-06', 'xxxxxxxxxxxxxxxxxxxx', 0),
+(93, 1, '2025-03-01', 19000000, 4, 'normal', '0368731585', '129', '2025-03-07', 'xxxxxxxxxxxxxxxxxxxx', 12000000),
+(94, 1, '2025-03-01', 17000000, 4, 'normal', '0368731585', '129 tan thoi nhat', '2025-03-07', 'xxxxxxxxxxxxxxxxxxxx', 12000000);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `linkinvoices`
+--
+
+CREATE TABLE `linkinvoices` (
+  `LinkID` int(255) NOT NULL,
+  `InvoiceID` int(255) NOT NULL,
+  `URL` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `linkinvoices`
+--
+
+INSERT INTO `linkinvoices` (`LinkID`, `InvoiceID`, `URL`) VALUES
+(1, 86, 'C:/xampp/htdocs/WebsiteSells/public/bill/ID_86_Name_Nguyên công Trần_hoadon.docx'),
+(2, 80, 'C:/xampp/htdocs/WebsiteSells/public/bill/ID_80_Name_Nguyên công Trần_hoadon.docx'),
+(3, 79, 'C:/xampp/htdocs/WebsiteSells/public/bill/ID_79_Name_meoemo_hoadon.docx');
 
 -- --------------------------------------------------------
 
@@ -198,7 +240,28 @@ INSERT INTO `loginmanager` (`ID`, `UserID`, `TimeLogin`, `Action`) VALUES
 (20, 15, '2025-02-20 20:53:20', 'Logout'),
 (21, 15, '2025-02-22 07:27:33', 'Login'),
 (22, 15, '2025-02-23 22:21:56', 'Login'),
-(23, 15, '2025-02-23 22:23:15', 'Logout');
+(23, 15, '2025-02-23 22:23:15', 'Logout'),
+(24, 15, '2025-02-28 15:35:03', 'Login'),
+(25, 15, '2025-02-28 17:10:13', 'Delete'),
+(26, 15, '2025-02-28 17:42:09', 'Logout'),
+(27, 15, '2025-02-28 17:44:19', 'Login'),
+(28, 15, '2025-02-28 17:44:54', 'Logout'),
+(29, 15, '2025-02-28 17:53:33', 'Login'),
+(30, 15, '2025-02-28 17:53:44', 'Logout'),
+(31, 15, '2025-03-01 09:08:10', 'Login'),
+(32, 15, '2025-03-01 09:08:11', 'Logout'),
+(33, 15, '2025-03-01 09:56:41', 'Login'),
+(34, 15, '2025-03-01 09:56:50', 'Logout'),
+(35, 15, '2025-03-01 22:15:38', 'Login'),
+(36, 15, '2025-03-01 22:15:55', 'Logout'),
+(41, 15, '2025-03-01 22:21:21', 'Login'),
+(42, 15, '2025-03-01 22:21:43', 'Logout'),
+(43, 15, '2025-03-01 22:22:11', 'Login'),
+(44, 15, '2025-03-01 22:24:41', 'Logout'),
+(45, 15, '2025-03-01 22:25:32', 'Login'),
+(46, 15, '2025-03-01 22:26:18', 'Logout'),
+(47, 15, '2025-03-14 17:34:01', 'Login'),
+(48, 15, '2025-03-14 17:39:46', 'Logout');
 
 -- --------------------------------------------------------
 
@@ -235,8 +298,8 @@ CREATE TABLE `notifications` (
 --
 
 INSERT INTO `notifications` (`ID`, `UserID`, `InvoiceID`, `Content`, `Status`, `Time`) VALUES
-(6, 1, 0, 'het hang', '0', '2025-02-19 20:38:26'),
-(14, 1, 83, 'Giao hang thanh cong', '1', '2025-02-20 20:53:17');
+(17, 14, 78, 'Giao hang thanh cong', '1', '2025-03-01 22:22:45'),
+(19, 1, 79, 'Send invoice word file', '2', '2025-03-14 17:39:43');
 
 -- --------------------------------------------------------
 
@@ -264,7 +327,16 @@ INSERT INTO `productdetails` (`ProductDetaiID`, `ProductType`, `Img`) VALUES
 (7, 'Mac Mini M4 Pro ', 'https://cdnv2.tgdd.vn/mwg-static//5698/331505/s16/mac-mini-m4-pro-48gb-1tb-3-638671788292267498-650x650.jpg'),
 (8, 'Iphone 16 Pro Max', 'https://cdnv2.tgdd.vn/mwg-static//42/329149/s16/iphone-16-pro-max-desert-titan-6-638621795603626395-650x650.jpg'),
 (9, 'Iphone 16 Pro Max', 'https://cdnv2.tgdd.vn/mwg-static//42/329149/s16/iphone-16-pro-max-desert-titan-8-638621795619447667-650x650.jpg'),
-(10, 'iPad 10 5G', 'https://cdn.tgdd.vn/Products/Images/522/295453/s16/vn_ipad_10th_gen_cellular_blue_pdp_image_5g_position-3-650x650.jpg');
+(121, 'iPhone 16e', '/public/ImgType/67c18bae6ecf4_iphone-16e-black-tz-8-638756446555940600-650x650.jpg'),
+(122, 'iPhone 16e', '/public/ImgType/67c18bae6f076_iphone-16e-black-tz-7-638756446547840092-650x650.jpg'),
+(123, 'iPhone 16e', '/public/ImgType/67c18bae6f2cd_iphone-16e-black-tz-6-638756446540426235-650x650.jpg'),
+(124, 'iPhone 16e', '/public/ImgType/67c18bae6f485_iphone-16e-black-tz-5-638756446531591535-650x650.jpg'),
+(125, 'iPhone 16e', '/public/ImgType/67c18bae6f6e8_iphone-16e-black-tz-4-638756446503324970-650x650.jpg'),
+(126, 'iPad Pro M2', '/public/ImgType/67c18ed8c6204_vn_ipad_pro_cellular_12-9_in_6th_gen_silver_pdp_image_position-4-650x650.jpg'),
+(127, 'iPad Pro M2', '/public/ImgType/67c18ed8c6364_vn_ipad_pro_cellular_12-9_in_6th_gen_silver_pdp_image_position-3-650x650.jpg'),
+(128, 'Iphone 13', '/public/ImgType/67d406f27dcc6_iphone-13-256gb-xanh-duong-6-650x650.jpg'),
+(129, 'Iphone 13', '/public/ImgType/67d406f27e09b_iphone-13-256gb-xanh-duong-4-650x650.jpg'),
+(130, 'Iphone 13', '/public/ImgType/67d406f27e45d_iphone-13-256gb-xanh-duong-1-650x650.jpg');
 
 -- --------------------------------------------------------
 
@@ -309,7 +381,8 @@ INSERT INTO `productmodel` (`ProductModelID`, `ProductModelName`, `ProductLine`)
 (1, 'Iphone 16', 1),
 (2, 'Iphone 15', 1),
 (3, 'Iphone 14', 1),
-(6, 'Iphone 13', 1);
+(6, 'Iphone 13', 1),
+(7, 'iPad Pro M2', 5);
 
 -- --------------------------------------------------------
 
@@ -348,12 +421,15 @@ INSERT INTO `products` (`ProductID`, `ProductLineID`, `ProductModel`, `ProductTy
 (15, 5, 'iPad 10', 'iPad 10 5G', 'iPad 10 5G', 31000000.00, 32000000, 8, 'https://cdn.tgdd.vn/Products/Images/522/295453/s16/ipad-gen-10-blue-650x650.png', '255GB', 'blue'),
 (16, 6, 'cables', 'cables', 'Cáp Thunderbolt 4 1.8m', 31000000.00, 32000000, 10, 'https://cdn.tgdd.vn/Products/Images/58/325164/s16/cap-thunderbolt-4-mw5j3-650x650.png', 'null', 'black'),
 (17, 6, 'AirTag', 'AirTag', 'AirTag', 31000000.00, 32000000, 10, 'https://cdn.tgdd.vn/Products/Images/10618/238092/s16/airtag-650x650.png', 'null', 'white'),
-(18, 1, 'iPhone 15 ', 'iPhone 15 Pro', 'iPhone 15 Pro 1T', 29000000.00, 32000000, 97, 'https://cdn.tgdd.vn/Products/Images/42/303832/s16/iphone-15-pro-blue-1-2-650x650.png', '1T', 'black'),
+(18, 1, 'iPhone 15 ', 'iPhone 15 Pro', 'iPhone 15 Pro 1T', 29000000.00, 32000000, 95, 'https://cdn.tgdd.vn/Products/Images/42/303832/s16/iphone-15-pro-blue-1-2-650x650.png', '1T', 'black'),
 (19, 2, 'MacBook Pro 14', 'MacBook Pro 14', 'MacBook Pro 14 inch M4', 20000000.00, 32000000, 0, 'https://cdn.tgdd.vn/Products/Images/44/331564/s16/macbook-pro-14-inch-m4-pro-topzone-den-thumb-650x650.png', 'RAM-16/ROM-512GB', 'black'),
 (20, 2, 'MacBook Air', 'MacBook Air M3', 'MacBook Air 13 inch M3 10GPU', 20000000.00, 32000000, 0, 'https://cdn.tgdd.vn/Products/Images/44/322633/s16/macbook-air-15-inch-m3-2024-xam-650x650.png', 'RAM-8GB/ROM-512GB', 'white'),
 (21, 1, 'Iphone 16', 'Iphone 16 Pro', 'Iphone 16 Pro 1T', 28000000.00, 300000000, 6, 'public/img/1739110657_iphone-16-pro-tu-nhien-650x650.png', '1T', 'white'),
-(22, 1, 'Iphone 14', 'Iphone 14', 'Iphone 14 255GB', 24000000.00, 28000000, 197, 'public/img/1739113522_iphone-14-purple-650x650.png', '255GB', 'pink'),
-(24, 1, 'Iphone 14', 'Iphone 14', 'Iphone 14 255GB yellow', 26000000.00, 28000000, 308, 'public/img/1739198763_iphone-14-gold-1-650x650.png', '255GB', 'yellow');
+(22, 1, 'Iphone 14', 'Iphone 14', 'Iphone 14 255GB', 24000000.00, 28000000, 195, 'public/img/1739113522_iphone-14-purple-650x650.png', '255GB', 'pink'),
+(24, 1, 'Iphone 14', 'Iphone 14', 'Iphone 14 255GB yellow', 26000000.00, 28000000, 309, 'public/img/1739198763_iphone-14-gold-1-650x650.png', '255GB', 'yellow'),
+(28, 5, 'iPad Pro M2', 'iPad Pro M2', 'iPad Pro M2 12.9 inch 5G 2TB', 19000000.00, 20000000, 121, 'public/img/1740738334_iPad-Pro-M2-129-5G-sliver-thumb-650x650.png', '2TB', 'white'),
+(29, 1, 'Iphone 16', 'iPhone 16e', 'iPhone 16e 128GB', 24151452.00, 111212335, 124, 'public/img/1740842368_iphone-16e-black-thumbtz-650x650.png', '128GB', 'black'),
+(30, 1, 'Iphone 13', 'Iphone 13', 'Iphone 13 128GB', 17000000.00, 20000000, 13, 'public/img/1741948576_iphone-13-blue-1-2-3-650x650.png', '128GB', 'green');
 
 -- --------------------------------------------------------
 
@@ -376,7 +452,10 @@ INSERT INTO `producttype` (`ProductTypeID`, `ProductModelID`, `ProductTypeName`)
 (2, 1, 'Iphone 16 Pro'),
 (3, 1, 'Iphone 16 Pro Max'),
 (4, 2, 'Iphone 15 Pro Max'),
-(5, 3, 'Iphone 14');
+(5, 3, 'Iphone 14'),
+(27, 1, 'iPhone 16e'),
+(30, 7, 'iPad Pro M2'),
+(31, 6, 'Iphone 13');
 
 -- --------------------------------------------------------
 
@@ -397,9 +476,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`UserID`, `FullName`, `PhoneNumber`, `Address`, `LoyaltyPoints`) VALUES
-(1, 'Nguyên công Trần', '0368731585', '129 tan thoi nhat', 12440000),
+(1, 'meoemo', '0368731585', 'meo meo', 0),
 (14, 'Nguyên công meo', '0368731585', '129', 2),
-(15, 'Admin', NULL, NULL, 0);
+(15, 'Admin', NULL, NULL, 0),
+(16, 'Nguyên công Trần', '0368731585', '129', 0),
+(17, 'Meo1', '0368731585', '129', 0);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -445,6 +526,12 @@ ALTER TABLE `invoicedetails`
 ALTER TABLE `invoices`
   ADD PRIMARY KEY (`InvoiceID`),
   ADD KEY `UserID` (`UserID`);
+
+--
+-- Chỉ mục cho bảng `linkinvoices`
+--
+ALTER TABLE `linkinvoices`
+  ADD PRIMARY KEY (`LinkID`);
 
 --
 -- Chỉ mục cho bảng `loginmanager`
@@ -512,7 +599,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `AccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `AccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT cho bảng `banner`
@@ -524,7 +611,7 @@ ALTER TABLE `banner`
 -- AUTO_INCREMENT cho bảng `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `CartID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `CartID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT cho bảng `credit`
@@ -536,19 +623,25 @@ ALTER TABLE `credit`
 -- AUTO_INCREMENT cho bảng `invoicedetails`
 --
 ALTER TABLE `invoicedetails`
-  MODIFY `DetailID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `DetailID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT cho bảng `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `InvoiceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `InvoiceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+
+--
+-- AUTO_INCREMENT cho bảng `linkinvoices`
+--
+ALTER TABLE `linkinvoices`
+  MODIFY `LinkID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `loginmanager`
 --
 ALTER TABLE `loginmanager`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT cho bảng `loyaltypoints`
@@ -560,13 +653,13 @@ ALTER TABLE `loyaltypoints`
 -- AUTO_INCREMENT cho bảng `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT cho bảng `productdetails`
 --
 ALTER TABLE `productdetails`
-  MODIFY `ProductDetaiID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `ProductDetaiID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT cho bảng `productlines`
@@ -578,25 +671,25 @@ ALTER TABLE `productlines`
 -- AUTO_INCREMENT cho bảng `productmodel`
 --
 ALTER TABLE `productmodel`
-  MODIFY `ProductModelID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ProductModelID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `ProductID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `ProductID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT cho bảng `producttype`
 --
 ALTER TABLE `producttype`
-  MODIFY `ProductTypeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ProductTypeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
