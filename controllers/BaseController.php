@@ -52,8 +52,6 @@
                     $products[] = new Product(
                         $item['productID'],
                         $item['productLineID'],
-                        $item['productType'],
-                        $item['productModel'],
                         $item['productName'],
                         $item['price'],
                         $item['originalPrice'],

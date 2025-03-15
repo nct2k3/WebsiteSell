@@ -1,75 +1,78 @@
 <?php
-require_once __DIR__ ."/../entities/Product.php";
+require_once __DIR__ . "/../entities/Product.php";
+
+class FileHandler
+{
+    public static function uploadFile($file, $destinationFolder = 'public/img/')
+    {
+        // Kiểm tra nếu file hợp lệ
+        if (!isset($file) || $file['error'] !== UPLOAD_ERR_OK) {
+            return ['success' => false, 'error' => 'File upload error or no file uploaded'];
+        }
+
+        // Kiểm tra định dạng file (chỉ chấp nhận ảnh)
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        $fileType = mime_content_type($file['tmp_name']);
+
+        if (!in_array($fileType, $allowedTypes)) {
+            return ['success' => false, 'error' => 'Invalid file type. Only JPEG, PNG, and GIF are allowed.'];
+        }
+
+        // Tạo tên file duy nhất
+        $fileName = time() . '_' . basename($file['name']);
+        $filePath = $destinationFolder . $fileName;
+
+        // Kiểm tra và tạo thư mục nếu chưa tồn tại
+        if (!is_dir($destinationFolder)) {
+            if (!mkdir($destinationFolder, 0777, true) && !is_dir($destinationFolder)) {
+                return ['success' => false, 'error' => 'Failed to create destination folder.'];
+            }
+        }
+
+        // Lưu file
+        if (move_uploaded_file($file['tmp_name'], $filePath)) {
+            return ['success' => true, 'filePath' => $filePath];
+        } else {
+            return ['success' => false, 'error' => 'Failed to save the uploaded file.'];
+        }
+    }
+}
 
 class AddProductController extends BaseController
 {
     private $ProductModel;
+
     public function __construct()
     {
         $this->ProductModel = $this->loadModel("ProductModel");
     }
+
     public function index()
     {
-        $Url='';
-        if (isset($_SESSION['UrlProduct'])) {
-            $Url = $_SESSION['UrlProduct'];
-        }
-        $dataLineProduct=$this->ProductModel->getLineProduct();
-        $this->view('manager.AddProduct.index',['Url'=>$Url,'dataLineProduct'=>$dataLineProduct]);
+        $Url = $_SESSION['UrlProduct'] ?? '';
+        $dataLineProduct = $this->ProductModel->getLineProduct();
+        $this->view('manager.AddProduct.index', ['Url' => $Url, 'dataLineProduct' => $dataLineProduct]);
     }
-    // lẤy model tu dtb 
-    public function productModel($id){
-        $Url='';
-        if (isset($_SESSION['UrlProduct'])) {
-            $Url = $_SESSION['UrlProduct'];
-        }
-        $dataModelProduct=$this->ProductModel->getModelProduct($id);
-        $dataLineProduct=$this->ProductModel->getLineProduct();
-        $_SESSION['LineId'] = $id;
-        $NameLine=$this->ProductModel-> getnameLine($id);
-        $this->view('manager.AddProduct.index',['Url'=>$Url,'NameLine'=>$NameLine,'dataModelProduct'=>$dataModelProduct,'dataLineProduct'=>$dataLineProduct]);
-    }
-    // lẤy type tu dtb
-    public function productType($id){
-        $Url='';
-        if (isset($_SESSION['UrlProduct'])) {
-            $Url = $_SESSION['UrlProduct'];
-        }
-        $Idline = $_SESSION['LineId'];
-        $dataModelProduct=$this->ProductModel->getModelProduct($Idline);
-        $dataLineProduct=$this->ProductModel->getLineProduct();
-        $dataTypeProduct=$this->ProductModel->getTypeProduct($id);
-        $NameLine=$this->ProductModel-> getnameLine($Idline);
-        $NameModel=$this->ProductModel->getnameModel($id);
-        $_SESSION['TypeId'] = $id;
-        $this->view('manager.AddProduct.index',['Url'=>$Url,'NameModel'=>$NameModel,'NameLine'=>$NameLine,'dataTypeProduct'=>$dataTypeProduct,'dataModelProduct'=>$dataModelProduct,'dataModelProduct'=>$dataModelProduct,'dataLineProduct'=>$dataLineProduct]);
-    }
-    // thêm sản phẩm
-    public function AddProduct($productType,$productName,$originalPrice,$price,$stock,$capacity,$color){
-        $Url = '';
-        $Idline = '';
-        $IdType = '';
-        if (isset($_SESSION['UrlProduct']) && !empty($_SESSION['UrlProduct'])) {
-            $Url = $_SESSION['UrlProduct'];
-        }
-        if (isset($_SESSION['LineId']) && !empty($_SESSION['LineId'])) {
-            $Idline = $_SESSION['LineId'];
-        }
-        if (isset($_SESSION['TypeId']) && !empty($_SESSION['TypeId'])) {
-            $IdType = $_SESSION['TypeId'];
-        }
-        if($Url==''||$Idline==''||$IdType==''||$productName==''||$capacity==''){
-            $_SESSION['error'] = "Missing data!";
-            $this->index();
+
+    public function AddProduct($productLine, $productName, $originalPrice, $price, $stock, $capacity, $color)
+    {
+        if (empty($productLine) || empty($productName) || empty($originalPrice) || empty($price)) {
+            $_SESSION['error'] = "Please fill in all required fields.";
+            header("Location: /?controller=addProduct");
             exit();
         }
-        $modelData = $this->ProductModel->getnameModel($IdType);
-        $NameModel = isset($modelData['ProductModelName']) ? $modelData['ProductModelName'] : '';
-        $productData= new product(
-            '',
-            $Idline,
-            $productType,
-            $NameModel,
+
+        $Url = $_SESSION['UrlProduct'] ?? '';
+
+        if (empty($Url)) {
+            $_SESSION['error'] = "File upload is required.";
+            header("Location: /?controller=addProduct");
+            exit();
+        }
+
+        $productData = new Product(
+            null,
+            $productLine,
             $productName,
             $price,
             $originalPrice,
@@ -78,60 +81,62 @@ class AddProductController extends BaseController
             $capacity,
             $color
         );
-        $data=$this->ProductModel->createProduct($productData);
-        $_SESSION['message'] = "Add successfully!";
-        header("Location: /?controller=homeManager");
-        exit();
+        print_r($productData);
         
+        $result = $this->ProductModel->createProduct($productData);
+
+        if ($result) {
+            $_SESSION['message'] = "Thêm thành côngcông!";
+            header("Location: /?controller=homeManager");
+        } else {
+            $_SESSION['error'] = "Thêm thất bại có thể sản phẩm đã tồn tại.";
+            header("Location: /?controller=addProduct");
+        }
+        exit();
     }
-    
 }
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $action = $_POST['action'] ?? null;
 
     switch ($action) {
-        case 'chosenLine':
-            $productLine = $_POST['productLine'];
-            $AddProductController= new AddProductController();
-            $AddProductController->productModel($productLine);
-            exit();
-        case 'chosenModel':
-                $productType = $_POST['productModel'];
-                $AddProductController= new AddProductController();
-                $AddProductController->productType($productType);
-                exit();
         case 'add':
-            $productType= $_POST['productType'];
-            $productName = $_POST['productName'];
-            $originalPrice = $_POST['originalPrice'];
-            $Price = $_POST['Price'];
-            $stock = $_POST['stock'];
-            $capacity = $_POST['capacity'];
-            $color = $_POST['color'];
-            $AddProductController= new AddProductController();
-            $AddProductController->AddProduct($productType, $productName,$originalPrice,$Price,$stock,$capacity,$color);
-            exit();
+            $productLine = $_POST['productLine'] ?? '';
+            $productName = $_POST['productName'] ?? '';
+            $originalPrice = $_POST['originalPrice'] ?? 0;
+            $price = $_POST['Price'] ?? 0;
+            $stock = 1;
+            $capacity = $_POST['capacity'] ?? '';
+            $color = $_POST['color'] ?? '';
 
-        case 'upload':
-            if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
-                $file = $_FILES['file'];
-                $fileName = time() . '_' . basename($file['name']);
-                $filePath = 'public/img/' . $fileName;
-                if (move_uploaded_file($file['tmp_name'], $filePath)) {
-                    $fullPath = $filePath; 
-                    $_SESSION['UrlProduct'] = $fullPath;
-                    $AddProductController= new AddProductController();
-                    $AddProductController->index();
-                    } else {
-                            echo "Lỗi khi tải tệp lên.";
-                    }
-                    } else {
-                        echo "Không có tệp nào được tải lên hoặc có lỗi xảy ra.";
-                    }
+            // Xử lý file upload
+            if (isset($_FILES['file'])) {
+                $uploadResult = FileHandler::uploadFile($_FILES['file']);
+                if ($uploadResult['success']) {
+                    $_SESSION['UrlProduct'] = $uploadResult['filePath'];
+                } else {
+                    $_SESSION['error'] = $uploadResult['error'];
+                    header("Location: /?controller=addProduct");
                     exit();
-            
-            default:
-            echo "Hành động không hợp lệ!";
+                }
+            } else {
+                $_SESSION['error'] = "No file uploaded.";
+                header("Location: /?controller=addProduct");
+                exit();
+            }
+
+            // Tạo sản phẩm
+            $AddProductController = new AddProductController();
+            $AddProductController->AddProduct(
+                $productLine,
+                $productName,
+                $originalPrice,
+                $price,
+                $stock,
+                $capacity,
+                $color
+            );
             break;
     }
 }
+?>

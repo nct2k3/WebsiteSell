@@ -49,26 +49,14 @@ $controller->index();
     </a>
   </div>
   <div class="mx-8 mt-2">
-    <div class="container flex-wrap d-flex gap-3">
-      <button
-      onclick="window.location='?controller=product&items=<?php echo $items?>'"
-      class="text-white hover:underline underline">All</button>
-      <?php foreach ($Model as $Models): ?>
-      <button
-      onclick="window.location='?controller=product&action=productModel&items=<?php echo $items?>&model=<?php echo htmlspecialchars($Models->productModel); ?>'"
-      class="text-white hover:underline">
-      <?php echo htmlspecialchars($Models->productModel); ?>
-      </button>
-      <?php endforeach; ?>
-    </div>
   </div>
     <div class="w-full flex justify-end px-8">
         <div>
             <div class="w-full">
                 <select id="sortSelect" name="sort" required class="text-black border text-sm mt-1 block w-full p-2 rounded-md" onchange="handleSort(this.value)">
-                    <option value="" disabled selected>Sort</option>
-                    <option value="0">Price high to low</option>
-                    <option value="1">Price low to high</option>
+                    <option value="" disabled selected>Lọc theo giá</option>
+                    <option value="0">Từ cao đến thấp</option>
+                    <option value="1">Từ thấp đến cao</option>
                 </select>
 
                 <script>
@@ -87,31 +75,35 @@ $controller->index();
     </div>
   <div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-0 p-0">
-        <?php foreach ($products as $productData): ?>
+        <?php foreach ($products as $productData):?>
+
             <div class="w-auto bg-gray-800 rounded-2xl shadow-lg p-5 text-center hover:bg-gray-700 m-4"
-            onclick="window.location='?controller=DetailProduct&items=<?php echo $productData['item']->productID; ?>'"
+            onclick="window.location='?controller=DetailProduct&items=<?php echo $productData->productID; ?>'"
             >
-                <a class="hidden"><?php echo htmlspecialchars($productData['item']->productID); ?></a>
-                <img class="mx-auto w-40 h-40" src="<?php echo htmlspecialchars($productData['item']->img); ?>" alt="<?php echo htmlspecialchars($productData['item']->productName); ?>">
-                <h2 class="text-lg font-bold mt-4"><?php echo htmlspecialchars($productData['item']->productName); ?></h2>
+                <a class="hidden"><?php echo htmlspecialchars($productData->productID); ?></a>
+                <img class="mx-auto w-40 h-40" src="<?php echo htmlspecialchars($productData->img); ?>" alt="<?php echo htmlspecialchars($productData->productName); ?>">
+                <h2 class="text-lg font-bold mt-4"><?php echo htmlspecialchars($productData->productName); ?></h2>
                 <div class="flex justify-center space-x-2 mt-3">
-                    <?php if (!empty($productData['capacity'])): ?>
-                        <?php foreach ($productData['capacity'] as $capacityData): ?>
-                            <span class="bg-gray-700 px-3 py-1 rounded text-sm"><?php echo htmlspecialchars($capacityData['Capacity']); ?></span>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <span class="bg-gray-700 px-3 py-1 rounded text-sm">No capacity available</span>
-                    <?php endif; ?>
+                    <?php echo $productData->capacity?>
                 </div>
                 <div class="mt-4">
-                    <p class="text-xl font-bold text-yellow-400"><?php echo number_format($productData['item']->price); ?>₫</p>
-                    <p class="text-sm line-through text-gray-400"><?php echo number_format($productData['item']->originalPrice); ?>₫</p>
+                    <p class="text-xl font-bold text-yellow-400"><?php echo number_format($productData->price); ?>₫</p>
+                    <p class="text-sm line-through text-gray-400"><?php echo number_format($productData->originalPrice); ?>₫</p>
                 </div>
                 <p class="text-orange-500 font-semibold mt-2">Online giá rẻ quá</p>
             </div>
         <?php endforeach; ?>
     </div>
   </div>
+<div class="flex justify-center p-4">
+    <?php if(isset($numpage) && $numpage > 0): ?>
+        <?php for($i = 1; $i <= $numpage; $i++): ?>
+            <button
+            onclick= "window.location.href = '?controller=product&items=<?php echo isset($items) ? htmlspecialchars($items) : ''; ?>&page=<?php echo $i;?>'"
+            class="h-12 w-12 p-4 rounded-xl bg-gray-500 m-2 flex items-center justify-center hover:bg-gray-100"><?php echo $i; ?></button>
+        <?php endfor; ?>
+    <?php endif; ?>
+</div>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

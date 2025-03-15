@@ -14,70 +14,38 @@ $controller->index();
 <body class="bg-gray-700 text-white">
 
 <div class="container mx-auto p-8">
-    <h1 class="text-2xl font-bold mb-6 text-center">Payment for Product</h1>
+    <h1 class="text-2xl font-bold mb-6 text-center">Đơn hàng của bạn</h1>
 
     <div class="bg-gray-600 p-6 rounded-lg shadow-md">
         
-        <h2 class="text-xl font-semibold mb-4">Payment Details</h2>
+        <h2 class="text-xl font-semibold mb-4">Thông tin đơn hàng</h2>
         <form action="?controller=payment" method="POST">
             <input type="hidden" name="action" value="<?php echo $dataAction ?>">
             <div class="mb-4">
-                <label for="address" class="block text-sm font-medium text-gray-100">Shipping Address</label>
+                <label for="address" class="block text-sm font-medium text-gray-100">Địa chỉ giao hàng</label>
                 <input type="text" id="address" name="address"   class="mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200" placeholder="<?php echo $dataUser->Address ?>">
             </div>
             <div class="mb-4">
-                <label for="PhomeNumber" class="block text-sm font-medium text-gray-100">Phone Number</label>
+                <label for="PhomeNumber" class="block text-sm font-medium text-gray-100">Số điện thoại</label>
                 <input type="number" id="PhoneNumber" name="PhoneNumber"   class="mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200" placeholder="<?php echo $dataUser->PhoneNumber ?>">
             </div>
             <div class="mb-4">
-                <label for="PhomeNumber" class="block text-sm font-medium text-gray-100">Delivery date</label>
+                <label for="PhomeNumber" class="block text-sm font-medium text-gray-100">Ngày giao hàng mong muốn</label>
                 <input
-                required
                 type="date" id="DateDelivery" name="DateDelivery"
-                    class="mt-1 block w-full text-black p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
-                    placeholder="<?php echo $dataUser->PhoneNumber ?>" 
+                   class="mt-1 block w-full text-black p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
                     min="<?php echo date('Y-m-d', strtotime('+5 days')); ?>">
             </div>
             <div class="mb-4">
-                <label for="Note" class="block text-sm font-medium text-gray-100">Note</label>
+                <label for="Note" class="block text-sm font-medium text-gray-100">Ghi chúchú</label>
                 <input type="text" id="Note" name="Note"   class="mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200" placeholder="Note....">
             </div>
 
             <div class="mb-4">
-                    <label for="LoyaltyPoints" class="block text-sm font-medium text-gray-100">Loyalty Points Max: <?php echo  number_format($dataUser->LoyaltyPoints, 0, ',', '.') . '₫';?></label>
-                    <input type="number" id="LoyaltyPoints" name="LoyaltyPoints" class="mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200" placeholder="Enter the number of points you want to use" min="0" max="<?php echo $dataUser->LoyaltyPoints?>">
+                    <label for="LoyaltyPoints" class="block text-sm font-medium text-gray-100">Số điểm tích được của bạnbạn: <?php echo  number_format($dataUser->LoyaltyPoints, 0, ',', '.') . '₫';?></label>
+                    <input type="number" id="LoyaltyPoints" name="LoyaltyPoints" class="mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200" placeholder="Nhập số điểm thưởng bạn muốn dùng" min="0" max="<?php echo $dataUser->LoyaltyPoints?>">
                 </div>
-            <div class="mb-4">
-                <label for="paymentType" class="block text-sm font-medium text-gray-100">Payment Type</label>
-                <select id="paymentType" name="paymentType" required class=" text-gray-500 mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200">
-                    <option value="" disabled selected>Select payment method</option>
-                    <option value="1">Order and pay upon receipt</option>
-                    <option value="2">Pay now</option>
-                    <option value="3">Oder with Credit Card</option>
-                </select>
-            </div>
-            <div id="creditCardFields" class="hidden">
-                <div class="mb-4">
-                    <label for="cardName" class="block text-sm font-medium text-gray-100">Name on Card</label>
-                    <input type="text" id="cardName" name="cardName"  class="mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200" placeholder="John Doe">
-                </div>
-                <div class="mb-4">
-                    <label for="cardNumber" class="block text-sm font-medium text-gray-100">Number Phone</label>
-                    <input type="text" id="cardNumber" name="cardNumber"  class="mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200" placeholder="1234 5678 9012 3456">
-                </div>
-
-                <div class="flex mb-4">
-                    <div class="w-1/2 pr-2">
-                        <label for="expiry" class="block text-sm font-medium text-gray-100">Expiry Date</label>
-                        <input type="text" id="expiry" name="expiry"  class="mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200" placeholder="MM/YY">
-                    </div>
-                    <div class="w-1/2 pl-2">
-                        <label for="cvv" class="block text-sm font-medium text-gray-100">CVV</label>
-                        <input type="text" id="cvv" name="cvv"  class="mt-1 block w-full text-black  p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200" placeholder="123">
-                    </div>
-                </div>
-            </div>
-            <h2 class="text-xl font-semibold mb-4">Product Summary</h2>
+            <h2 class="text-xl font-semibold mb-4">Danh sách sản phẩm mua</h2>
         
 
         <div class="bg-gray-600 shadow-md rounded px-4 pt-6 pb-8 my-4">
@@ -85,11 +53,11 @@ $controller->index();
                 <table class="table-auto w-full text-white text-sm sm:text-base">
                     <thead>
                         <tr class="border-b border-gray-500">
-                            <th class="text-left px-2 py-1">Product</th>
-                            <th class="text-left px-2 py-1">Picture</th>
-                            <th class="text-left px-2 py-1">Price</th>
-                            <th class="text-left px-2 py-1">Quantity</th>
-                            <th class="text-left px-2 py-1">Status</th>
+                            <th class="text-left px-2 py-1">Tên sản phẩm</th>
+                            <th class="text-left px-2 py-1"></th>
+                            <th class="text-left px-2 py-1">Giá</th>
+                            <th class="text-left px-2 py-1">Số lượng</th>
+                            <th class="text-left px-2 py-1"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -123,14 +91,14 @@ $controller->index();
                 </table>
             </div>
             <div class="flex justify-end items-center mt-2 text-white text-sm ">
-                <p><strong>Cumulative points:</strong> <?php echo htmlspecialchars(number_format($total/100, 0, ',', '.')) . '₫'; ?></p>
+                <p><strong>Số điểm bạn được tích khi mua:</strong> <?php echo htmlspecialchars(number_format($total/100, 0, ',', '.')) . '₫'; ?></p>
             </div>
             <div class="flex justify-end items-center mt-2 text-white ">
-                <p><strong>Total:</strong> <?php echo htmlspecialchars(number_format($total, 0, ',', '.')) . '₫'; ?></p>
+                <p><strong>Đơn giá cuối:</strong> <?php echo htmlspecialchars(number_format($total, 0, ',', '.')) . '₫'; ?></p>
             </div>
         </div>
 
-            <button type="submit" class="w-full bg-indigo-600 text-white p-2 rounded-md button-animation hover:bg-indigo-700">Transaction Completed</button>
+            <button type="submit" class="w-full bg-indigo-600 text-white p-2 rounded-md button-animation hover:bg-indigo-700">Xác nhận đặt hàng</button>
         </form>
     </div>
     

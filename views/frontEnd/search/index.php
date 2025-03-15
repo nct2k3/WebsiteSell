@@ -83,25 +83,28 @@ $controller->index();
             </div>
             
         <?php if (!empty($dataPrd)): ?>
-            <?php foreach ($dataPrd as $product): ?>
-            <div
-            onclick="window.location='?controller=DetailProduct&items=<?php echo $product->productID; ?>'"
-             class="mt-2 p-2">
-                <div class="rounded w-full flex flex-wrap hover:bg-gray-800 hover:opacity-75 border-b border-gray-500">
-                    <div class="py-2 px-2">
-                        <img class="h-12 w-12 sm:h-16 sm:w-16 object-cover" src="<?php echo $product->img ?>">
-                    </div>
-                    <h class="flex py-2 px-2 mt-3">
-                        <div class="font-bold">Name Product:</div>
-                        <div class="px-2"><?php echo $product->productName ?></div>
-                    </h>
-                    <h class="flex py-2 px-2 mt-3">
-                        <div class="font-bold">Product:</div>
-                        <div class="px-2"><?php echo htmlspecialchars(number_format($product->price, 0, ',', '.')) . '₫'; ?></div>
-                    </h>
+            <div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-0 p-0">
+                    <?php foreach ($dataPrd as $productData):?>
+
+                        <div class="w-auto bg-gray-800 rounded-2xl shadow-lg p-5 text-center hover:bg-gray-700 m-4"
+                        onclick="window.location='?controller=DetailProduct&items=<?php echo $productData->productID; ?>'"
+                        >
+                            <a class="hidden"><?php echo htmlspecialchars($productData->productID); ?></a>
+                            <img class="mx-auto w-40 h-40" src="<?php echo htmlspecialchars($productData->img); ?>" alt="<?php echo htmlspecialchars($productData->productName); ?>">
+                            <h2 class="text-lg font-bold mt-4"><?php echo htmlspecialchars($productData->productName); ?></h2>
+                            <div class="flex justify-center space-x-2 mt-3">
+                                <?php echo $productData->capacity?>
+                            </div>
+                            <div class="mt-4">
+                                <p class="text-xl font-bold text-yellow-400"><?php echo number_format($productData->price); ?>₫</p>
+                                <p class="text-sm line-through text-gray-400"><?php echo number_format($productData->originalPrice); ?>₫</p>
+                            </div>
+                            <p class="text-orange-500 font-semibold mt-2">Online giá rẻ quá</p>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
-            <?php endforeach; ?>
         <?php else: ?>
             
             <p class="text-center font-bold mt-4 text-red-500">There are no products found</p>
