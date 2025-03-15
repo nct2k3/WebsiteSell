@@ -11,93 +11,69 @@ class ProductController extends BaseController
     public function index()
     {
         $id = $_GET['items'];
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $product = $this->ProductModel->getProduct($id);
-        $Model= $this->ProductModel->getModel($id);
         $Banner= $this->BannerModel->getBanners($id);
-        $products = [];
-        foreach ($product as $items) {
-            $capacity = $this->getCapacity($items->productType);
-        
-            $products[] = [
-                'item' => $items,
-                'capacity' => $capacity
-            ];
+        $numbegin=0;
+        $numend=6;
+        if($page && $page>1){
+            $numbegin= ($page-1)*$numend;
+            $numend= $numend*$page;
         }
-        $this->view('frontEnd.product.index', 
-        ['products' => $products,'Model'=>$Model,'Banner'=> $Banner,'items'=>$id]);
-    }
-    // lây sản phẩm theo đơn line
-    public function productModel()
-    {
-        $id = $_GET['items'];
-        $Model=$_GET['model'];
-        $product = $this->ProductModel->getProductModel($Model);
-        $Model= $this->ProductModel->getModel($id);
-        $Banner= $this->BannerModel->getBanners($id);
-        $products = [];
-        foreach ($product as $items) {
-            $capacity = $this->getCapacity($items->productType);
-        
-            $products[] = [
-                'item' => $items,
-                'capacity' => $capacity
-            ];
-        }
-        $this->view('frontEnd.product.index', 
-        ['products' => $products,'Model'=>$Model,'Banner'=> $Banner,'items'=>$id]);
-    }
-    // lấy dung lượng
-    public function getCapacity($productType) {
-        $capacity = $this->ProductModel->getCapacity($productType);
-        return $capacity;
+        $number= count($product);
+        $numpage= ceil($number/6);
+        $products = array_slice($product,$numbegin,$numend);
+        $this->view('frontEnd.product.index', ['products' => $products,'Banner'=> $Banner,'items'=>$id,'numpage'=>$numpage ]);
     }
 
+    
     public function indexSortHightToLow()
     {
         $id = $_GET['items'];
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $product = $this->ProductModel->getProduct($id);
         if (!empty($product)) {
             usort($product, function($a, $b) {
                 return  $b->price - $a->price;
             });
         }
-
-        $Model= $this->ProductModel->getModel($id);
         $Banner= $this->BannerModel->getBanners($id);
-        $products = [];
-        foreach ($product as $items) {
-            $capacity = $this->getCapacity($items->productType);
-        
-            $products[] = [
-                'item' => $items,
-                'capacity' => $capacity
-            ];
+        $numbegin=0;
+        $numend=6;
+        if($page && $page>1){
+            $numbegin= ($page-1)*$numend;
+            $numend= $numend*$page;
         }
+        $number= count($product);
+        $numpage= ceil($number/6);
+        $products = array_slice($product,$numbegin,$numend);
+        
         $this->view('frontEnd.product.index', 
-        ['products' => $products,'Model'=>$Model,'Banner'=> $Banner,'items'=>$id]);
+        ['products' => $products,'Banner'=> $Banner,'items'=>$id,'numpage'=>$numpage]);
     }
+    
     public function indexSortLowToHight()
     {
         $id = $_GET['items'];
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $product = $this->ProductModel->getProduct($id);
         if (!empty($product)) {
             usort($product, function($a, $b) {
                 return  $a->price - $b->price;
             });
         }
-
-        $Model= $this->ProductModel->getModel($id);
         $Banner= $this->BannerModel->getBanners($id);
-        $products = [];
-        foreach ($product as $items) {
-            $capacity = $this->getCapacity($items->productType);
-        
-            $products[] = [
-                'item' => $items,
-                'capacity' => $capacity
-            ];
+        $numbegin=0;
+        $numend=6;
+        if($page && $page>1){
+            $numbegin= ($page-1)*$numend;
+            $numend= $numend*$page;
         }
+        $number= count($product);
+        $numpage= ceil($number/6);
+        $products = array_slice($product,$numbegin,$numend);
+       
         $this->view('frontEnd.product.index', 
-        ['products' => $products,'Model'=>$Model,'Banner'=> $Banner,'items'=>$id]);
+        ['products' => $products,'Banner'=> $Banner,'items'=>$id,'numpage'=>$numpage]);
     }
 }

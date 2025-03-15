@@ -51,17 +51,12 @@ $controller->index();
                 <div class="grid-3 md:grid-1">
                     <span class="text-lg font-semibold text-gray-800 ">Name: <?php echo $item->productName ?></span>
                     <span class="text-gray-600 ml-2">Product ID: <?php echo $item->productID?> </span>
-                    <span class="text-gray-600m ml-2">Model: <?php echo $item->productModel ?></span>
                     <span class="text-orange-600 ml-2">Price: <?php echo $item->price?></span>
                     <span class="text-gray-500 line-through ml-2">Original Price: <?php echo $item->originalPrice?></span>
-                    <span class="text-gray-600 ml-2">Stock: <?php echo $item->stock?></span>
                     <span class="text-gray-600 ml-2">Capacity: <?php echo $item->capacity?></span>
                     <span class="text-gray-600 ml-2 ">Color: <?php echo $item->color?></span>
                 </div>
                 <div>
-                    <div
-                    onclick="window.location='/?controller=AddQuantity&id=<?php echo $item->productID?>'"
-                    class=" text-center text-white rounded text-sm h-7 bg-green-500 p-1 w-36 hover:bg-green-400 m-2">Add quantity</div>
                     <div
                     onclick="window.location='/?controller=EditProduct&id=<?php echo $item->productID?>'"
                     class="text-center text-white rounded text-sm h-7 bg-blue-500 p-1 w-36 hover:bg-blue-400 m-2"> Edit </div>

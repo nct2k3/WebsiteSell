@@ -268,79 +268,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     switch ($action) {
         case 'payment':
             $loyaltyPoints = $_POST['LoyaltyPoints'] ?? null;
-            $paymentType = $_POST['paymentType'] ?? null;
             $dateDelivery = $_POST['DateDelivery'] ?? null;
             $PhoneNumber = $_POST['PhoneNumber'] ?? null;
             $address = $_POST['address'] ?? null;
             $Note = $_POST['Note'] ?? null;
             $paymentcontroller= new PaymentController;
-            
-            if ($paymentType) {
-                if ($paymentType == 1) {
-                  
-                   $paymentcontroller->PaymentNormal($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,0);
-                }
-                else
-                if ($paymentType == 2) {
-                   
-                   $paymentcontroller->PaymentNormal($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,4);
-                }
-                if ($paymentType == 3) {
-                    $cardName = $_POST['cardName'] ?? null;
-                    $cardNumber = $_POST['cardNumber'] ?? null;
-                    $expiry = $_POST['expiry'] ?? null;
-                    $cvv = $_POST['cvv'] ?? null;
-
-                    echo '<pre>';
-                    if ($cardName && $cardNumber && $expiry && $cvv) {
-                        echo "Thẻ tín dụng hợp lệ.<br>";
-                    } else {
-                        $_SESSION['error'] = "Invalid credit card!";
-                        $paymentcontroller->index(); 
-                    }
-                }
-            } else {
-                $_SESSION['error'] = "Error!";
-                 $paymentcontroller->index(); 
-            }
+            $paymentcontroller->PaymentNormal($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,0);       
             break;
             case 'payOne':
                 $loyaltyPoints = $_POST['LoyaltyPoints'] ?? null;
-                $paymentType = $_POST['paymentType'] ?? null;
                 $dateDelivery = $_POST['DateDelivery'] ?? null;
                 $PhoneNumber = $_POST['PhoneNumber'] ?? null;
                 $address = $_POST['address'] ?? null;
                 $Note = $_POST['Note'] ?? null;
-                $paymentcontroller= new PaymentController;
-                print_r($paymentType  );
-
-                if ($paymentType) {
-                    if ($paymentType == 1) {
-                      $paymentcontroller->PaymentOne($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,0);
-                    }
-                    else
-                    if ($paymentType == 2) {
-                       $paymentcontroller->PaymentOne($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,4);
-                    }
-                    else
-                    if ($paymentType == 3) {
-                        $cardName = $_POST['cardName'] ?? null;
-                        $cardNumber = $_POST['cardNumber'] ?? null;
-                        $expiry = $_POST['expiry'] ?? null;
-                        $cvv = $_POST['cvv'] ?? null;
-    
-                        echo '<pre>';
-                        if ($cardName && $cardNumber && $expiry && $cvv) {
-                            echo "Thẻ tín dụng hợp lệ.<br>";
-                        } else {
-                            $_SESSION['error'] = "Invalid credit card!";
-                            $paymentcontroller->index(); 
-                        }
-                    }
-                } else {
-                    $_SESSION['error'] = "Error!";
-                    $paymentcontroller->index(); 
-                }
+                $paymentcontroller= new PaymentController;           
+                $paymentcontroller->PaymentOne($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,0);               
                 break;
 
         default:

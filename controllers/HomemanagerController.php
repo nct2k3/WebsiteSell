@@ -24,7 +24,7 @@ class HomemanagerController extends BaseController
     }
     // tìm kiếm sản phẩm
     public function searchProduct($string) {
-        $data = $this->getAllProduct();
+        $data = $this->ProductModel->getAllProduct();
         
         $productDataSearch = [];
         foreach ($data as $items) {

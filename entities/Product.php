@@ -2,8 +2,6 @@
 class Product {
     public $productID;
     public $productLineID;
-    public $productType;
-    public $productModel;
     public $productName;
     public $price;
     public $originalPrice;
@@ -11,13 +9,12 @@ class Product {
     public $img;
     public $capacity;
     public $color;
-    public function __construct($productID, $productLineID, $productType,$productModel, $productName, $price, $originalPrice, $stock, $img, $capacity, $color) {
+    
+    public function __construct($productID = null, $productLineID = null, $productName = null,$price = null, $originalPrice = null, $stock = null, $img = null, $capacity = null, $color = null) 
+    {
         $this->productID = $productID;
         $this->productLineID = $productLineID;
-        $this->productType = $productType;
-        $this->productModel = $productModel;
         $this->productName = $productName;
-        $this->productLineID = $productLineID;
         $this->price = $price;
         $this->originalPrice = $originalPrice;
         $this->stock = $stock;
