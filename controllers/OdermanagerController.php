@@ -46,18 +46,18 @@ class OdermanagerController extends BaseController
                         'quantity' => $item->quantity,
                     ];
                 }
-                $status="wait for confirmation";
+                $status="Chờ xác nhận ";
                 if($items->status == 1) {
-                    $status="confirmed";
+                    $status="Đã xác nhận ";
                 }
                 else if($items->status == 2) {
-                    $status="being transported";
+                    $status="Đang vận chuyển ";
                 }
                 else if($items->status == 3) {
-                    $status="delivered";
+                    $status="Giao hàng thành công";
                 }
                 else if($items->status == 4) {
-                    $status="complete";
+                    $status="Hoàn tất";
                 }
                 $dataPament[] = [
                     'products' => $products,
@@ -117,6 +117,12 @@ class OdermanagerController extends BaseController
             );    
             $this->NotificationManagerModel->createNotification($Notification);
         }
+        $check=$this->InvoiceModel->getInvoiceByID($Id);
+        if($check->status>$value){
+            $_SESSION['error'] = "Không thể cập nhập ngược  !";
+            $this->index();
+            exit();
+        }
         $this->InvoiceModel->UpdateStatus($Id,$value);
         $_SESSION['message'] = "Change successfully!";
         $this->index();
@@ -142,18 +148,18 @@ class OdermanagerController extends BaseController
                         'quantity' => $item->quantity,
                     ];
                 }
-                $status="wait for confirmation";
+                $status="Chờ xác nhận";
                 if($items->status == 1) {
-                    $status="confirmed";
+                    $status="Đã xác nhận ";
                 }
                 else if($items->status == 2) {
-                    $status="being transported";
+                    $status="Đang vận chuyển ";
                 }
                 else if($items->status == 3) {
-                    $status="delivered";
+                    $status="Giao hàng thành công";
                 }
                 else if($items->status == 4) {
-                    $status="complete";
+                    $status="Hoàn tất";
                 }
                 $dataPament[] = [
                     'products' => $products,
