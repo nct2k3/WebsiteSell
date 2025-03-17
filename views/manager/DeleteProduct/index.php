@@ -46,7 +46,7 @@ $controller->index();
 <div class="space-y-4 mt-1">
     <div class="grid grid-cols-2 gap-4">
         <?php foreach($data as $item) :?>
-        <div class="flex items-start p-4 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
+        <div class="  <?php if($item->Status==1) echo "opacity-50 bg-gray-300" ?> flex items-start p-4 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
             <img src="<?php echo $item->img ?>" alt="Product 1" class="h-16 rounded-lg mr-4">
             <div class="flex flex-grow">
                 <div class="flex-grow">

@@ -45,7 +45,7 @@ $controller->index();
 
     <div class="mt-1 grid grid-cols-1 md:grid-cols-2 gap-4">
         <?php foreach($data as $item) :?>
-        <div class="flex items-start p-4 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
+        <div class="flex <?php if($item->Status==1) echo "opacity-50 bg-gray-300" ?> items-start p-4 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
             <img src="<?php echo $item->img ?>" alt="Sản phẩm 1" class="h-16 rounded-lg mr-4">
             <div class="flex flex-1 justify-between">
                 <div class="grid gap-1">
