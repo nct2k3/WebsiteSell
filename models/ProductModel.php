@@ -18,6 +18,7 @@ class ProductModel extends BaseModel
         'Img' => $productsData->img,
         'ProductLineID' => $productsData->productLineID,
         'ProductName' => $productsData->productName,
+        'Status'=>$productsData->status,
         'OriginalPrice' => $productsData->originalPrice,
         'Price' => $productsData->price,
         'Stock' => $productsData->stock,
@@ -25,7 +26,6 @@ class ProductModel extends BaseModel
         'Color' => $productsData->color,
     ];
 
-    // Kiểm tra nếu sản phẩm đã tồn tại
     $sql = "SELECT * FROM products 
             WHERE ProductLineID = '{$productsData->productLineID}' 
               AND ProductName = '{$productsData->productName}' 
@@ -111,7 +111,8 @@ class ProductModel extends BaseModel
             $Product[] = new Product(
                 $row['ProductID'], 
                 $row['ProductLineID'],     
-                $row['ProductName'],      
+                $row['ProductName']
+                ,$row['Status'],      
                 $row['Price']  ,
                 $row['OriginalPrice'],
                 $row['Stock'],
@@ -134,7 +135,8 @@ class ProductModel extends BaseModel
             $Product[] = new Product(
                 $row['ProductID'], 
                 $row['ProductLineID'],     
-                $row['ProductName'],      
+                $row['ProductName'] 
+                ,$row['Status'],     
                 $row['Price']  ,
                 $row['OriginalPrice'],
                 $row['Stock'],
@@ -152,8 +154,9 @@ class ProductModel extends BaseModel
         foreach ($data as $row) {
             $Product[] = new Product(
                 $row['ProductID'], 
-                $row['ProductLineID'],     
-                $row['ProductName'],      
+                $row['ProductLineID'], 
+                $row['ProductName'],
+                $row['Status'],          
                 $row['Price']  ,
                 $row['OriginalPrice'],
                 $row['Stock'],
@@ -174,6 +177,7 @@ class ProductModel extends BaseModel
             $data['ProductID'],
             $data['ProductLineID'],
             $data['ProductName'],
+            $data['Status'],
             $data['Price'],
             $data['OriginalPrice'],
             $data['Stock'],
@@ -186,13 +190,14 @@ class ProductModel extends BaseModel
     }
     public function getByIdGroup($ProductID)
     {
-        $data = $this->getByIdGroupByGroupBy('Products', $ProductID, 'ProductLineID',"	ProductType",6);
+        $data = $this->getByIdGroupByGroupBy('Products', $ProductID, 'ProductLineID',"	ProductName",6);
             $Product = [];
             foreach ($data as $row) {
                 $Product[] = new Product(
                     $row['ProductID'], 
                     $row['ProductLineID'],    
-                    $row['ProductName'],     
+                    $row['ProductName'],  
+                    $row['Status'],   
                     $row['Price']  ,
                     $row['OriginalPrice'],
                     $row['Stock'],
@@ -212,7 +217,8 @@ class ProductModel extends BaseModel
                 $Product[] = new Product(
                     $row['ProductID'], 
                     $row['ProductLineID'],
-                    $row['ProductName'],    
+                    $row['ProductName'],  
+                    $row['Status'],  
                     $row['Price']  ,
                     $row['OriginalPrice'],
                     $row['Stock'],
@@ -231,7 +237,8 @@ class ProductModel extends BaseModel
                 $Product[] = new Product(
                     $row['ProductID'], 
                     $row['ProductLineID'],  
-                    $row['ProductName'],      
+                    $row['ProductName'],
+                    $row['Status'],    
                     $row['Price']  ,
                     $row['OriginalPrice'],
                     $row['Stock'],
@@ -249,7 +256,8 @@ class ProductModel extends BaseModel
             $Product = new Product(
                 $productData['ProductID'], 
                 $productData['ProductLineID'],     
-                $productData['ProductName'],      
+                $productData['ProductName'], 
+                $productData['Status'],  
                 $productData['Price'],
                 $productData['OriginalPrice'],
                 $productData['Stock'],
@@ -272,7 +280,7 @@ class ProductModel extends BaseModel
             $Product = new Product(
                 $productData['ProductID'], 
                 $productData['ProductLineID'],     
-                $productData['ProductName'],      
+                $productData['ProductName'],$productData['Status'],      
                 $productData['Price'],
                 $productData['OriginalPrice'],
                 $productData['Stock'],
@@ -297,7 +305,7 @@ class ProductModel extends BaseModel
             $Product = new Product(
                 $productData['ProductID'], 
                 $productData['ProductLineID'],     
-                $productData['ProductName'],      
+                $productData['ProductName'],$productData['Status'],      
                 $productData['Price'],
                 $productData['OriginalPrice'],
                 $productData['Stock'],
@@ -340,8 +348,9 @@ class ProductModel extends BaseModel
         while ($row = mysqli_fetch_assoc($result)) {
             $Product[] = new Product(
                 $row['ProductID'], 
-                $row['ProductLineID'],     
-                $row['ProductName'],      
+                $row['ProductLineID'],   
+                $row['ProductName'],  
+                $row['Status'],      
                 $row['Price'],
                 $row['OriginalPrice'],
                 $row['Stock'],
@@ -367,8 +376,9 @@ class ProductModel extends BaseModel
         while ($row = mysqli_fetch_assoc($result)) {
             $Product[] = new Product(
                 $row['ProductID'], 
-                $row['ProductLineID'],     
-                $row['ProductName'],      
+                $row['ProductLineID'],    
+                $row['ProductName'],  
+                $row['Status'],     
                 $row['Price'],
                 $row['OriginalPrice'],
                 $row['Stock'],
@@ -411,7 +421,7 @@ class ProductModel extends BaseModel
             $Product = [];
             foreach ($data as $row) {
                 $Product[] = new ProductLine(
-                    $row['ProductLineID'], 
+                    $row['ProductLineID'],
                     $row['ProductLineName'], 
                 );
             }
@@ -473,6 +483,7 @@ class ProductModel extends BaseModel
         $sql="UPDATE products 
         SET ProductName='$productData->productName',
         Price='$productData->price',
+        'Status'='$productData->Status',
         OriginalPrice=$productData->originalPrice,
         Stock='$productData->stock',
         Img='$productData->img',
@@ -494,10 +505,19 @@ class ProductModel extends BaseModel
 
     // delete
 
-    public function deleteProduct($id) {
+public function deleteProduct($id) {
+    $sql = "SELECT ProductID FROM invoicedetails WHERE ProductID = " . intval($id);
+    $result = $this->getCustome($sql);
     
-        $this->deleteID('products', $id,'ProductID');
+    if ($result == null) {
+        $this->deleteID('products', $id, 'ProductID');
+        return true;
+    } else {
+        $updateSql = "UPDATE products SET Status = 1 WHERE ProductID = " . intval($id);
+        $this->UpdateCustome($updateSql);
+        return true;
     }
+}
     //check
     public function CheclIsEmpty($product){
         $sql="SELECT ProductID FROM products WHERE ProductName='$product->productName' and Color='$product->color' and Img='$product->img' and Capacity='$product->capacity' ";

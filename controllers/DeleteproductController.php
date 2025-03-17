@@ -14,9 +14,19 @@ class DeleteproductController extends BaseController
             header("Location: /");
             $_SESSION['error'] = "You do not have a management role";
         }
-        $data = $this->ProductModel->getProductDelete();
+        $product = $this->ProductModel->getAllProduct();
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $numbegin=0;
+        $numend=10;
+        if($page && $page>1){
+            $numbegin= ($page-1)*$numend;
+            $numend= $numend*$page;
+        }
+        $number= count($product);
+        $numpage= ceil($number/10);
+        $products = array_slice($product,$numbegin,$numend);
         $dataLineProduct=$this->ProductModel->getLineProduct();
-        $this->view('manager.Deleteproduct.index',['dataLineProduct'=>$dataLineProduct,'data'=>$data]);
+        $this->view('manager.Deleteproduct.index',['dataLineProduct'=>$dataLineProduct,'data'=>$products,'numpage'=>$numpage ]);
     }
     //lọc sản phẩm theo dòng
     public function FilterProduct($id){
