@@ -54,7 +54,6 @@
                         <option value="1">List Product</option>
                         <option value="2">Add New Product</option>
                         <option value="3">Delete Product</option>
-                        <option value="4">Add Detail Product</option>
                        
                     </select>
                 </div>

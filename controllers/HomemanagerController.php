@@ -13,8 +13,21 @@ class HomemanagerController extends BaseController
             $_SESSION['error'] = "You do not have a management role";
         }
         $data = $this->ProductModel->getAllProduct();
+        
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $numbegin=0;
+        $numend=10;
+        if($page && $page>1){
+            $numbegin= ($page-1)*$numend;
+            $numend= $numend*$page;
+        }
+        $number= count($data);
+        $numpage= ceil($number/10);
+        $products = array_slice($data,$numbegin,$numend);
+
+
         $dataLineProduct=$this->ProductModel->getLineProduct();
-        $this->view('manager.HomeManager.index',['dataLineProduct'=>$dataLineProduct,'data'=>$data]);
+        $this->view('manager.HomeManager.index',['dataLineProduct'=>$dataLineProduct,'data'=>$products,'numpage'=>$numpage]);
     }
     //  lọc sản phâm
     public function FilterProduct($id){

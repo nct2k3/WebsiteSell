@@ -43,44 +43,64 @@ $controller->index();
         </form>
         </div>
 
-    <div class="space-y-4 mt-1">
+<div class="space-y-4 mt-1">
+    <div class="grid grid-cols-2 gap-4">
         <?php foreach($data as $item) :?>
         <div class="flex items-start p-4 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
-            <img src="<?php echo $item->img ?>" alt="Product 1" class=" h-16 rounded-lg mr-4">
-            <div class="flex">
-                <div class="grid-3 md:grid-1">
-                    <span class="text-lg font-semibold text-gray-800 ">Name: <?php echo $item->productName ?></span>
-                    <span class="text-gray-600 ml-2">Product ID: <?php echo $item->productID?> </span>
-                    <span class="text-gray-600m ml-2">Model: <?php echo $item->productModel ?></span>
-                    <span class="text-orange-600 ml-2">Price: <?php echo $item->price?></span>
-                    <span class="text-gray-500 line-through ml-2">Original Price: <?php echo $item->originalPrice?></span>
-                    <span class="text-gray-600 ml-2">Stock: <?php echo $item->stock?></span>
-                    <span class="text-gray-600 ml-2">Capacity: <?php echo $item->capacity?></span>
-                    <span class="text-gray-600 ml-2 ">Color: <?php echo $item->color?></span>
+            <img src="<?php echo $item->img ?>" alt="Product 1" class="h-16 rounded-lg mr-4">
+            <div class="flex flex-grow">
+                <div class="flex-grow">
+                    <span class="text-lg font-semibold text-gray-800 block">Name: <?php echo $item->productName ?></span>
+                    <span>Mã sản phẩm: <?php echo $item->productID ?></span>
+                    <span class="text-orange-600 block">Price: <?php echo $item->price?></span>
+                    <span class="text-gray-500 line-through block">Original Price: <?php echo $item->originalPrice?></span>
+                    <span class="text-gray-600 block">Stock: <?php echo $item->stock?></span>
+                    <span class="text-gray-600 block">Capacity: <?php echo $item->capacity?></span>
+                    <span class="text-gray-600 block">Color: <?php echo $item->color?></span>
+                    <span>Trạng thái: 
+                        <?php 
+                        $NewStatus = "Đang bán";
+                        $statusColor = "text-green-600";
+                        if($item->Status == 1){
+                            $NewStatus = "Tạm ẩn";
+                            $statusColor = "text-red-600";
+                        }
+                        ?>
+                        <span class="<?php echo $statusColor; ?> font-semibold">
+                            <?php echo $NewStatus ?>
+                        </span>
+                    </span>
                 </div>
-                <div>
+                <div class="ml-4">
                     <form action="/?controller=DeleteProduct&action=deleteProduct" method="POST" onsubmit="return confirmDelete()">
                         <input type="hidden" name="id" value="<?php echo $item->productID; ?>">
-
-                        <div class="text-center text-white rounded text-sm h-7 bg-red-500 p-1 w-36 hover:bg-red-400 m-2">
+                        <div class="text-center text-white rounded text-sm h-7 bg-red-500 p-1 w-36 hover:bg-red-400">
                             <button type="submit" class="w-full h-full bg-transparent border-none cursor-pointer">
                                 Delete
                             </button>
                         </div>
                     </form>
                 </div>
-
-                <script>
-                    function confirmDelete() {
-                        return confirm('Are you sure you want to delete this product?');
-                    }
-                </script>
-
             </div>
         </div>
         <?php endforeach ?>
-
     </div>
+</div>
+
+<script>
+    function confirmDelete() {
+        return confirm('Are you sure you want to delete this product?');
+    }
+</script>
+    <div class="flex justify-center p-4">
+    <?php if(isset($numpage) && $numpage > 0): ?>
+        <?php for($i = 1; $i <= $numpage; $i++): ?>
+            <button
+            onclick= "window.location.href = '?controller=DeleteProduct&page=<?php echo $i;?>'"
+            class="h-12 w-12 p-4 rounded-xl bg-gray-100 m-2 flex items-center justify-center hover:bg-gray-200 border"><?php echo $i; ?></button>
+        <?php endfor; ?>
+    <?php endif; ?>
+
 
 </div>
 
