@@ -72,21 +72,21 @@ $controller->index();
                         <div class="bg-orange-500 rounded-full h-2" style="width: 80%;"></div>
                     </div>
                     <div class="flex">   
-                    <?php if ($productInfo->stock == 0): ?>
+                    <?php if ($productInfo->Status = 1): ?>
                         <button class="btn btn-danger text-white w-full font-bold m-2 text-xl" disabled>
-                            Out Of Stock
+                            Sản phẩm đã bị ẩn
                         </button>
                     <?php else: ?>
                         <button
                             onclick="window.location='?controller=payment&action=buyOne&items=<?php echo htmlspecialchars($productInfo->productID); ?>'"
                             class="btn btn-primary w-full font-bold m-2 text-xl py-4">
-                            Buy Now
+                            Mua ngay
                         </button>
 
                         <button
                             onclick="window.location='?controller=DetailProduct&action=addCart&items=<?php echo htmlspecialchars($productInfo->productID); ?>'"
                             class="btn btn-warning text-white w-full font-bold m-2 text-xl">
-                            Add To Cart
+                            Thêm gỏ hàng
                         </button>
                     <?php endif; ?>
                     </div>
