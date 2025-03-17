@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Header</title>
+    <title>Tiêu Đề Tương Thích</title>
     <style>
         @keyframes fadeOut {
             0% { opacity: 1; }
@@ -45,48 +44,46 @@
                     <h1 
                     onclick="window.location =`/`"
                     class="font-bold bg-gradient-to-r from-blue-500 to-red-500 bg-clip-text text-transparent text-xl ml-2">
-                        Iphone Manager
+                        iPhone
                     </h1>
                 </div>
                 <div class="col-12 col-md-2 text-white">
                     <select id="paymentType" onchange="handleSelectionProduct(this)" name="paymentType" required class="bg-gray-800 text-gray-500 mt-1 block w-full text-white p-2 rounded-md ">
-                        <option value="" disabled selected>Product Manager</option>
-                        <option value="1">List Product</option>
-                        <option value="2">Add New Product</option>
-                        <option value="3">Delete Product</option>
-                       
+                        <option value="" disabled selected>Quản Lý Sản Phẩm</option>
+                        <option value="1">Danh Sách Sản Phẩm</option>
+                        <option value="2">Thêm Sản Phẩm Mới</option>
+                        <option value="3">Xóa Sản Phẩm</option>
                     </select>
                 </div>
                 <div class="col-12 col-md-2 text-white">
                     <select id="paymentType" name="paymentType" required class="bg-gray-800 text-gray-500 mt-1 block w-full text-white p-2 rounded-md" onchange="handleSelection(this)">
-                        <option value="" disabled selected>Order Manager</option>
-                        <option value="5">The order has not been completed yet</option>
-                        <option value="4">Order has been completed</option>
+                        <option value="" disabled selected>Quản Lý Đơn Hàng</option>
+                        <option value="5">Đơn hàng chưa hoàn thành</option>
+                        <option value="4">Đơn hàng đã hoàn thành</option>
                     </select>
                 </div>     
                 <div class="col-12 col-md-2 text-white">
                     <select id="paymentType" name="paymentType" required class="bg-gray-800 text-gray-500 mt-1 block w-full text-white p-2 rounded-md" onchange="handleSelectionUser(this)">
-                        <option value="" disabled selected>Users Manager</option>
-                        <option value="1">Action manager</option>
-                        <option value="2">Edit Users</option>
+                        <option value="" disabled selected>Quản Lý Người Dùng</option>
+                        <option value="1">Quản lý hành động</option>
+                        <option value="2">Chỉnh sửa người dùng</option>
                     </select>
                 </div>             
                 
 
                 <div class="col-12 col-md-2 text-white">
                     <select id="paymentType" onchange="handleSelectionStatiscal(this)" name="paymentType" required class="bg-gray-800 text-gray-500 mt-1 block w-full text-white p-2 rounded-md ">
-                        <option value="" disabled selected>Statistical</option>
-                        <option value="1">Order statistics</option>
-                        <option value="2">Products statistics</option>
-                        <option value="3">Revenue report</option>
-                        <option value="4">Purchase Payment</option>
-                       
+                        <option value="" disabled selected>Thống Kê</option>
+                        <option value="1">Thống kê đơn hàng</option>
+                        <option value="2">Thống kê sản phẩm</option>
+                        <option value="3">Báo cáo doanh thu</option>
+                        <option value="4">Thanh toán mua hàng</option>
                     </select>
                 </div>
                 <div
                 onclick="window.location='?controller=Headermanager&action=logout'"
                 class="col-12 rounded col-md-1 text-white p-2 mt-1 hover:bg-red-500">
-                    Logout
+                    Đăng Xuất
                 </div>   
             </div>
         </div>
@@ -159,8 +156,6 @@
         if (value==1) {
             window.location = `?controller=ActionManager`;
         }
-        
-
     }
       
 </script>
