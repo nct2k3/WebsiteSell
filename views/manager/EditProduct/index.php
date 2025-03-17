@@ -1,109 +1,114 @@
-<?Php
+<?php
 require_once './controllers/HeadermanagerController.php';
 $controller = new HeadermanagerController();
 $controller->index();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Nhập Liệu Sản Phẩm</title>
+    <title>Chỉnh Sửa Sản Phẩm</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class=" ">
-    <h1 class="text-2xl font-bold mt-2 text-center ">Edit products</h1>
-    
-    <div class="max-w-6xl mx-auto px-6 py-4 bg-white rounded-lg shadow-md ">
-    <div class=" my-2 flex items-start p-4 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
-            <img src="<?php echo $ProductEdit->img ?>" alt="Product 1" class=" h-16 rounded-lg mr-4">
-            <div class="flex">
-                <div class="grid-3 md:grid-1">
-                    <span class="text-lg font-semibold text-gray-800 ">Name: <?php echo $ProductEdit->productName ?></span>
-                    <span class="text-gray-600 ml-2">Product ID: <?php echo $ProductEdit->productID?> </span>
-                    <span class="text-gray-600m ml-2">Model: <?php echo $ProductEdit->productModel ?></span>
-                    <span class="text-orange-600 ml-2">Price: <?php echo $ProductEdit->price?></span>
-                    <span class="text-gray-500 line-through ml-2">Original Price: <?php echo $ProductEdit->originalPrice?></span>
-                    <span class="text-gray-600 ml-2">Stock: <?php echo $ProductEdit->stock?></span>
-                    <span class="text-gray-600 ml-2">Capacity: <?php echo $ProductEdit->capacity?></span>
-                    <span class="text-gray-600 ml-2 ">Color: <?php echo $ProductEdit->color?></span>
-                </div>
+<body>
+    <h1 class="text-2xl font-bold mt-2 text-center">Chỉnh Sửa Sản Phẩm: ID <?php echo $ProductEdit->productID; ?></h1>
+    <div class="max-w-6xl mx-auto px-6 py-4 bg-white rounded-lg shadow-md">
+        <form action="?controller=EditProduct" method="POST" enctype="multipart/form-data" class="grid grid-cols-3 gap-4">
+            <input type="hidden" name="action" value="edit">
+            <input type="hidden" name="productId" value="<?php echo $ProductEdit->productID; ?>">
+            <div>
+                <label for="file" class="block text-sm font-medium text-gray-700">Hình ảnh</label>
+                <input type="file" name="file" id="file" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" accept="image/*" onchange="previewImage(this)">
+                <img id="preview" src="<?php echo $ProductEdit->img; ?>" alt="Preview" class="h-24 w-24 mt-2">
+                <script>
+                    function previewImage(input) {
+                        const preview = document.getElementById('preview');
+                        if (input.files && input.files[0]) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                preview.src = e.target.result;
+                            }
+                            reader.readAsDataURL(input.files[0]);
+                        }
+                    }
+                </script>
             </div>
-    </div>
-        <div class="grid  md:grid-cols-3 gap-4">
-             <div>
-                <label for="img" class="block text-sm font-medium text-gray-700">Image URL:
+            <div>
+                <label for="productLine" class="block text-sm font-medium text-gray-700">Dòng sản phẩ: <?php echo $ProductEdit->productLineID; ?></label>
+                <select id="productLine" name="productLine" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    <option value="" disabled>Chọn dòng sản phẩm</option>
+                    <?php foreach ($dataLineProduct as $items): ?>
+                        <option value="<?php echo $items->ProductLineID; ?>"><?php echo $items->ProductLineName; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
 
+
+            <div>
+                <label for="productName" class="block text-sm font-medium text-gray-700">Tên sản phẩm : <?php echo $ProductEdit->productName; ?></label>
+                <input type="text" id="productName" name="productName" value="<?php echo $ProductEdit->productName; ?>" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+            </div>
+
+            <div>
+                <label for="originalPrice" class="block text-sm font-medium text-gray-700">Giá gốc: <?php echo number_format($ProductEdit->originalPrice); ?> đ</label>
+                <input type="number" id="originalPrice" name="originalPrice" value="<?php echo $ProductEdit->originalPrice; ?>" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+            </div>
+
+            <div>
+                <label for="Price" class="block text-sm font-medium text-gray-700">Giá bán: <?php echo number_format($ProductEdit->price);?> đđ</label>
+                <input type="number" id="Price" name="Price" value="<?php echo $ProductEdit->price; ?>" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+            </div>
+
+            <div>
+                <label for="capacity" class="block text-sm font-medium text-gray-700">Dung lượng: <?php echo $ProductEdit->capacity; ?></label>
+                <input type="text" id="capacity" name="capacity" value="<?php echo $ProductEdit->capacity; ?>" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+            </div>
+
+            <div>
+                <label for="color" class="block text-sm font-medium text-gray-700">Màu sắc: <?php echo $ProductEdit->color; ?></label>
+                <select id="color" name="color" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    <option value="<?php echo $ProductEdit->color; ?>" selected hidden><?php 
+                        $colorMap = [
+                            'black' => 'Đen',
+                            'white' => 'Trắng', 
+                            'red' => 'Đỏ',
+                            'blue' => 'Xanh dương',
+                            'green' => 'Xanh lá',
+                            'yellow' => 'Vàng gold',
+                            'pink' => 'Hồng'
+                        ];
+                        echo isset($colorMap[$ProductEdit->color]) ? $colorMap[$ProductEdit->color] : $ProductEdit->color;
+                    ?></option>
+                    <option value="black">Đen</option>
+                    <option value="white">Trắng</option>
+                    <option value="red">Đỏ</option>
+                    <option value="blue">Xanh dương</option>
+                    <option value="green">Xanh lá</option>
+                    <option value="yellow">Vàng gold</option>
+                    <option value="pink">Hồng</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="Status" class="block text-sm font-medium text-gray-700">Trạng thái: 
+                    <span class="<?php echo $ProductEdit->Status == 0 ? 'text-green-600' : 'text-red-600'; ?>">
+                        <?php echo $ProductEdit->Status == 0 ? 'Đang bán' : 'Đã ẩn'; ?>
+                    </span>
                 </label>
-                <form method="POST" action="?controller=EditProduct&id=<?php echo $ProductEdit->productID?>" enctype="multipart/form-data">
-                    <input type="hidden" name="action" value="uploadEdit">
-                    <input type="file" name="file" id="file" class="w-36"  required>
-                    <input type="submit" class="p-1 rounded w-36"  value="Uploads">
-                </form>
-                <?php if (isset($Url) && $Url != ''): ?>
-                    <img class="h-16" src="<?php echo htmlspecialchars($Url); ?>" alt="Uploaded Image">
-                <?php endif; ?>
-            </div>
-            <div>
-                <label for="productLineId" class="block text-sm font-medium text-gray-700">Product Type</label>
-                <input placeholder="<?php echo $ProductEdit->productType ?>" type="number" min="0" id="Price" name="Price" class="mt-1 block w-full p-2 border border-gray-300 rounded-md hover:bg-red-500" readonly> 
-            </div>
-        
-            
-            <div>
-                <label for="productModel" class="block text-sm font-medium text-gray-700">Product Model</label>
-                <input placeholder="<?php echo $ProductEdit->productModel ?>" type="number" min="0" id="Price" name="Price" class="mt-1 block w-full p-2 border border-gray-300 rounded-md hover:bg-red-500" readonly>    
-            </div>
-        </div>
-        <form action="?controller=EditProduct" method="POST" class="grid  md:grid-cols-3 gap-4">
-            <input type="hidden" name="action" value="add">
-            <input type="hidden" name="IdProduct"value="<?php echo $ProductEdit->productID?>">
-
-            <div>
-                <label for="productName" class="block text-sm font-medium text-gray-700">Product Name</label>
-                <input placeholder="<?php echo $ProductEdit->productName ?>" type="text" id="productName" name="productName" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" >
+                <select id="Status" name="Status" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                    <option value="<?php echo $ProductEdit->Status; ?>" selected hidden>
+                        <?php echo $ProductEdit->Status == 0 ? 'Đang bán' : 'Ẩn'; ?>
+                    </option>
+                    <option value="0">Đang bán</option>
+                    <option value="1">Ẩn</option>
+                </select>
             </div>
 
-            <div>
-                <label for="originalPrice" class="block text-sm font-medium text-gray-700">Original Price</label>
-                <input placeholder="<?php echo $ProductEdit->originalPrice ?>" type="number" min="0" id="originalPrice" name="originalPrice" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" >
+            <div class="col-span-3 flex justify-end">
+                <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">Cập nhật</button>
             </div>
-
-            <div>
-                <label for="Price" class="block text-sm font-medium text-gray-700">Price</label>
-                <input placeholder="<?php echo $ProductEdit->price ?>" type="number" min="0" id="Price" name="Price" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" >
-            </div>
-            <div>
-                <label for="stock" class="block text-sm font-medium text-gray-700">Stock</label>
-                <input placeholder="<?php echo $ProductEdit->stock?>" type="number" id="stock" min="1" name="stock" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" >
-            </div>
-
-            <div>
-                <label for="capacity" class="block text-sm font-medium text-gray-700">Capacity</label>
-                <input placeholder="<?php echo $ProductEdit->capacity ?>" type="text" id="capacity" name="capacity" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" >
-            </div>
-
-            <div>
-                <label for="color" class="block text-sm font-medium text-gray-700">Color</label>
-                <div class="w-full">
-                    <select id="color" name="color"  class="text-black border  mt-1 block w-full  p-2 rounded-md ">
-                        <option value="" disabled selected>Color</option>
-                        <option value="black">Black</option>
-                        <option value="white">White</option>
-                        <option value="red">Red</option>
-                        <option value="blue">Blue</option>
-                        <option value="green">Green</option>
-                        <option value="yellow">Gold</option>
-                        <option value="pink">Pink</option>
-                    </select>
-                </div>
-            </div>
-            <div class="w-full flex justify-end">
-                <button type="submit" class=" w-full bg-green-600 text-white font-bold py-2 px-4 rounded hover:bg-green-700">Edit</button>
-            </div>
-            </form>
-
-        
+        </form>
     </div>
 </body>
 </html>

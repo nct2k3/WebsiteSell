@@ -479,20 +479,48 @@ class ProductModel extends BaseModel
         return $data;
     }
     // update
-    public function UpdateProduct($productData){
-        $sql="UPDATE products 
-        SET ProductName='$productData->productName',
-        Price='$productData->price',
-        'Status'='$productData->Status',
-        OriginalPrice=$productData->originalPrice,
-        Stock='$productData->stock',
-        Img='$productData->img',
-        Capacity='$productData->capacity',
-        Color='$productData->color'
-        WHERE ProductID=$productData->productID";
-        $this->UpdateCustome($sql);
-        
+    public function updateProduct(Product $product)
+    {
+        $fields = [];
+        if (!empty($product->productLineID)) $fields[] = "ProductLineID = " . intval($product->productLineID);
+        if (!empty($product->productName)) $fields[] = "ProductName = '" . mysqli_real_escape_string($this->connect, $product->productName) . "'";
+        if (!empty($product->price)) $fields[] = "Price = " . floatval($product->price);
+        if (!empty($product->originalPrice)) $fields[] = "OriginalPrice = " . floatval($product->originalPrice);
+        if (!empty($product->capacity)) $fields[] = "Capacity = '" . mysqli_real_escape_string($this->connect, $product->capacity) . "'";
+        if (!empty($product->color)) $fields[] = "Color = '" . mysqli_real_escape_string($this->connect, $product->color) . "'";
+        if (!empty($product->img)) $fields[] = "Img = '" . mysqli_real_escape_string($this->connect, $product->img) . "'";
+        if (!is_null($product->Status)) $fields[] = "Status = " . intval($product->Status);
+    
+        if (empty($fields)) {
+            throw new Exception("No fields to update.");
+        }
+    
+        $fieldsString = implode(", ", $fields);
+    
+        $sql = "UPDATE products SET {$fieldsString} WHERE ProductID = " . intval($product->productID);
+
+        return $this->UpdateCustome($sql);
     }
+    
+    
+
+public function updateProductss(Product $product)
+{
+    $sql = "UPDATE products 
+            SET ProductLineID = '{$product->productLineID}',
+                ProductName = '{$product->productName}', 
+                Price = {$product->price},
+                OriginalPrice = {$product->originalPrice},
+                Stock = {$product->stock},
+                Img = '{$product->img}',
+                Capacity = '{$product->capacity}',
+                Color = '{$product->color}',
+                Status = {$product->Status}
+            WHERE ProductID = {$product->productID}";
+    
+    return $this->UpdateCustome($sql);
+}
+
     public function UpdateQuantity($productData){
 
         $sql="UPDATE products 
