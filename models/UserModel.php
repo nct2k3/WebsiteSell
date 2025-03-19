@@ -44,4 +44,22 @@ class UserModel extends BaseModel {
             );
             return $User;
     }
+    public function getAllUser() {
+        $data = $this->getAll('users');
+        if (empty($data)) {
+            return null;
+        }
+        
+        $users = [];
+        foreach ($data as $row) {
+            $users[] = new User(
+                $row['UserID'],
+                $row['FullName'], 
+                $row['PhoneNumber'],
+                $row['Address'],
+                $row['LoyaltyPoints']
+            );
+        }
+        return $users;
+    }
 }

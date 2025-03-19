@@ -72,7 +72,7 @@ $controller->index();
                         <div class="bg-orange-500 rounded-full h-2" style="width: 80%;"></div>
                     </div>
                     <div class="flex">   
-                    <?php if ($productInfo->Status = 1): ?>
+                    <?php if ($productInfo->Status == 1): ?>
                         <button class="btn btn-danger text-white w-full font-bold m-2 text-xl" disabled>
                             Sản phẩm đã bị ẩn
                         </button>

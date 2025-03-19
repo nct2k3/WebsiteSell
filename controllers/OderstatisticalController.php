@@ -1,62 +1,95 @@
-<?php
+<?php 
 require_once __DIR__ . '/../entities/Account.php';
-require_once __DIR__ .'/../entities/User.php';
+require_once __DIR__ . '/../entities/User.php';
 require_once __DIR__ . '/../controllers/BaseController.php';
+
 class OderstatisticalController extends BaseController {
     private $ProductModel;
     private $InvoiceModel;
+    private $UserModel;
+    private $InvoiceDetailModel;
+
     public function __construct()
     {
         $this->InvoiceModel = $this->loadModel("InvoiceModel");
         $this->ProductModel = $this->loadModel("ProductModel");
+        $this->UserModel = $this->loadModel("UserModel");
+        $this->InvoiceDetailModel = $this->loadModel("InvoiceDetailModel");
     }
 
     public function index() {
-        // lấy đơn hàng theo trạng tháithái
-    $waitingConfirm = $this->InvoiceModel->getInvoiceBystatus(0);
-    $confirmed = $this->InvoiceModel->getInvoiceBystatus(1);
-    $inDelivery = $this->InvoiceModel->getInvoiceBystatus(3);
-    $completed = $this->InvoiceModel->getInvoiceBystatus(4);
-
-    $ProductNotsoldProductNotsold = $this->ProductModel->getProductDelete();
-    $AllProduct = $this->ProductModel->getAllProduct();
-    // lấy số lượng + chía %
-    $numWaitingConfirm = is_array($waitingConfirm) ? count($waitingConfirm) : 0;
-    $numConfirmed = is_array($confirmed) ? count($confirmed) : 0;
-    $numInDelivery = is_array($inDelivery) ? count($inDelivery) : 0;
-    $numCompleted = is_array($completed) ? count($completed) : 0;
-    $numProductNotSold=is_array($ProductNotsoldProductNotsold) ? count($ProductNotsoldProductNotsold) : 0;
-    $numAllProductAllProduct=is_array($AllProduct) ? count($AllProduct) : 0;
-    $numProductSold=$numAllProductAllProduct-$numProductNotSold;
+         $datefrom = '2025-02-01';
+        $dateto = '2025-12-30';
+        if (isset($_GET['datefrom'])) {
+            $datefrom = $_GET['datefrom'];
+        }
+        if (isset($_GET['dateto'])) {
+            $dateto = $_GET['dateto'];
+        }
     
-    $total=$numWaitingConfirm+$numConfirmed+$numInDelivery+$numCompleted;
-    // tính %
-    $PercentWaitingConfirm=($numWaitingConfirm/$total)*100;
-    $PercentConfirmed=($numConfirmed/$total)*100;
-    $PercentInDelivery=($numInDelivery/$total)*100;
-    $PercentCompleted=($numCompleted/$total)*100;
-    // tính % sản phẩm bán đc
-    $PercentProductSold=($numProductSold/$numAllProductAllProduct)*100;
-    $PercentProductNotSold=($numProductNotSold/$numAllProductAllProduct)*100;
+        $DataInvoice = $this->InvoiceModel->getInvoicewithDate(4, $datefrom, $dateto);
+        $dataUser = [];
+        foreach ($DataInvoice as $items) {
+            $found = false;
+            foreach ($dataUser as $key => $user) { // Không sử dụng tham chiếu
+                if ($user['id'] == $items->userID) {
+                    $dataUser[$key]['totalAmount'] += $items->totalAmount;
+                    $found = true;
+                    break;
+                }
+            }
+            if (!$found) {
+                $dataUser[] = [
+                    'id' => $items->userID,
+                    'name' => $this->UserModel->getUserByID($items->userID)->FullName,
+                    'totalAmount' => $items->totalAmount
+                ];
+            }
+        }
 
-        $this->view('manager.OderStatistical.index',
-        ['PercentWaitingConfirm'=>$PercentWaitingConfirm,
-        'PercentConfirmed'=>$PercentConfirmed,
-        'PercentInDelivery'=>$PercentInDelivery,
-        'PercentCompleted'=>$PercentCompleted,
-        'numWaitingConfirm'=>$numWaitingConfirm,
-        'numConfirmed'=>$numConfirmed,
-        'numInDelivery'=>$numInDelivery,
-        'numCompleted'=>$numCompleted,
-        'total'=>$total,
-        'PercentProductSold'=>$PercentProductSold,
-        'PercentProductNotSold'=>$PercentProductNotSold,
-        'numProductSold'=>$numProductSold,
-        'numProductNotSold'=>$numProductNotSold,
-        'numAllProductAllProduct'=>$numAllProductAllProduct
+        usort($dataUser, function($a, $b) {
+            return $b['totalAmount'] - $a['totalAmount'];
+        });
+
+        $dataUsers = array_slice($dataUser, 0, 5);
+        $dataPament = [];
+        
+        // Initialize array structure for each top user
+        foreach ($dataUsers as $user) {
+            $dataPament[$user['id']] = [
+                'userName' => $user['name'],
+                'totalAmount' => $user['totalAmount'],
+                'invoices' => []
+            ];
+        }
+
+        if ($DataInvoice != null) {
+            foreach ($DataInvoice as $items) {
+                foreach ($dataUsers as $user) {
+                    if ($user['id'] == $items->userID) {
+                        $products = [];
+                        $dataInvoiceDetail = $this->InvoiceDetailModel->getInvoiceDetailByIDUser($items->invoiceID);
+                        
+                        foreach ($dataInvoiceDetail as $item) {
+                            $products[] = [
+                                'product' => $this->ProductModel->getProductByID($item->productID),
+                                'quantity' => $item->quantity,
+                            ];
+                        }
+
+                        $dataPament[$user['id']]['invoices'][] = [
+                            'products' => $products,
+                            'invoice' => $items
+                        ];
+                        break;
+                    }
+                }
+            }
+        }
+        
+        $this->view('manager.OderStatistical.index', [
+            'dataUser' => $dataUsers,
+            'dataPament' => $dataPament
         ]);
-    
     }
-
 }
-

@@ -1,4 +1,4 @@
-<?Php
+<?php
 require_once './controllers/HeaderController.php';
 $controller = new HeaderController();
 $controller->index();
@@ -11,75 +11,93 @@ $controller->index();
     <title>Thông Báo</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gradient-to-r from-gray-600 to-black" >
-
-    <div
-    class="flex justify-center items-center h-20 bg-gray-700 text-white text-2xl"> Your Notification</div>
-    <?php foreach($DataInvoice as $items): ?>
-    <?php $color='blue'; ?>
-    <div class="flex  h-auto bg-gradient-to-r from-gray-600 to-black px-6 py-2">
-        <div class="h-1/5 w-full bg-white border-l-4 border-<?php echo $color?>-500 pt-6 rounded shadow-md text-center">
-            <div class="flex justify-between items-center px-6">
-            <h1 class=" font-bold py-1">
-                    Notification: 
-                    <?php 
-                    if ($items['Data']->Status == 0) {
-                        echo 'Cancel Order'; 
-                    } else if ($items['Data']->Status == 1) {
-                        echo 'Successful delivery'; 
-                    }
-                    ?>
-                    order code: <?php echo $items['Data']->InvoiceID?>
-                    </h1>
-                    <form action="?controller=Notification" method="POST">
-                    <input type="hidden" name="action" value="Delete">
-                    <input type="hidden" name="IdDelete" value="<?php echo $items['Data']->InvoiceID?>">
-                        <button type="submit"  class="bg-<?php echo $color?>-500 text-sm text-white font-bold py-1 px-4 rounded hover:bg-<?php echo $color?>-700 transition duration-200">
-                        Delete Notification</button>
-                    </form>
-            </div>
-            <p class="text-gray-700 mb-2 "><?php echo $items['Data']->Content?>
-            <form action="?controller=Notification" method="POST">
-                <input type="hidden" name="action" value="TakeFile">
-                <input type="hidden" name="URL" value="<?php echo $items['Link'] ?>">
-                <button type="submit"  class="bg-green-500 p-2 rounded text-white text-sm hover:bg-green-600 mb-2">Down your file invoice</button>
-            </form>
-            </p>
-            
-            <p class="text-gray-100 bg-<?php echo $color?>-500 text-sm ">Time: <?php echo $items['Data']->Time?></p>
+<body class="bg-gradient-to-r from-gray-800 to-black">
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-white">Your Notifications</h1>
         </div>
-    </div>
-    <?php endforeach ?>
 
-    <?php foreach($data as $items): ?>
-    <?php $color='blue'; if($items->Status == 0)$color='red'; ?>
-    <div class="flex  h-auto bg-gray-100 px-6 py-2">
-        <div class="h-1/5 w-full bg-white border-l-4 border-<?php echo $color?>-500 pt-6 rounded shadow-md text-center">
-            <div class="flex justify-between items-center px-6">
-            <h1 class=" font-bold py-1">
-                    Notification: 
-                    <?php 
-                    if ($items->Status == 0) {
-                        echo 'Cancel Order'; 
-                    } else if ($items->Status == 1) {
-                        echo 'Successful delivery'; 
-                    }
-                    ?>
-                    
-                    order code: <?php echo $items->InvoiceID?>
-                    </h1>
-                    <form action="?controller=Notification" method="POST">
-                    <input type="hidden" name="action" value="Delete">
-                    <input type="hidden" name="IdDelete" value="<?php echo $items->ID?>">
-                        <button type="submit"  class="bg-<?php echo $color?>-500 text-sm text-white font-bold py-1 px-4 rounded hover:bg-<?php echo $color?>-700 transition duration-200">
-                        Delete Notification</button>
-                    </form>
-                
+        <!-- Invoice Notifications -->
+        <?php if (!empty($DataInvoice)): ?>
+            <div class="space-y-4">
+                <?php foreach($DataInvoice as $items): ?>
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="border-l-4 border-blue-500">
+                            <div class="p-6">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h2 class="text-xl font-semibold">
+                                        <?php 
+                                        echo $items['Data']->Status == 0 ? 'Order Cancelled' : 'Order Delivered Successfully';
+                                        echo " - Order #" . $items['Data']->InvoiceID;
+                                        ?>
+                                    </h2>
+                                    <form action="?controller=Notification" method="POST">
+                                        <input type="hidden" name="action" value="Delete">
+                                        <input type="hidden" name="IdDelete" value="<?php echo $items['Data']->InvoiceID?>">
+                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition duration-200">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <p class="text-gray-600"><?php echo $items['Data']->Content?></p>
+                                </div>
+
+                                <div class="flex justify-between items-center">
+                                    <form action="?controller=Notification" method="POST">
+                                        <input type="hidden" name="action" value="TakeFile">
+                                        <input type="hidden" name="URL" value="<?php echo $items['Link'] ?>">
+                                        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition duration-200">
+                                            Download Invoice
+                                        </button>
+                                    </form>
+                                    <span class="text-sm text-gray-500">
+                                        <?php echo $items['Data']->Time?>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach ?>
             </div>
-            <p class="text-gray-700 mb-2"><?php echo $items->Content?></p>
-            <p class="text-gray-100 bg-<?php echo $color?>-500 text-sm ">Time: <?php echo $items->Time?></p>
-        </div>
+        <?php endif ?>
+
+        <!-- Regular Notifications -->
+        <?php if (!empty($data)): ?>
+            <div class="space-y-4 mt-8">
+                <?php foreach($data as $items): ?>
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="border-l-4 border-<?php echo $items->Status == 0 ? 'red' : 'blue'?>-500">
+                            <div class="p-6">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h2 class="text-xl font-semibold">
+                                        <?php 
+                                        echo $items->Status == 0 ? 'Order Cancelled' : 'Order Delivered Successfully';
+                                        echo " - Order #" . $items->InvoiceID;
+                                        ?>
+                                    </h2>
+                                    <form action="?controller=Notification" method="POST">
+                                        <input type="hidden" name="action" value="Delete">
+                                        <input type="hidden" name="IdDelete" value="<?php echo $items->ID?>">
+                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition duration-200">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                                
+                                <div class="flex justify-between items-center">
+                                    <p class="text-gray-600"><?php echo $items->Content?></p>
+                                    <span class="text-sm text-gray-500">
+                                        <?php echo $items->Time?>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach ?>
+            </div>
+        <?php endif ?>
     </div>
-    <?php endforeach ?>
 </body>
 </html>
