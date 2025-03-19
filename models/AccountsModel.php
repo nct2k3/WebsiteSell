@@ -58,19 +58,28 @@ class AccountsModel extends BaseModel
         );
         return $Account;
     }
-        public function getAccountByEmail($Email) {
-            $data = $this->getByString('Accounts', $Email, 'Email');
-            if (empty($data)) {
-                return null; 
-            }
-            $Account = new Account(
-                $data['AccountID'],
-                $data['Email'],
-                $data['Password'],
-                $data['Role'],
-                $data['UserID']     
-            );
-            return $Account;
-        
-}
+    public function getAccountByEmail($Email) {
+        $data = $this->getByString('Accounts', $Email, 'Email');
+        if (empty($data)) {
+            return null; 
+        }
+        $Account = new Account(
+            $data['AccountID'],
+            $data['Email'],
+            $data['Password'],
+            $data['Role'],
+            $data['UserID']     
+        );
+        return $Account;
+    }
+
+    public function updateAccount($userID, $email, $password,$role) {
+        $sql = "UPDATE accounts SET `Email`='$email', `Password`='$password', `Role`='$role'  WHERE UserID=$userID";
+        $result = $this->UpdateCustome($sql);
+        if ($result) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }

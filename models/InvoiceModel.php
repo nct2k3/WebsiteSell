@@ -222,7 +222,6 @@ class InvoiceModel extends BaseModel
             $product = $productModel->getProductByID($data->productID);
             $endQuantity= $product->stock + $data->quantity;
             $sql="UPDATE products SET Stock = $endQuantity WHERE ProductID = $data->productID";
-            print_r($sql);
             $this->UpdateCustome($sql);
         }
          $this->deleteID('invoices', $InvoiceId,'InvoiceID');

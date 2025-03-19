@@ -45,6 +45,10 @@ class LoginController extends BaseController {
             header("Location: /?controller=homeManager"); 
             exit();
         }
+        elseif ($temp->role == 2) {
+            $_SESSION['error'] = "Tài khoản đã bị khóa vui lòng liện hệ hổ trợ!";
+            $this->index(); 
+        }
 
     }
 }

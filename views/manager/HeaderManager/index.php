@@ -64,9 +64,10 @@
                 </div>     
                 <div class="col-12 col-md-2 text-white">
                     <select id="paymentType" name="paymentType" required class="bg-gray-800 text-gray-500 mt-1 block w-full text-white p-2 rounded-md" onchange="handleSelectionUser(this)">
-                        <option value="" disabled selected>Quản Lý Người Dùng</option>
-                        <option value="1">Quản lý hành động</option>
-                        <option value="2">Chỉnh sửa người dùng</option>
+                        <option value="" disabled selected>Quản tài khoản </option>
+                        <option value="0">Thêm người dùng </option>
+                        <option value="1">Quản lý người dùng</option>
+                        <option value="2">Quản lý hoạt động Admin</option>
                     </select>
                 </div>             
                 
@@ -153,7 +154,13 @@
     }
     function handleSelectionUser(select) {
         const value = select.value;
+        if (value==0) {
+            window.location = `?controller=Adduser`;
+        } else
         if (value==1) {
+            window.location = `?controller=Usermanager`;
+        }else
+        if (value==2) {
             window.location = `?controller=ActionManager`;
         }
     }
