@@ -36,13 +36,7 @@ $controller->index();
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100">
-    <header class="bg-gray-800 shadow-lg py-4 text-center">
-        <div class="container mx-auto flex items-center justify-center space-x-4">
-            <img class="h-8 w-auto" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
-            <h1 class="text-xl font-bold text-white">iPhone Store</h1>
-        </div>
-    </header>
-
+    
     <div class="container mx-auto px-4 py-8">
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner rounded-xl overflow-hidden">

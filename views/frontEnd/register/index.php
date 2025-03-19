@@ -4,11 +4,11 @@ $controller = new HeaderController();
 $controller->index();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register - Apple Store</title>
+  <title>Đăng Ký - Cửa Hàng Apple</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     function validatePassword() {
@@ -17,7 +17,7 @@ $controller->index();
       const errorDiv = document.getElementById("error-message");
 
       if (password !== confirmPassword) {
-        errorDiv.textContent = "Passwords do not match!";
+        errorDiv.textContent = "Mật khẩu không khớp!";
         errorDiv.classList.remove("hidden");
         return false;
       }
@@ -33,38 +33,38 @@ $controller->index();
         <img 
           class="h-full w-full object-cover"
           src="https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:quality(100)/2022_9_21_637993950025502251_iphone-quoc-te-la-gi-0.jpg" 
-          alt="Apple Store Banner"
+          alt="Banner Cửa Hàng Apple"
         >
       </div>
       <div class="w-full md:w-1/2 p-8">
         <div class="text-center mb-8">
-          <h2 class="text-3xl font-bold">Welcome to Apple Store</h2>
-          <p class="mt-2 text-gray-400">Create your account</p>
+          <h2 class="text-3xl font-bold">Chào mừng đến Cửa Hàng Apple</h2>
+          <p class="mt-2 text-gray-400">Tạo tài khoản của bạn</p>
         </div>
         
         <form action="?controller=register" method="POST" class="space-y-6" onsubmit="return validatePassword();">
           <input type="hidden" name="action" value="register">
           
           <div>
-            <label for="email" class="block text-sm font-medium mb-2">Email Address</label>
+            <label for="email" class="block text-sm font-medium mb-2">Địa Chỉ Email</label>
             <input 
               type="email" 
               name="Email" 
               id="email" 
               class="w-full px-3 py-2 border border-gray-700 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" 
-              placeholder="Enter your email"
+              placeholder="Nhập email của bạn"
               required
             >
           </div>
 
           <div>
-            <label for="password" class="block text-sm font-medium mb-2">Password</label>
+            <label for="password" class="block text-sm font-medium mb-2">Mật Khẩu</label>
             <input 
               type="password" 
               name="Password" 
               id="password" 
               class="w-full px-3 py-2 border border-gray-700 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" 
-              placeholder="Enter your password"
+              placeholder="Nhập mật khẩu của bạn"
               required
             >
           </div>
@@ -72,58 +72,58 @@ $controller->index();
           <div id="error-message" class="text-red-500 text-sm hidden"></div>
 
           <div>
-            <label for="ConfirmPassword" class="block text-sm font-medium mb-2">Confirm Password</label>
+            <label for="ConfirmPassword" class="block text-sm font-medium mb-2">Xác Nhận Mật Khẩu</label>
             <input 
               type="password" 
               name="ConfirmPassword" 
               id="ConfirmPassword" 
               class="w-full px-3 py-2 border border-gray-700 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" 
-              placeholder="Confirm your password"
+              placeholder="Xác nhận mật khẩu của bạn"
               required
             >
           </div>
 
           <div>
-            <label for="FullName" class="block text-sm font-medium mb-2">Full Name</label>
+            <label for="FullName" class="block text-sm font-medium mb-2">Họ và Tên</label>
             <input 
               type="text" 
               name="FullName" 
               id="FullName" 
               class="w-full px-3 py-2 border border-gray-700 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" 
-              placeholder="Enter your full name"
+              placeholder="Nhập họ và tên của bạn"
               required
             >
           </div>
 
           <div>
-            <label for="NumberPhone" class="block text-sm font-medium mb-2">Phone Number</label>
+            <label for="NumberPhone" class="block text-sm font-medium mb-2">Số Điện Thoại</label>
             <input 
               type="tel" 
               name="NumberPhone" 
               id="NumberPhone" 
               class="w-full px-3 py-2 border border-gray-700 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" 
-              placeholder="Enter your phone number"
+              placeholder="Nhập số điện thoại của bạn"
               required
             >
           </div>
 
           <div>
-            <label for="Address" class="block text-sm font-medium mb-2">Address</label>
+            <label for="Address" class="block text-sm font-medium mb-2">Địa Chỉ</label>
             <input 
               type="text" 
               name="Address" 
               id="Address" 
               class="w-full px-3 py-2 border border-gray-700 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" 
-              placeholder="Enter your address"
+              placeholder="Nhập địa chỉ của bạn"
               required
             >
           </div>
 
           <button 
             type="submit" 
-            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition duration-200 transform hover:scale-[1.02]"
+            class="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition duration-200 transform hover:scale-[1.02]"
           >
-            Create Account
+            Tạo Tài Khoản
           </button>
         </form>
       </div>
