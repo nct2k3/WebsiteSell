@@ -37,11 +37,11 @@
 
 
         <div class="container-fluid w-full">
-            <div id="content" class="row bg-gradient-to-r from-gray-600 to-black p-3 fixed z-40 top-0 w-full hidden md:flex md:flex-row flex-col">
+            <div id="content" class="row bg-gradient-to-r from-yellow-900 via-pink-500 to-blue-600 p-3 fixed z-40 top-0 w-full hidden md:flex md:flex-row flex-col">
                 <div  onclick="window.location='/'"
                 class="col-12 col-md-2 d-flex align-items-center justify-content-center">
-                    <img class="h-8" src="https://img.icons8.com/?size=100&id=17843&format=png&color=42A5F5" alt="Logo">
-                    <h1 class="font-bold bg-gradient-to-r from-blue-500 to-red-500 bg-clip-text text-transparent text-xl ml-2">
+                    <img class="h-8" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
+                    <h1 class="font-bold text-white bg-clip-text text-transparent text-xl ml-2">
                         IPHONE
                     </h1>
                 </div>
@@ -78,7 +78,7 @@
                 
                  <div  id="searchButton"
                  onclick="window.location='?controller=search'"
-                 class="bg-gray-500 col-12 col-md-1 rounded-full hover:bg-gray-400 ">
+                 class="bg-black opacity-50 col-12 col-md-1 rounded-full hover:bg-gray-400 ">
                     <img class="h-8 mx-1 mt-1 p-1" src="https://img.icons8.com/?size=100&id=7695&format=png&color=ffffff" alt="Icon">
                     
                 </div>
