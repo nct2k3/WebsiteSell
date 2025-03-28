@@ -155,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $searchController->searchWithConditions($ProductLine,$From,$To);
             exit();
         default:
-            echo "Hành động không hợp lệ!";
+            echo "";
             break;
     }
 
