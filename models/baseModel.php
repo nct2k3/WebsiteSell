@@ -9,6 +9,7 @@ class BaseModel extends Database {
         return mysqli_query($this->connect, $sql);
     }
     // get
+    
     public function getAll($table) {
         $sql = "SELECT * FROM ${table}";
         $result = $this->_query($sql);
