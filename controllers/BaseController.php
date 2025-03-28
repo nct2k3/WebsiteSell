@@ -53,6 +53,7 @@
                         $item['productID'],
                         $item['productLineID'],
                         $item['productName'],
+                        $item['Status'], 
                         $item['price'],
                         $item['originalPrice'],
                         $item['stock'],
