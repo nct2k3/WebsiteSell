@@ -20,6 +20,11 @@ class PaymentController extends BaseController
         $dataUser = $this->UserModel->getUserByID($userID);
         $dataCart = $this->CartModel->getCart($userID);
         $products = []; 
+        if(!is_array($dataCart) || empty($dataCart)){
+            $_SESSION['error'] = "There are no products in the cart!";
+            header("Location: /?controller=cart");
+            exit;
+        }
         if (is_array($dataCart)) {
             foreach ($dataCart as $item) {
                 if (isset($item->ProductID)) {
