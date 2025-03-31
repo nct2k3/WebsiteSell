@@ -25,6 +25,7 @@ class HomemanagerController extends BaseController
         $numpage= ceil($number/10);
         $products = array_slice($data,$numbegin,$numend);
 
+        $products = array_slice($data, $numbegin, min(10, count($data) - $numbegin));
 
         $dataLineProduct=$this->ProductModel->getLineProduct();
         $this->view('manager.HomeManager.index',['dataLineProduct'=>$dataLineProduct,'data'=>$products,'numpage'=>$numpage]);

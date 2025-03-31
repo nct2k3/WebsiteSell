@@ -99,7 +99,15 @@ $controller->index();
                             <p><strong>Ngày đặt: </strong><?php echo $payment['invoice']->invoiceDate; ?></p>
                             <p><strong>Tổng tiền: </strong><?php echo number_format($payment['invoice']->totalAmount); ?></p>
                         </div>
-                        <p><strong class="text-green-500">Ngày giao hàng dự kiến: </strong><?php echo $payment['invoice']->DateDelivery; ?></p>
+                        <p><strong class="text-green-500">Ngày giao hàng mong muốn: </strong>
+                            <?php 
+                                if($payment['invoice']->DateDelivery == '0000-00-00' || empty($payment['invoice']->DateDelivery)) {
+                                    echo "Bạn không chọn ngày giao hàng mong muốn";
+                                } else {
+                                    echo $payment['invoice']->DateDelivery;
+                                }
+                            ?>
+                        </p>
                         <p><strong class="text-green-500">Ghi chú: </strong><?php echo $payment['invoice']->Note; ?></p>
                         <?php if ($payment['status']=='delivered'): ?>
                             <form action="?controller=information" method="POST" class="space-y-4">
