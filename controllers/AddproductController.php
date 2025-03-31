@@ -54,7 +54,7 @@ class AddProductController extends BaseController
         $this->view('manager.AddProduct.index', ['Url' => $Url, 'dataLineProduct' => $dataLineProduct]);
     }
 
-    public function AddProduct($productLine, $productName, $originalPrice, $price, $stock, $capacity, $color)
+    public function AddProduct($productLine, $productName,$Status, $originalPrice, $price, $stock, $capacity, $color)
     {
         if (empty($productLine) || empty($productName) || empty($originalPrice) || empty($price)) {
             $_SESSION['error'] = "Please fill in all required fields.";
@@ -74,6 +74,7 @@ class AddProductController extends BaseController
             null,
             $productLine,
             $productName,
+            $Status,
             $price,
             $originalPrice,
             $stock,
@@ -108,6 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stock = 1;
             $capacity = $_POST['capacity'] ?? '';
             $color = $_POST['color'] ?? '';
+            $Status = 0;
 
             // Xử lý file upload
             if (isset($_FILES['file'])) {
@@ -130,6 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $AddProductController->AddProduct(
                 $productLine,
                 $productName,
+                $Status,
                 $originalPrice,
                 $price,
                 $stock,
