@@ -64,8 +64,11 @@ $controller->index();
               name="Password" 
               id="password" 
               class="w-full px-3 py-2 border border-gray-700 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" 
-              placeholder="Nhập mật khẩu của bạn"
+              placeholder="Nhập mật khẩu của bạn (ít nhất 6 ký tự)"
               required
+              minlength="6"
+              oninvalid="this.setCustomValidity('Mật khẩu phải có ít nhất 6 ký tự')"
+              oninput="this.setCustomValidity('')"
             >
           </div>
 
@@ -80,6 +83,9 @@ $controller->index();
               class="w-full px-3 py-2 border border-gray-700 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" 
               placeholder="Xác nhận mật khẩu của bạn"
               required
+              minlength="6"
+              oninvalid="this.setCustomValidity('Mật khẩu xác nhận phải có ít nhất 6 ký tự')"
+              oninput="this.setCustomValidity('')"
             >
           </div>
 

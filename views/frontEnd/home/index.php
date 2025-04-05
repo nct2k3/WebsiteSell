@@ -71,7 +71,7 @@ $controller->index();
                 <img src="<?php echo $items->img; ?>" alt="<?php echo $items->productName; ?>" class="w-full h-48 object-contain rounded-lg mb-4">
                 <h3 class="text-xl font-semibold text-white mb-2 text-center"><?php echo $items->productName; ?></h3>
                 <p class="text-2xl font-bold text-white text-center"><?php echo number_format($items->price); ?>₫</p>
-                <p class="text-gray-400 line-through text-center"><?php echo $items->originalPrice; ?>₫</p>
+                <p class="text-gray-400 line-through text-center"><?php echo number_format($items->originalPrice); ?>₫</p>
             </div>
             <?php endforeach; ?>
         </div>
@@ -88,7 +88,7 @@ $controller->index();
                 <img src="<?php echo $items->img; ?>" alt="<?php echo $items->productName; ?>" class="w-full h-48 object-contain rounded-lg mb-4">
                 <h3 class="text-xl font-semibold text-white mb-2 text-center"><?php echo $items->productName; ?></h3>
                 <p class="text-2xl font-bold text-white text-center"><?php echo number_format($items->price); ?>₫</p>
-                <p class="text-gray-400 line-through text-center"><?php echo $items->originalPrice; ?>₫</p>
+                <p class="text-gray-400 line-through text-center"><?php echo number_format($items->originalPrice); ?>₫</p>
             </div>
             <?php endforeach; ?>
         </div>
@@ -105,7 +105,7 @@ $controller->index();
                 <img src="<?php echo $items->img; ?>" alt="<?php echo $items->productName; ?>" class="w-full h-48 object-contain rounded-lg mb-4">
                 <h3 class="text-xl font-semibold text-white mb-2 text-center"><?php echo $items->productName; ?></h3>
                 <p class="text-2xl font-bold text-white text-center"><?php echo number_format($items->price); ?>₫</p>
-                <p class="text-gray-400 line-through text-center"><?php echo $items->originalPrice; ?>₫</p>
+                <p class="text-gray-400 line-through text-center"><?php echo number_format($items->originalPrice); ?>₫</p>
             </div>
             <?php endforeach; ?>
         </div>
@@ -122,7 +122,7 @@ $controller->index();
                 <img src="<?php echo $items->img; ?>" alt="<?php echo $items->productName; ?>" class="w-full h-48 object-contain rounded-lg mb-4">
                 <h3 class="text-xl font-semibold text-white mb-2 text-center"><?php echo $items->productName; ?></h3>
                 <p class="text-2xl font-bold text-white text-center"><?php echo number_format($items->price); ?>₫</p>
-                <p class="text-gray-400 line-through text-center"><?php echo $items->originalPrice; ?>₫</p>
+                <p class="text-gray-400 line-through text-center"><?php echo number_format($items->originalPrice); ?>₫</p>
             </div>
             <?php endforeach; ?>
         </div>

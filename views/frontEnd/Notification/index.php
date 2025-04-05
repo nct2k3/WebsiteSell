@@ -14,7 +14,7 @@ $controller->index();
 <body class="bg-gradient-to-r from-gray-800 to-black">
     <div class="container mx-auto px-4 py-8">
         <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-white">Your Notifications</h1>
+            <h1 class="text-3xl font-bold text-white">Thông Báo Của Bạn</h1>
         </div>
 
         <!-- Invoice Notifications -->
@@ -27,15 +27,15 @@ $controller->index();
                                 <div class="flex justify-between items-center mb-4">
                                     <h2 class="text-xl font-semibold">
                                         <?php 
-                                        echo $items['Data']->Status == 0 ? 'Order Cancelled' : 'Order Delivered Successfully';
-                                        echo " - Order #" . $items['Data']->InvoiceID;
+                                        echo $items['Data']->Status == 0 ? 'Đơn Hàng Đã Hủy' : 'Đơn Hàng Đã Giao Thành Công';
+                                        echo " - Đơn Hàng #" . $items['Data']->InvoiceID;
                                         ?>
                                     </h2>
                                     <form action="?controller=Notification" method="POST">
                                         <input type="hidden" name="action" value="Delete">
                                         <input type="hidden" name="IdDelete" value="<?php echo $items['Data']->InvoiceID?>">
                                         <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition duration-200">
-                                            Delete
+                                            Xóa
                                         </button>
                                     </form>
                                 </div>
@@ -49,7 +49,7 @@ $controller->index();
                                         <input type="hidden" name="action" value="TakeFile">
                                         <input type="hidden" name="URL" value="<?php echo $items['Link'] ?>">
                                         <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition duration-200">
-                                            Download Invoice
+                                            Tải Hóa Đơn
                                         </button>
                                     </form>
                                     <span class="text-sm text-gray-500">
@@ -73,15 +73,15 @@ $controller->index();
                                 <div class="flex justify-between items-center mb-4">
                                     <h2 class="text-xl font-semibold">
                                         <?php 
-                                        echo $items->Status == 0 ? 'Order Cancelled' : 'Order Delivered Successfully';
-                                        echo " - Order #" . $items->InvoiceID;
+                                        echo $items->Status == 0 ? 'Đơn Hàng Đã Hủy' : 'Đơn Hàng Đã Giao Thành Công';
+                                        echo " - Đơn Hàng #" . $items->InvoiceID;
                                         ?>
                                     </h2>
                                     <form action="?controller=Notification" method="POST">
                                         <input type="hidden" name="action" value="Delete">
                                         <input type="hidden" name="IdDelete" value="<?php echo $items->ID?>">
                                         <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition duration-200">
-                                            Delete
+                                            Xóa
                                         </button>
                                     </form>
                                 </div>
@@ -101,3 +101,7 @@ $controller->index();
     </div>
 </body>
 </html>
+</html>
+<?php
+require_once './views/footer.php';
+?>

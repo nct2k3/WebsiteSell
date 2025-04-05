@@ -43,8 +43,22 @@ class PaymentController extends BaseController
         foreach ($products as $product) {
             $total += $product['item']->price*$product['quantity'];
         }
+
+        $provinceList = $this->InvoiceModel->getProvinces();
         $dataAction='payment';
-        $this->view('frontEnd.payment.index', ['dataAction'=>$dataAction,'products' => $products, 'total' => $total, 'userID' => $userID,'dataUser'=>$dataUser,]);
+        $this->view('frontEnd.payment.index', ['dataAction'=>$dataAction,'products' => $products, 'total' => $total, 'userID' => $userID,'dataUser'=>$dataUser,'provinceList'=>$provinceList]);
+    }
+    public function getDistricts() {
+        if (isset($_GET['province'])) {
+            $province = $_GET['province'];
+            // Chuẩn hóa giá trị province thành dạng 2 chữ số
+            $province = str_pad($province, 2, '0', STR_PAD_LEFT);
+            
+            $districts = $this->InvoiceModel->getDistricts($province);
+            header('Content-Type: application/json');
+            echo json_encode($districts);
+            exit;
+        }
     }
     // mua 1 sản phẩm 
     public function buyOne()
@@ -72,7 +86,8 @@ class PaymentController extends BaseController
          }
         $total =$product->price; 
         $dataAction='payOne';
-        $this->view('frontEnd.payment.index', ['dataAction'=>$dataAction,'products' => $products, 'total' => $total, 'userID' => $userID,'dataUser'=>$dataUser]);
+        $provinceList = $this->InvoiceModel->getProvinces();
+        $this->view('frontEnd.payment.index', ['dataAction'=>$dataAction,'products' => $products, 'total' => $total, 'userID' => $userID,'dataUser'=>$dataUser,'provinceList'=>$provinceList]);
     }
     // xóa  spsp
 
@@ -125,7 +140,7 @@ class PaymentController extends BaseController
         $this->index(); 
     }
     // thanh toán bình thương với giỏ hànghàng
-    public function PaymentNormal($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,$StattusTypePay) {
+    public function PaymentNormal($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,$StattusTypePay,$province,$district) {
         $userID = $this->takeIDAccount();
         $dataUser = $this->UserModel->getUserByID($userID);
         $dataCart = $this->CartModel->getCart($userID);
@@ -159,8 +174,19 @@ class PaymentController extends BaseController
             $PhoneNumberend=$PhoneNumber;
         }
         $addressend=$dataUser->Address;
-        if($address!=''){
-            $addressend=$address;
+        if($address!=''||$province!=''||$district!=''){
+
+            if($address == '' || $province == '' || $district == '') {
+                $_SESSION['error'] = "Vui lòng điền đầy đủ thông tin địa chỉ (Địa chỉ, Tỉnh/Thành phố, Quận/Huyện) khi thay đổi";
+                header("Location: /?controller=payment");
+                exit;
+            }
+            $province = strlen($province) == 1 ? str_pad($province, 2, '0', STR_PAD_LEFT) : $province;
+            $district = strlen($district) == 1 ? str_pad($district, 2, '0', STR_PAD_LEFT) : $district;     
+            $provinceEnd = $this->InvoiceModel->getProvinceName($province);
+            $districtEnd = $this->InvoiceModel->getDistrictName($district);
+            $addressend = $address . " - " . $districtEnd . " - " . $provinceEnd;
+            
         }
         $NodeEnd='';
         if($Note!=''){
@@ -199,7 +225,7 @@ class PaymentController extends BaseController
         }
     }
     // THANH TOÁN VỚI 1 sản phẩm
-    public function PaymentOne($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,$StattusTypePay) {
+    public function PaymentOne($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,$StattusTypePay,$province,$district) {
         $userID = $this->takeIDAccount();
         $dataUser = $this->UserModel->getUserByID($userID);
         $idProduct=$this->takeIDProduct();
@@ -229,8 +255,19 @@ class PaymentController extends BaseController
             $PhoneNumberend=$PhoneNumber;
         }
         $addressend=$dataUser->Address;
-        if($address!=''){
-            $addressend=$address;
+        if($address!=''||$province!=''||$district!=''){
+
+            if($address == '' || $province == '' || $district == '') {
+                $_SESSION['error'] = "Vui lòng điền đầy đủ thông tin địa chỉ (Địa chỉ, Tỉnh/Thành phố, Quận/Huyện) khi thay đổi";
+                header("Location: /?controller=payment");
+                exit;
+            }
+            $province = strlen($province) == 1 ? str_pad($province, 2, '0', STR_PAD_LEFT) : $province;
+            $district = strlen($district) == 1 ? str_pad($district, 2, '0', STR_PAD_LEFT) : $district;     
+            $provinceEnd = $this->InvoiceModel->getProvinceName($province);
+            $districtEnd = $this->InvoiceModel->getDistrictName($district);
+            $addressend = $address . " - " . $districtEnd . " - " . $provinceEnd;
+            
         }
         $NodeEnd='';
         if($Note!=''){
@@ -275,19 +312,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $loyaltyPoints = $_POST['LoyaltyPoints'] ?? null;
             $dateDelivery = $_POST['DateDelivery'] ?? null;
             $PhoneNumber = $_POST['PhoneNumber'] ?? null;
-            $address = $_POST['address'] ?? null;
+            $address = ($_POST['address'] ?? '');
+            $province = $_POST['province']?? null;
+            $district = $_POST['district']?? null;
             $Note = $_POST['Note'] ?? null;
             $paymentcontroller= new PaymentController;
-            $paymentcontroller->PaymentNormal($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,0);       
+            $paymentcontroller->PaymentNormal($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,0,$province,$district);       
             break;
             case 'payOne':
                 $loyaltyPoints = $_POST['LoyaltyPoints'] ?? null;
                 $dateDelivery = $_POST['DateDelivery'] ?? null;
                 $PhoneNumber = $_POST['PhoneNumber'] ?? null;
-                $address = $_POST['address'] ?? null;
+                 $address = ($_POST['address'] ?? '') . "-" . ($_POST['district'] ?? '') . "-" . ($_POST['province'] ?? '');
                 $Note = $_POST['Note'] ?? null;
+                $province = $_POST['province']?? null;
+                $district = $_POST['district']?? null;
                 $paymentcontroller= new PaymentController;           
-                $paymentcontroller->PaymentOne($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,0);               
+                $paymentcontroller->PaymentOne($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,0,$province,$district);               
                 break;
 
         default:

@@ -149,15 +149,21 @@ class ProductModel extends BaseModel
     }
     public function getProduct($ProductLineID)
     {
-        $data = $this->getByProductLineID('Products',$ProductLineID); 
+        $sql = "SELECT * FROM Products WHERE ProductLineID = " . intval($ProductLineID) . " AND Status = 0";
+        $result = $this->_query($sql);
+    
+        if ($result === false) {
+            die("SQL Error: " . mysqli_error($this->connect)); 
+        }
+
         $Product = [];
-        foreach ($data as $row) {
+        while ($row = mysqli_fetch_assoc($result)) {
             $Product[] = new Product(
                 $row['ProductID'], 
                 $row['ProductLineID'], 
                 $row['ProductName'],
                 $row['Status'],          
-                $row['Price']  ,
+                $row['Price'],
                 $row['OriginalPrice'],
                 $row['Stock'],
                 $row['Img'],
@@ -190,15 +196,18 @@ class ProductModel extends BaseModel
     }
     public function getByIdGroup($ProductID)
     {
-        $data = $this->getByIdGroupByGroupBy('Products', $ProductID, 'ProductLineID',"	ProductName",6);
-            $Product = [];
-            foreach ($data as $row) {
+        $sql = "SELECT * FROM Products WHERE ProductLineID = $ProductID AND Status = 0 GROUP BY ProductName LIMIT 4";
+        $result = $this->_query($sql);
+
+        $Product = [];
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
                 $Product[] = new Product(
                     $row['ProductID'], 
                     $row['ProductLineID'],    
                     $row['ProductName'],  
                     $row['Status'],   
-                    $row['Price']  ,
+                    $row['Price'],
                     $row['OriginalPrice'],
                     $row['Stock'],
                     $row['Img'],
@@ -206,7 +215,8 @@ class ProductModel extends BaseModel
                     $row['Color']  
                 );
             }
-            return $Product; 
+        }
+        return $Product;
     }
 
     public function getProductModel($ID)
@@ -496,7 +506,6 @@ class ProductModel extends BaseModel
         }
     
         $fieldsString = implode(", ", $fields);
-    
         $sql = "UPDATE products SET {$fieldsString} WHERE ProductID = " . intval($product->productID);
 
         return $this->UpdateCustome($sql);
@@ -517,6 +526,7 @@ public function updateProductss(Product $product)
                 Color = '{$product->color}',
                 Status = {$product->Status}
             WHERE ProductID = {$product->productID}";
+          
     
     return $this->UpdateCustome($sql);
 }

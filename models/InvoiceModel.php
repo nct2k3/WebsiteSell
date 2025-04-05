@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ . '/../entities/Invoice.php';
+require_once __DIR__ .'/../entities/provinces.php';
+require_once __DIR__.'/../entities/districts.php';
 require_once __DIR__ .'./InvoiceDetailModel.php';
 require_once __DIR__ .'./ProductModel.php';
 class InvoiceModel extends BaseModel
@@ -21,6 +23,80 @@ class InvoiceModel extends BaseModel
         return $this->createReturnID('invoices', $invoiceData);
     }
     //get
+    public function getProvinces() {
+        try {
+            $sql = "SELECT * FROM `provinces`";
+            $datas = $this->getCustome($sql);
+            
+            $provinces = []; 
+            if (!empty($datas) && is_array($datas)) {
+                foreach ($datas as $data) {
+                    $provinces[] = new Provinces(
+                        (int)$data['code'], 
+                        (string)$data['name'] 
+                    );
+                }
+            }
+            return $provinces;
+        } catch (Exception $e) {
+            // Xử lý lỗi nếu cần
+            error_log("Error in getProvinces: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    public function getDistricts($code_province) {
+        try {
+            $sql = "SELECT * FROM `districts` WHERE province_code = $code_province";
+            $datas = $this->getCustome($sql);
+            
+            $districts = []; 
+            if (!empty($datas) && is_array($datas)) {
+                foreach ($datas as $data) {
+                    $districts[] = new Districts(
+                        (int)$data['code'], 
+                        (string)$data['name'], 
+                        (int)$code_province 
+                    );
+                }
+            }
+            return $districts;
+        } catch (Exception $e) {
+            // Xử lý lỗi nếu cần
+            error_log("Error in getDistricts: " . $e->getMessage());
+            return [];
+        }
+    }
+    public function getProvinceName($provinceCode) {
+        try {
+            $sql = "SELECT name FROM `provinces` WHERE code = $provinceCode";
+            $datas = $this->getCustome($sql); 
+    
+            if (!empty($datas) && isset($datas[0]['name'])) {
+                return $datas[0]['name'];
+            }
+            return null; // Không tìm thấy
+        } catch (Exception $e) {
+            error_log("Error in getProvinceName: " . $e->getMessage());
+            return null;
+        }
+    }
+    public function getDistrictName($districtCode) {
+        try {
+            $sql = "SELECT name FROM `districts` WHERE code = $districtCode";
+            $datas = $this->getCustome($sql);
+    
+            if (!empty($datas) && isset($datas[0]['name'])) {
+                return $datas[0]['name'];
+            }
+            return null;
+        } catch (Exception $e) {
+            error_log("Error in getDistrictName: " . $e->getMessage());
+            return null;
+        }
+    }
+        
+
     public function getInvoiceByIDUser($UserID) {
         $datas = $this->getListById('invoices', $UserID, 'UserID');
         if (empty($datas)) {

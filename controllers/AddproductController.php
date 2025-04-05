@@ -87,7 +87,7 @@ class AddProductController extends BaseController
         $result = $this->ProductModel->createProduct($productData);
 
         if ($result) {
-            $_SESSION['message'] = "Thêm thành côngcông!";
+            $_SESSION['message'] = "Thêm thành công!";
             header("Location: /?controller=homeManager");
         } else {
             $_SESSION['error'] = "Thêm thất bại có thể sản phẩm đã tồn tại.";
