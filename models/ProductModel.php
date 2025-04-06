@@ -90,7 +90,7 @@ class ProductModel extends BaseModel
 
     // get
     public function getByProductLineID($table, $ProductLineID) {
-        $sql = "SELECT * FROM ${table} WHERE ProductLineID = " . intval($ProductLineID);
+        $sql = "SELECT * FROM ${table} WHERE ProductLineID = " . intval($ProductLineID). " AND Status = 0";
         $result = $this->_query($sql);
     
         if ($result === false) {
@@ -149,24 +149,28 @@ class ProductModel extends BaseModel
     }
     public function getProduct($ProductLineID)
     {
-        $data = $this->getByProductLineID('Products',$ProductLineID); 
+        $data = $this->getByProductLineID('Products', $ProductLineID); 
         $Product = [];
+
         foreach ($data as $row) {
-            $Product[] = new Product(
-                $row['ProductID'], 
-                $row['ProductLineID'], 
-                $row['ProductName'],
-                $row['Status'],          
-                $row['Price']  ,
-                $row['OriginalPrice'],
-                $row['Stock'],
-                $row['Img'],
-                $row['Capacity'],
-                $row['Color']   
-            );
+            if ($row['Status'] == 0) { 
+                $Product[] = new Product(
+                    $row['ProductID'], 
+                    $row['ProductLineID'], 
+                    $row['ProductName'],
+                    $row['Status'],          
+                    $row['Price'],
+                    $row['OriginalPrice'],
+                    $row['Stock'],
+                    $row['Img'],
+                    $row['Capacity'],
+                    $row['Color']
+                );
+            }
         }
         return $Product; 
     }
+
     public function getProductByID($ProductID)
     {
         $data = $this->getById('Products', $ProductID, 'ProductID');
@@ -192,18 +196,18 @@ class ProductModel extends BaseModel
     {
         $data = $this->getByIdGroupByGroupBy('Products', $ProductID, 'ProductLineID',"	ProductName",6);
             $Product = [];
-            foreach ($data as $row) {
+            foreach ($data as $row) { 
                 $Product[] = new Product(
                     $row['ProductID'], 
                     $row['ProductLineID'],    
                     $row['ProductName'],  
                     $row['Status'],   
-                    $row['Price']  ,
+                    $row['Price'],
                     $row['OriginalPrice'],
                     $row['Stock'],
                     $row['Img'],
                     $row['Capacity'],
-                    $row['Color']  
+                    $row['Color']
                 );
             }
             return $Product; 

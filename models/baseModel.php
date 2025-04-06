@@ -77,7 +77,7 @@ class BaseModel extends Database {
         return $data; 
     }
     public function getByIdGroupByGroupBy($table, $id ,$typeID,$By,$limit) {
-        $sql = "SELECT * FROM ${table} WHERE ${typeID} = " . intval($id)." GROUP BY ${By} LIMIT ${limit}";
+        $sql = "SELECT * FROM ${table} WHERE ${typeID} = " . intval($id)." AND Status = 0 GROUP BY ${By} LIMIT ${limit}";
         $result = $this->_query($sql);
         $data = [];
         while ($row = mysqli_fetch_assoc($result)) {

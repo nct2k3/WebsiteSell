@@ -3,10 +3,10 @@
 class Database
 {
     const HOST = 'localhost';
-    const PORT = 3307; // Remove quotes to make it an integer
+    const PORT = 3306; // Remove quotes to make it an integer
     const USERNAME = 'root';
     const PASSWORD = '';
-    const DB_NAME = 'phpdatabase';
+    const DB_NAME = 'phpdatabase3';
     private $connect;
 
     // Configure database connection

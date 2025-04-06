@@ -23,6 +23,7 @@ class ProductController extends BaseController
         $number= count($product);
         $numpage= ceil($number/6);
         $products = array_slice($product,$numbegin,$numend);
+        $products = array_slice($products, 0, 6);
         $this->view('frontEnd.product.index', ['products' => $products,'Banner'=> $Banner,'items'=>$id,'numpage'=>$numpage ]);
     }
 
@@ -75,5 +76,11 @@ class ProductController extends BaseController
        
         $this->view('frontEnd.product.index', 
         ['products' => $products,'Banner'=> $Banner,'items'=>$id,'numpage'=>$numpage]);
+    }
+
+    public function getProductsByCategory($ProductLineID){
+       
+        $products = $this->ProductModel->getByProductLineID('products',$ProductLineID);
+        return $products;
     }
 }
