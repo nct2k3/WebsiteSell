@@ -99,16 +99,23 @@
                         </a>
                         <div class="d-flex align-items-center justify-content-center mt-2 mt-md-0">
                         <?php if ($Role == 0): ?>
-                            <img class="h-8 bg-gray-900 hover:bg-gray-400 p-1 rounded-full mx-2"
-                                onclick="window.location='?controller=Notification'"
-                                src="https://img.icons8.com/?size=100&id=ftMXZGFfen2R&format=png&color=ffffff" alt="Notification Icon">
-                            <div class="text-red-500 text-sm mt-0 h-8" style="font-size:10px"> 
-                                +<?php echo $NumNotification; ?> 
+                            <div class="relative">
+                                <img class="h-8 bg-gray-900 hover:bg-gray-400 p-1 rounded-full mx-2"
+                                    onclick="window.location='?controller=Notification'"
+                                    src="https://img.icons8.com/?size=100&id=ftMXZGFfen2R&format=png&color=ffffff" alt="Notification Icon">
+                                <div class="absolute -top-2 -right-2 text-red-500 rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                                    + <?php echo $NumNotification; ?>
+                                </div>
                             </div>
 
-                            <img class="h-8 bg-gray-900 hover:bg-gray-400 p-1 rounded-full mx-2"
-                                onclick="window.location='?controller=cart&user=<?php echo $userID; ?>'"
-                                src="https://img.icons8.com/?size=100&id=MuChNUVbFLwr&format=png&color=ffffff" alt="Cart Icon">
+                            <div class="relative">
+                                <img class="h-8 w-8 bg-gray-900 hover:bg-gray-400 p-1 rounded-full mx-3 "
+                                    onclick="window.location='?controller=cart&user=<?php echo $userID; ?>'"
+                                    src="https://img.icons8.com/?size=100&id=MuChNUVbFLwr&format=png&color=ffffff" alt="Cart Icon">
+                                <div class="absolute -top-2 -right-2 bg-white text-red-500 rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                                    <?php echo $Cart;?>
+                                </div>
+                        
                         <?php endif; ?>
                         </div>
                     <?php else: ?>

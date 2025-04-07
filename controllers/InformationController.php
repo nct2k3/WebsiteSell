@@ -22,11 +22,14 @@ class InformationController extends BaseController
         $dataUser = $this->UserModel->getUserByID($id);
         $dataAccount = $this->AccountsModel->getAccountByIDUser($id);
         $dataInvoice = $this->InvoiceModel->getInvoiceByIDUser($id);
+        $provinces = $this->InvoiceModel->getProvinces(); // Lấy danh sách tỉnh
+
         if (!empty($dataInvoice)) {
             usort($dataInvoice, function($a, $b) {
-                return  $b->invoiceID - $a->invoiceID;
+                return $b->invoiceID - $a->invoiceID;
             });
         }
+
         $dataPament = [];
         $dataWasPayment = [];
     
@@ -66,11 +69,20 @@ class InformationController extends BaseController
                 }
             }
         }
+        $addressParts = explode(', ', $dataUser->Address);
+        $specificAddress = $addressParts[0] ?? '';
+        $districtName = $addressParts[1] ?? '';
+        $provinceName = $addressParts[2] ?? '';
+
         $this->view('frontEnd.information.index', [
             'dataUser' => $dataUser,
             'Email' => $dataAccount->email,
-            'dataPament'=>$dataPament,
-            'dataWasPayment'=>$dataWasPayment,
+            'dataPament' => $dataPament,
+            'dataWasPayment' => $dataWasPayment,
+            'provinces' => $provinces,
+            'specificAddress' => $specificAddress,
+            'districtName' => $districtName,
+            'provinceName' => $provinceName
         ]);
     }
     // đăng xuấtxuất
@@ -88,26 +100,53 @@ class InformationController extends BaseController
         $_SESSION['message'] = "Cancel successfully!";
         $this->index();
     }
-    // đổi thông tin
-    public function change($FullName,$NumberPhone,$Address){
+    public function change($FullName, $NumberPhone, $ProvinceCode, $DistrictCode, $SpecificAddress) {
         $id = $this->takeIDAccount();
         $dataUser = $this->UserModel->getUserByID($id);
-        $dataFullName=$FullName;
-        if($FullName==''){
-            $dataFullName=$dataUser->FullName;
+    
+        $dataFullName = $FullName ?: $dataUser->FullName;
+        $dataNumberPhone = $NumberPhone ?: $dataUser->PhoneNumber;
+        $dataAddress = $dataUser->Address; 
+    
+        $isAddressChanged = false;
+    
+        if (!empty($ProvinceCode) && !empty($DistrictCode) && !empty($SpecificAddress)) {
+            $provinceName = $this->InvoiceModel->getProvinceName($ProvinceCode);
+            $districtName = $this->InvoiceModel->getDistrictName($DistrictCode);
+    
+            if ($provinceName && $districtName) {
+                $dataAddress = "$SpecificAddress, $districtName, $provinceName";
+                $isAddressChanged = true;
+            } else {
+                $dataAddress = $dataUser->Address;
+            }
         }
-        $dataNumberPhone = $NumberPhone;
-        if($NumberPhone==''){
-            $dataNumberPhone=$dataUser->NumberPhone;
+        $this->UserModel->updateInformation($dataFullName, $dataNumberPhone, $dataAddress, $id);
+        if ($dataFullName !== $dataUser->FullName || $dataNumberPhone !== $dataUser->PhoneNumber || $isAddressChanged) {
+            $_SESSION['message'] = "Change successfully!";
+        } else {
+            $_SESSION['error'] = "Điền đủ thông tin (Địa chỉ, Quận/Huyện, Tỉnh/Thành phố).";
         }
-        $dataAddress= $Address;
-        if($Address== ''){
-            $dataAddress=$dataUser->Address;
-        }
-        $this->UserModel->updateInformation($dataFullName,$dataNumberPhone,$dataAddress,$id);
-        $_SESSION['message'] = "Change successfully!";
+    
         $this->index();
         exit();
+    }
+    public function getDistricts() {
+        if (isset($_GET['province'])) {
+            $province = $_GET['province'];
+            $province = str_pad($province, 2, '0', STR_PAD_LEFT); 
+            
+            $districts = $this->InvoiceModel->getDistricts($province);
+            $result = array_map(function($district) {
+                return [
+                    'code' => $district->code,
+                    'name' => $district->name
+                ];
+            }, $districts);
+            header('Content-Type: application/json');
+            echo json_encode($result);
+            exit;
+        }
     }
     // thay đổi trạng thái mua hàng
     public function UpdateStatus($IdInvoices,$value,$TotalAmount){
@@ -141,40 +180,39 @@ class InformationController extends BaseController
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'] ?? null;
-
     switch ($action) {
-            case 'change':
-            $FullName = $_POST['fullName'] ?? ''; 
+        case 'change':
+            $FullName = $_POST['fullName'] ?? '';
             $NumberPhone = $_POST['phone'] ?? '';
-            $Address = $_POST['address'] ?? '';
-            
-
+            $ProvinceCode = $_POST['ProvinceCode'] ?? '';
+            $DistrictCode = $_POST['DistrictCode'] ?? '';
+            $SpecificAddress = $_POST['SpecificAddress'] ?? '';
             $InformationController = new InformationController();
-            $InformationController->change($FullName, $NumberPhone, $Address);
+            $InformationController->change($FullName, $NumberPhone, $ProvinceCode, $DistrictCode, $SpecificAddress);
             break;
-            case 'ChangeStatus':
-                if (!isset($_SESSION['form_submitted'])) {
+        case 'ChangeStatus':
+            if (!isset($_SESSION['form_submitted'])) {
                 $Status = 4;
                 $IdPayment = $_POST['IdOder'];
-                $TotalAmount=$_POST['TotalAmount'];
-                $InformationController=new  InformationController();
-                $InformationController->UpdateStatus($IdPayment,$Status, $TotalAmount);
+                $TotalAmount = $_POST['TotalAmount'];
+                $InformationController = new InformationController();
+                $InformationController->UpdateStatus($IdPayment, $Status, $TotalAmount);
                 $_SESSION['form_submitted'] = true;
-            }
-            else {
-                $InformationController=new  InformationController();
+            } else {
+                $InformationController = new InformationController();
                 $InformationController->index();
             }
             exit();
-
-            case 'Reorder':
-                $IdPayment = $_POST['InvoiceID'];
-                $InformationController=new  InformationController();
-                $InformationController->BuyAgain($IdPayment);
-
-
+        case 'Reorder':
+            $IdPayment = $_POST['InvoiceID'];
+            $InformationController = new InformationController();
+            $InformationController->BuyAgain($IdPayment);
+            break;
         default:
             echo "Hành động không hợp lệ!";
             break;
     }
+} elseif (isset($_GET['controller']) && $_GET['controller'] === 'information' && isset($_GET['action']) && $_GET['action'] === 'getDistricts') {
+    $InformationController = new InformationController();
+    $InformationController->getDistricts();
 }

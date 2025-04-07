@@ -59,7 +59,7 @@
                     <select id="paymentType" name="paymentType" required class="bg-gray-800 text-gray-500 mt-1 block w-full text-white p-2 rounded-md" onchange="handleSelection(this)">
                         <option value="" disabled selected>Quản Lý Đơn Hàng</option>
                         <option value="5">Đơn hàng chưa hoàn thành</option>
-                        <option value="4">Đơn hàng đã hoàn thành</option>
+                        <option value="3">Đơn hàng đã hoàn thành</option>
                     </select>
                 </div>     
                 <div class="col-12 col-md-2 text-white">
@@ -75,10 +75,10 @@
                 <div class="col-12 col-md-2 text-white">
                     <select id="paymentType" onchange="handleSelectionStatiscal(this)" name="paymentType" required class="bg-gray-800 text-gray-500 mt-1 block w-full text-white p-2 rounded-md ">
                         <option value="" disabled selected>Thống Kê</option>
-                        <option value="1">Thống kê đơn hàng</option>
-                        <option value="2">Thống kê sản phẩm</option>
+                        <option value="1">Thống kê khách hàng tiềm năng</option>
+                        <!-- <option value="2">Thống kê sản phẩm</option>
                         <option value="3">Báo cáo doanh thu</option>
-                        <option value="4">Thanh toán mua hàng</option>
+                        <option value="4">Thanh toán mua hàng</option> -->
                     </select>
                 </div>
                 <div

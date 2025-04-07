@@ -54,10 +54,16 @@ $controller->index();
                 </tbody>
             </table>
         </div>
-        <div onclick="window.location='?controller=payment'"
-        class="flex justify-end items-center mt-4 text-white bg-gray-500 p-2 rounded hover:bg-green-300">
-            <p><strong>Buy All Total:</strong> <?php echo htmlspecialchars(number_format($total, 0, ',', '.')) . '₫'; ?></p>
-        </div>
+        <?php if (count($products) > 0): ?>
+            <div onclick="window.location='?controller=payment'"
+                class="flex justify-end items-center mt-4 text-white bg-gray-500 p-2 rounded hover:bg-green-300 cursor-pointer">
+                <p><strong>Buy All Total:</strong> <?php echo htmlspecialchars(number_format($total, 0, ',', '.')) . '₫'; ?></p>
+            </div>
+        <?php else: ?>
+            <div class="flex justify-end items-center mt-4 text-white bg-gray-400 p-2 rounded cursor-not-allowed">
+                <p><strong>Your cart is empty</strong></p>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 <script>

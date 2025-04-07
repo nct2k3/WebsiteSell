@@ -26,7 +26,9 @@ class SearchController extends BaseController
     public function searchProduct($string)
     {
         $searchQuery = isset($_GET['string']) ? trim($_GET['string']) : '';
-        $data = $this->getAllProduct();
+        $data = array_filter($this->getAllProduct(), function($product) {
+            return $product->Status === 0;
+        });
         $dataLineProduct = $this->ProductModel->getLineProduct();
         $productDataSearch = [];
         $productLineName = '';

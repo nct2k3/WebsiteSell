@@ -86,7 +86,7 @@ $controller->index();
                         <button
                             onclick="window.location='?controller=DetailProduct&action=addCart&items=<?php echo htmlspecialchars($productInfo->productID); ?>'"
                             class="btn btn-warning text-white w-full font-bold m-2 text-xl">
-                            Thêm gỏ hàng
+                            Thêm giỏ hàng
                         </button>
                     <?php endif; ?>
                     </div>

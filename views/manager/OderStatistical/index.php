@@ -36,26 +36,35 @@ $controller->index();
                         <th class="p-2 text-left">Xếp hạng</th>
                         <th class="p-2 text-left">Tên</th>
                         <th class="p-2 text-left">Tổng tiền</th>
+                        <th class="p-2 text-left"></th> <!-- Cột trống cho nút toggle -->
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i=1; foreach ($dataUser as $items): ?>
                         <tr class="border-t <?php echo $i==1 ? 'bg-amber-50' : ($i==2 ? 'bg-emerald-50' : ''); ?>">
-                            <td class="p-2"><span class="w-6 h-6 inline-flex items-center justify-center rounded-full <?php 
-                                echo $i==1 ? 'bg-amber-100 text-amber-700' : ($i==2 ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-700');
-                            ?>"><?php echo $i ?></span></td>
-                            <td class="p-2"><a href="#<?= $items['name'] ?>" class="text-blue-600"><?= $items['name'] ?></a></td>
+                            <td class="p-2">
+                                <span class="w-6 h-6 inline-flex items-center justify-center rounded-full <?php 
+                                    echo $i==1 ? 'bg-amber-100 text-amber-700' : ($i==2 ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-700');
+                                ?>"><?php echo $i ?></span>
+                            </td>
+                            <td class="p-2"><?= $items['name'] ?></td>
                             <td class="p-2"><?php echo number_format($items['totalAmount']) ?>₫</td>
+                            <td class="p-2">
+                                <button 
+                                    onclick="toggleDetails('details-<?= $items['id'] ?>', this)" 
+                                    class="text-blue-600 focus:outline-none toggle-text"
+                                >
+                                    Xem chi tiết
+                                </button>
+                            </td>
                         </tr>
                     <?php $i++; endforeach;?>
                 </tbody>
             </table>
         </div>
-
-        <h2 class="text-2xl font-bold text-center mb-4">Danh Sách Hóa Đơn Chi Tiết</h2>
         
         <?php foreach ($dataPament as $userID => $payment): ?>
-        <section id="<?= $payment['userName'] ?>" class="mb-4 bg-white rounded-lg shadow p-4">
+        <section id="details-<?= $userID ?>" class="mb-4 bg-white rounded-lg shadow p-4 hidden">
             <h3 class="text-xl font-bold border-b pb-2 mb-3">
                 <?= $payment['userName'] ?> 
                 <span class="text-gray-600">(<?= number_format($payment['totalAmount'], 0, ',', '.') ?> VND)</span>
@@ -106,5 +115,23 @@ $controller->index();
         </section>
         <?php endforeach; ?>
     </div>
+
+    <script>
+        function toggleDetails(elementId, button) {
+            const element = document.getElementById(elementId);
+            
+            if (element.classList.contains('hidden')) {
+                element.classList.remove('hidden');
+                button.textContent = 'Ẩn chi tiết';
+                button.classList.remove('text-blue-600');
+                button.classList.add('text-red-600');
+            } else {
+                element.classList.add('hidden');
+                button.textContent = 'Xem chi tiết';
+                button.classList.remove('text-red-600');
+                button.classList.add('text-blue-600');
+            }
+        }
+    </script>
 </body>
 </html>

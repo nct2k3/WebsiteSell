@@ -20,11 +20,6 @@ class PaymentController extends BaseController
         $dataUser = $this->UserModel->getUserByID($userID);
         $dataCart = $this->CartModel->getCart($userID);
         $products = []; 
-        if(!is_array($dataCart) || empty($dataCart)){
-            $_SESSION['error'] = "There are no products in the cart!";
-            header("Location: /?controller=cart");
-            exit;
-        }
         if (is_array($dataCart)) {
             foreach ($dataCart as $item) {
                 if (isset($item->ProductID)) {
@@ -64,6 +59,8 @@ class PaymentController extends BaseController
     public function buyOne()
     {
         $userID =$this->takeIDAccount();
+      
+        
         if($userID==""){
             $_SESSION['error'] = "You are not logged in yet!";
             header("Location: /");
@@ -71,6 +68,12 @@ class PaymentController extends BaseController
 
         }
         $dataUser = $this->UserModel->getUserByID($userID);
+        if($dataUser->FullName="Admin"){
+            $_SESSION['error'] = "Admin không có quyền mua hàng!";
+            header("Location: /");
+            return;
+
+        }
         $dataCart = $this->CartModel->getCart($userID);
         $products = []; 
         $idProduct=$_GET['items'];
@@ -139,7 +142,7 @@ class PaymentController extends BaseController
         }
         $this->index(); 
     }
-    // thanh toán bình thương với giỏ hànghàng
+    // thanh toán bình thương với giỏ hàng
     public function PaymentNormal($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,$StattusTypePay,$province,$district) {
         $userID = $this->takeIDAccount();
         $dataUser = $this->UserModel->getUserByID($userID);
@@ -185,7 +188,7 @@ class PaymentController extends BaseController
             $district = strlen($district) == 1 ? str_pad($district, 2, '0', STR_PAD_LEFT) : $district;     
             $provinceEnd = $this->InvoiceModel->getProvinceName($province);
             $districtEnd = $this->InvoiceModel->getDistrictName($district);
-            $addressend = $address . " - " . $districtEnd . " - " . $provinceEnd;
+            $addressend = $address . ", " . $districtEnd . ", " . $provinceEnd;
             
         }
         $NodeEnd='';
@@ -266,7 +269,7 @@ class PaymentController extends BaseController
             $district = strlen($district) == 1 ? str_pad($district, 2, '0', STR_PAD_LEFT) : $district;     
             $provinceEnd = $this->InvoiceModel->getProvinceName($province);
             $districtEnd = $this->InvoiceModel->getDistrictName($district);
-            $addressend = $address . " - " . $districtEnd . " - " . $provinceEnd;
+            $addressend = $address . ", " . $districtEnd . ", " . $provinceEnd;
             
         }
         $NodeEnd='';
@@ -323,10 +326,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $loyaltyPoints = $_POST['LoyaltyPoints'] ?? null;
                 $dateDelivery = $_POST['DateDelivery'] ?? null;
                 $PhoneNumber = $_POST['PhoneNumber'] ?? null;
-                 $address = ($_POST['address'] ?? '') . "-" . ($_POST['district'] ?? '') . "-" . ($_POST['province'] ?? '');
-                $Note = $_POST['Note'] ?? null;
+                $address = ($_POST['address'] ?? '');
                 $province = $_POST['province']?? null;
                 $district = $_POST['district']?? null;
+                $Note = $_POST['Note'] ?? null;
                 $paymentcontroller= new PaymentController;           
                 $paymentcontroller->PaymentOne($loyaltyPoints,$PhoneNumber,$address,$dateDelivery,$Note,0,$province,$district);               
                 break;

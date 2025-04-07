@@ -171,10 +171,10 @@ class InvoiceModel extends BaseModel
     public function getInvoiceAll($status) {
         $sql="";
         if ($status == 5) {
-        $sql="SELECT * FROM invoices WHERE  status!=4";
+        $sql="SELECT * FROM invoices WHERE  status!=3 and status!=4 and status!=5";
         }
-        else if ($status == 4) {
-            $sql="SELECT * FROM invoices WHERE status=$status";
+        else if ($status == 3) {
+            $sql="SELECT * FROM invoices WHERE status=$status or status=4";
         }
         $datas = $this->getCustome($sql);
         if (empty($datas)) {
@@ -204,10 +204,10 @@ class InvoiceModel extends BaseModel
 
         $sql="";
         if ($status == 5) {
-        $sql="SELECT * FROM invoices WHERE  status!=4 and InvoiceDate BETWEEN '$DateFrom' And '$DateTo'";
+        $sql="SELECT * FROM invoices WHERE  status!=4 and status!=3 and InvoiceDate BETWEEN '$DateFrom' And '$DateTo'";
         }
-        else if ($status == 4) {
-            $sql="SELECT * FROM invoices WHERE status=$status and InvoiceDate BETWEEN '$DateFrom' And '$DateTo'";
+        else if ($status == 3) {
+            $sql="SELECT * FROM invoices WHERE (status=$status or status=4) and InvoiceDate BETWEEN '$DateFrom' And '$DateTo'";
         }
         $datas = $this->getCustome($sql);
         if (empty($datas)) {

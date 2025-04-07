@@ -34,7 +34,7 @@ class CartController extends BaseController
         $this->view('frontEnd.cart.index', ['products' => $products, 'total' => $total, 'userID' => $userID]);
     }
 
-    // xóa giỏ hànghàng
+    // xóa giỏ hàng
     public function delete()
     {
         if (isset($_GET['user']) && isset($_GET['product'])) {

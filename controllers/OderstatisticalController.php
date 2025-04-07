@@ -18,8 +18,8 @@ class OderstatisticalController extends BaseController {
     }
 
     public function index() {
-         $datefrom = '2025-02-01';
-        $dateto = '2025-12-30';
+        $datefrom = '2025-04-06';
+        $dateto = '2025-04-08';
         if (isset($_GET['datefrom'])) {
             $datefrom = $_GET['datefrom'];
         }
@@ -27,23 +27,30 @@ class OderstatisticalController extends BaseController {
             $dateto = $_GET['dateto'];
         }
     
-        $DataInvoice = $this->InvoiceModel->getInvoicewithDate(4, $datefrom, $dateto);
+        $DataInvoice = $this->InvoiceModel->getInvoicewithDate(3, $datefrom, $dateto);
         $dataUser = [];
-        foreach ($DataInvoice as $items) {
-            $found = false;
-            foreach ($dataUser as $key => $user) { // Không sử dụng tham chiếu
-                if ($user['id'] == $items->userID) {
-                    $dataUser[$key]['totalAmount'] += $items->totalAmount;
-                    $found = true;
-                    break;
+        
+        // Check if $DataInvoice is not null before iterating
+        if ($DataInvoice && is_array($DataInvoice)) {
+            foreach ($DataInvoice as $items) {
+                $found = false;
+                foreach ($dataUser as $key => $user) { 
+                    if ($user['id'] == $items->userID) {
+                        $dataUser[$key]['totalAmount'] += $items->totalAmount;
+                        $found = true;
+                        break;
+                    }
                 }
-            }
-            if (!$found) {
-                $dataUser[] = [
-                    'id' => $items->userID,
-                    'name' => $this->UserModel->getUserByID($items->userID)->FullName,
-                    'totalAmount' => $items->totalAmount
-                ];
+                if (!$found) {
+                    $user = $this->UserModel->getUserByID($items->userID);
+                    if ($user) {
+                        $dataUser[] = [
+                            'id' => $items->userID,
+                            'name' => $user->FullName,
+                            'totalAmount' => $items->totalAmount
+                        ];
+                    }
+                }
             }
         }
 
@@ -55,26 +62,33 @@ class OderstatisticalController extends BaseController {
         $dataPament = [];
         
         // Initialize array structure for each top user
-        foreach ($dataUsers as $user) {
-            $dataPament[$user['id']] = [
-                'userName' => $user['name'],
-                'totalAmount' => $user['totalAmount'],
-                'invoices' => []
-            ];
+        if (!empty($dataUsers)) {
+            foreach ($dataUsers as $user) {
+                $dataPament[$user['id']] = [
+                    'userName' => $user['name'],
+                    'totalAmount' => $user['totalAmount'],
+                    'invoices' => []
+                ];
+            }
         }
 
-        if ($DataInvoice != null) {
+        if ($DataInvoice && is_array($DataInvoice)) {
             foreach ($DataInvoice as $items) {
                 foreach ($dataUsers as $user) {
                     if ($user['id'] == $items->userID) {
                         $products = [];
                         $dataInvoiceDetail = $this->InvoiceDetailModel->getInvoiceDetailByIDUser($items->invoiceID);
                         
-                        foreach ($dataInvoiceDetail as $item) {
-                            $products[] = [
-                                'product' => $this->ProductModel->getProductByID($item->productID),
-                                'quantity' => $item->quantity,
-                            ];
+                        if ($dataInvoiceDetail && is_array($dataInvoiceDetail)) {
+                            foreach ($dataInvoiceDetail as $item) {
+                                $product = $this->ProductModel->getProductByID($item->productID);
+                                if ($product) {
+                                    $products[] = [
+                                        'product' => $product,
+                                        'quantity' => $item->quantity,
+                                    ];
+                                }
+                            }
                         }
 
                         $dataPament[$user['id']]['invoices'][] = [

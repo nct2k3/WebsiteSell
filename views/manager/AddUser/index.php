@@ -27,6 +27,27 @@ $controller->index();
       }
       return true;
     }
+
+    function loadDistricts() {
+      const provinceCode = document.getElementById("ProvinceCode").value;
+      const districtSelect = document.getElementById("DistrictCode");
+
+      districtSelect.innerHTML = '<option value="">Chọn huyện</option>';
+
+      if (provinceCode) {
+        fetch(`?controller=Adduser&action=getDistricts&province=${provinceCode}`)
+          .then(response => response.json())
+          .then(data => {
+            data.forEach(district => {
+              const option = document.createElement("option");
+              option.value = district.code;
+              option.textContent = district.name;
+              districtSelect.appendChild(option);
+            });
+          })
+          .catch(error => console.error('Error loading districts:', error));
+      }
+    }
   </script>
   <style>
     body {
@@ -40,6 +61,12 @@ $controller->index();
     <div class="flex bg-white shadow-2xl rounded-xl overflow-hidden w-full max-w-4xl transform transition-all hover:scale-[1.01]">
       <div class="w-full px-10 py-8">
         <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Tạo tài khoản mới</h2>
+        <?php if (isset($_SESSION['error'])): ?>
+          <div class="text-red-500 text-sm mb-4"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></div>
+        <?php endif; ?>
+        <?php if (isset($_SESSION['message'])): ?>
+          <div class="text-green-500 text-sm mb-4"><?php echo $_SESSION['message']; unset($_SESSION['message']); ?></div>
+        <?php endif; ?>
         <form action="?controller=Adduser" method="POST" class="space-y-6" onsubmit="return validatePassword();">
           <input type="hidden" name="action" value="Adduser">
           <div class="grid grid-cols-2 gap-6">
@@ -74,10 +101,29 @@ $controller->index();
                     placeholder="Nhập số điện thoại của bạn" required>
             </div>
             <div class="mb-4">
-                <label for="Address" class="block text-sm font-medium mb-2 text-gray-700">Địa chỉ</label>
-                <input type="text" name="Address" id="Address" 
+                <label for="ProvinceCode" class="block text-sm font-medium mb-2 text-gray-700">Tỉnh/Thành phố</label>
+                <select name="ProvinceCode" id="ProvinceCode" 
                     class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" 
-                    placeholder="Nhập địa chỉ của bạn" required>
+                    required onchange="loadDistricts()">
+                    <option value="">Chọn tỉnh/thành phố</option>
+                    <?php foreach ($provinces as $province): ?>
+                        <option value="<?= $province->code ?>"><?= $province->name ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="DistrictCode" class="block text-sm font-medium mb-2 text-gray-700">Quận/Huyện</label>
+                <select name="DistrictCode" id="DistrictCode" 
+                    class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" 
+                    required>
+                    <option value="">Chọn huyện</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="SpecificAddress" class="block text-sm font-medium mb-2 text-gray-700">Địa chỉ cụ thể</label>
+                <input type="text" name="SpecificAddress" id="SpecificAddress" 
+                    class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200" 
+                    placeholder="Nhập địa chỉ cụ thể của bạn" required>
             </div>
           </div>
           <div id="error-message" class="text-red-500 text-sm hidden mb-4 text-center"></div>

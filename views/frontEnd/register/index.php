@@ -24,6 +24,28 @@ $controller->index();
       errorDiv.classList.add("hidden");
       return true;
     }
+
+    function loadDistricts() {
+      const provinceCode = document.getElementById("ProvinceCode").value;
+      const districtSelect = document.getElementById("DistrictCode");
+
+      // Xóa các tùy chọn hiện tại
+      districtSelect.innerHTML = '<option value="">Chọn huyện</option>';
+
+      if (provinceCode) {
+        fetch(`?controller=register&action=getDistricts&province=${provinceCode}`)
+          .then(response => response.json())
+          .then(data => {
+            data.forEach(district => {
+              const option = document.createElement("option");
+              option.value = district.code;
+              option.textContent = district.name;
+              districtSelect.appendChild(option);
+            });
+          })
+          .catch(error => console.error('Error loading districts:', error));
+      }
+    }
   </script>
 </head>
 <body class="bg-gray-900 text-gray-100">
@@ -114,13 +136,41 @@ $controller->index();
           </div>
 
           <div>
-            <label for="Address" class="block text-sm font-medium mb-2">Địa Chỉ</label>
+            <label for="ProvinceCode" class="block text-sm font-medium mb-2">Tỉnh/Thành Phố</label>
+            <select 
+              name="ProvinceCode" 
+              id="ProvinceCode" 
+              class="w-full px-3 py-2 border border-gray-700 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" 
+              required
+              onchange="loadDistricts()"
+            >
+              <option value="">Chọn tỉnh/thành phố</option>
+              <?php foreach ($provinces as $province): ?>
+                <option value="<?= $province->code ?>"><?= $province->name ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+
+          <div>
+            <label for="DistrictCode" class="block text-sm font-medium mb-2">Quận/Huyện</label>
+            <select 
+              name="DistrictCode" 
+              id="DistrictCode" 
+              class="w-full px-3 py-2 border border-gray-700 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" 
+              required
+            >
+              <option value="">Chọn huyện</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="SpecificAddress" class="block text-sm font-medium mb-2">Địa Chỉ Cụ Thể</label>
             <input 
               type="text" 
-              name="Address" 
-              id="Address" 
+              name="SpecificAddress" 
+              id="SpecificAddress" 
               class="w-full px-3 py-2 border border-gray-700 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" 
-              placeholder="Nhập địa chỉ của bạn"
+              placeholder="Nhập địa chỉ cụ thể (số nhà, đường, ...)"
               required
             >
           </div>

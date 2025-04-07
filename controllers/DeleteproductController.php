@@ -36,7 +36,7 @@ class DeleteproductController extends BaseController
     }
     // tìm sản phẩm theo têntên
     public function searchProduct($string) {
-        $data = $this->ProductModel->getProductDelete();
+        $data = $this->ProductModel->getAllProduct();
         
         $productDataSearch = [];
         foreach ($data as $items) {
