@@ -68,7 +68,7 @@ class PaymentController extends BaseController
 
         }
         $dataUser = $this->UserModel->getUserByID($userID);
-        if($dataUser->FullName="Admin"){
+        if($dataUser->FullName=="Admin"){
             $_SESSION['error'] = "Admin không có quyền mua hàng!";
             header("Location: /");
             return;

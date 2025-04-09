@@ -124,7 +124,7 @@ class ProductModel extends BaseModel
         return $Product; 
     }
 
-  
+
 
     
     public function getAllProduct()
@@ -350,6 +350,33 @@ class ProductModel extends BaseModel
                 FROM products p
                 LEFT JOIN invoicedetails id ON p.ProductID = id.ProductID
                 WHERE id.ProductID IS NULL ";
+        $result = $this->_query($sql);
+        if ($result === false) {
+            die("SQL Error: " . mysqli_error($this->connect)); 
+        }
+        $Product = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $Product[] = new Product(
+                $row['ProductID'], 
+                $row['ProductLineID'],   
+                $row['ProductName'],  
+                $row['Status'],      
+                $row['Price'],
+                $row['OriginalPrice'],
+                $row['Stock'],
+                $row['Img'],
+                $row['Capacity'],
+                $row['Color']
+            );
+        }
+
+        return $Product; 
+    }
+    public function getProductUnDelete()
+    {
+        $sql = "SELECT *
+                FROM products 
+                WHERE Status!=1 ";
         $result = $this->_query($sql);
         if ($result === false) {
             die("SQL Error: " . mysqli_error($this->connect)); 

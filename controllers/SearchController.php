@@ -26,9 +26,7 @@ class SearchController extends BaseController
     public function searchProduct($string)
     {
         $searchQuery = isset($_GET['string']) ? trim($_GET['string']) : '';
-        $data = array_filter($this->getAllProduct(), function($product) {
-            return $product->Status === 0;
-        });
+        $data = $this->ProductModel->getProductUnDelete();
         $dataLineProduct = $this->ProductModel->getLineProduct();
         $productDataSearch = [];
         $productLineName = '';
@@ -72,7 +70,7 @@ class SearchController extends BaseController
     // Sửa phương thức searchWithConditions để linh hoạt hơn
     public function searchWithConditions($ProductLines, $From, $To)
     {
-        $data = $this->getAllProduct();
+        $data = $this->ProductModel->getProductUnDelete();
         $dataLineProduct = $this->ProductModel->getLineProduct();
         $productDataSearch = [];
         $productLineName = '';
