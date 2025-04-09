@@ -41,7 +41,7 @@ $controller->index();
                                         type="number" 
                                         class="quantity-input w-16 text-center border rounded bg-gray-800" 
                                         value="<?php echo $item['quantity']; ?>" 
-                                        min="1" max="<?php $item['item']->stock; ?>?>"
+                                        min="1"
                                         data-product-id="<?php echo $item['item']->productID; ?>" />
                                 </td>
                                 <td class="py-2 px-2">
@@ -50,7 +50,7 @@ $controller->index();
                                 </td>
                                
                             </tr>
-                        <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

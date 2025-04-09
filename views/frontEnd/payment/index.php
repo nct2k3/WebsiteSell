@@ -75,7 +75,7 @@ $controller->index();
                             <th class="text-left px-2 py-1"></th>
                             <th class="text-left px-2 py-1">Giá</th>
                             <th class="text-left px-2 py-1">Số lượng</th>
-                            <th class="text-left px-2 py-1"></th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -88,21 +88,14 @@ $controller->index();
                                 <td class="py-2 px-2"><?php echo htmlspecialchars(number_format($item['price'], 0, ',', '.')) . '₫'; ?></td>
                                 <td class="py-2 px-2">
                                     <input 
-                                    <?php if($dataAction=='payOne') echo 'readonly' ?>
+                                         readonly
                                         type="number" 
                                         class="quantity-input w-16 text-center border rounded bg-gray-700" 
                                         value="<?php echo $item['quantity']; ?>" 
                                         min="1"
                                         data-product-id="<?php echo $item['item']->productID; ?>" />
                                 </td>
-                                <td class="py-2 px-2">
-                                    <?php if($dataAction == 'payOne'): ?>
-                                        <span class="text-gray-500">Delete</span> 
-                                    <?php else: ?>
-                                        <a href="#" class="text-red-500 hover:text-red-600"
-                                        onclick="window.location='?controller=payment&action=Delete&user=<?php echo $userID; ?>&product=<?php echo $item['item']->productID; ?>'">Delete</a>
-                                    <?php endif; ?>
-                                </td>
+                                
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -132,14 +125,16 @@ $controller->index();
         }
     });
 
-    document.querySelectorAll('.quantity-input').forEach(input => {
+        document.querySelectorAll('.quantity-input').forEach(input => {
         input.addEventListener('change', function () {
+            console.log("Quantity changed:", this.value, this.dataset.productId);
             const productId = this.dataset.productId;
             const newQuantity = this.value;
             const url = new URL(window.location.href);
-            url.searchParams.set('action', 'ChangeQuantity'); 
+            url.searchParams.set('action', 'ChangeQuantity');
             url.searchParams.set('quantity', newQuantity);
             url.searchParams.set('product', productId);
+            console.log("Redirecting to:", url.toString());
             window.location.href = url.toString();
         });
     });

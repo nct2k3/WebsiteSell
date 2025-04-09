@@ -125,11 +125,6 @@ class PaymentController extends BaseController
             return;
         }
         $product = $this->ProductModel->getProductByID($id);
-        if($product->stock< $quantity){
-            $_SESSION['error'] = "Excess inventory cannot be added!";
-            $this->index(); 
-            return;
-        }
         $cart= new Cart(
             '',
             $userId,

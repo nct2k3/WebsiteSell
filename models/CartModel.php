@@ -39,7 +39,7 @@ class CartModel extends BaseModel
         $existingCartItem = $this->getOneCustome($sql);
 
         if ($existingCartItem) {
-            $Endquantity = $existingCartItem['Quantity']+$quantity;
+            $Endquantity = $quantity;
             return $this->updateTowId('cart',$userID,$productID,'UserID','ProductID','Quantity',$Endquantity);
         } else {
             $data = [
@@ -51,4 +51,27 @@ class CartModel extends BaseModel
         }
     }
 
+
+    public function adddCart($Cart) {
+        if (empty($Cart->UserID) || empty($Cart->ProductID) || $Cart->Quantity <= 0) {
+            throw new InvalidArgumentException('Invalid cart data.');
+        }
+        $userID = intval($Cart->UserID);
+        $productID = intval($Cart->ProductID);
+        $quantity = intval($Cart->Quantity);
+        $sql = "SELECT * FROM cart WHERE UserID = $userID AND ProductID = $productID";
+        $existingCartItem = $this->getOneCustome($sql);
+
+        if ($existingCartItem) {
+            $Endquantity = $existingCartItem['Quantity']+$quantity;
+            return $this->updateTowId('cart',$userID,$productID,'UserID','ProductID','Quantity',$Endquantity);
+        } else {
+            $data = [
+                'UserID' => $userID,
+                'ProductID' => $productID,
+                'Quantity' => $quantity,
+            ];
+            return $this->create('cart', $data);
+        }
+    }
 }

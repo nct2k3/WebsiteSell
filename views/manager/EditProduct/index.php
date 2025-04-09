@@ -35,7 +35,7 @@ $controller->index();
                 </script>
             </div>
             <div>
-                <label for="productLine" class="block text-sm font-medium text-gray-700">Dòng sản phẩ: <?php echo $ProductEdit->productLineID; ?></label>
+                <label for="productLine" class="block text-sm font-medium text-gray-700">Dòng sản phẩm: <?php echo $ProductEdit->productLineID; ?></label>
                 <select id="productLine" name="productLine" required class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                     <option value="" disabled>Chọn dòng sản phẩm</option>
                     <?php foreach ($dataLineProduct as $items): ?>

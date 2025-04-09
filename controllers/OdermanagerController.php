@@ -159,7 +159,7 @@ class OdermanagerController extends BaseController
             }        
         }
         if (count($dataPament) == 0) {
-            $_SESSION['error'] = "Can't find";
+            $_SESSION['error'] = "Không tìm thấy đơn hàng nào khớp với thời gian!";
             $this->index();
             exit();
         }

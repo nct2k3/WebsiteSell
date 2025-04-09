@@ -32,7 +32,7 @@ class DetailProductController extends BaseController
             $id,
             1
         );
-        $data=$this->CartModel->createCart($cart);
+        $data=$this->CartModel-> adddCart($cart);
         if ($data==1) {
             $_SESSION['message'] = "Added successfully!";
         }

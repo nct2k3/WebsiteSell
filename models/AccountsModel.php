@@ -21,7 +21,6 @@ class AccountsModel extends BaseModel
         return $accounts; 
     }
     public function createAccounts($accounts) {
-        print_r($accounts);
         $accountData = [
             'Email' => $accounts->email,
             'Password' => $accounts->password,
