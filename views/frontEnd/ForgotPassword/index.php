@@ -39,7 +39,7 @@ $controller->index();
                     
                     <button type="submit" 
                             class="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-colors duration-200 transform hover:scale-[1.02]">
-                        Đặt Lại Mật Khẩu
+                        Lấy Lại Mật Khẩu
                     </button>
                 </form>
 

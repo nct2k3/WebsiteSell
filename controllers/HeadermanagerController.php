@@ -23,7 +23,7 @@ class HeadermanagerController extends BaseController
         $this->LoginManagerModel->createLoginManager($loginmanager);
         $_SESSION['AccountID'] = "";
         $_SESSION['Role'] ="";
-        $_SESSION['message'] = "Log out successfully!";
+        $_SESSION['message'] = "Đăng xuất thành công!";
         header("Location: /");
         exit();
     }

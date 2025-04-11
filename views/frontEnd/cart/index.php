@@ -14,18 +14,18 @@ $controller->index();
 <body class="bg-gray-700">
 
 <div class="container mx-auto bg-gray-700 py-4 px-2 sm:px-10">
-    <h1 class="text-3xl font-bold text-center text-white">Your Cart</h1>
+    <h1 class="text-3xl font-bold text-center text-white">Giỏ hàng của bạn</h1>
 
     <div class="bg-gray-600 shadow-md rounded px-4 pt-6 pb-8 my-4">
         <div class="overflow-x-auto">
             <table class="table-auto w-full text-white text-sm sm:text-base">
                 <thead>
                     <tr class="border-b border-gray-500">
-                        <th class="text-left px-2 py-1">Product</th>
-                        <th class="text-left px-2 py-1">Picture</th>
-                        <th class="text-left px-2 py-1">Price</th>
-                        <th class="text-left px-2 py-1">Quantity</th>
-                        <th class="text-left px-2 py-1">Status</th>
+                        <th class="text-left px-2 py-1">Sản phẩm</th>
+                        <th class="text-left px-2 py-1">Hình ảnh</th>
+                        <th class="text-left px-2 py-1">Giá</th>
+                        <th class="text-left px-2 py-1">Số lượng</th>
+                        <th class="text-left px-2 py-1">Trạng thái</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,9 +46,8 @@ $controller->index();
                                 </td>
                                 <td class="py-2 px-2">
                                     <a href="#" class="text-red-500 hover:text-red-600"
-                                       onclick="window.location='?controller=cart&action=Delete&user=<?php echo $userID; ?>&product=<?php echo $item['item']->productID; ?>'">Delete</a>
+                                       onclick="window.location='?controller=cart&action=Delete&user=<?php echo $userID; ?>&product=<?php echo $item['item']->productID; ?>'">Xóa</a>
                                 </td>
-                               
                             </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -57,11 +56,11 @@ $controller->index();
         <?php if (count($products) > 0): ?>
             <div onclick="window.location='?controller=payment'"
                 class="flex justify-end items-center mt-4 text-white bg-gray-500 p-2 rounded hover:bg-green-300 cursor-pointer">
-                <p><strong>Buy All Total:</strong> <?php echo htmlspecialchars(number_format($total, 0, ',', '.')) . '₫'; ?></p>
+                <p><strong>Mua tất cả - Tổng cộng:</strong> <?php echo htmlspecialchars(number_format($total, 0, ',', '.')) . '₫'; ?></p>
             </div>
         <?php else: ?>
             <div class="flex justify-end items-center mt-4 text-white bg-gray-400 p-2 rounded cursor-not-allowed">
-                <p><strong>Your cart is empty</strong></p>
+                <p><strong>Giỏ hàng của bạn đang trống</strong></p>
             </div>
         <?php endif; ?>
     </div>

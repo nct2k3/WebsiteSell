@@ -17,18 +17,18 @@ class AdddetailproductController extends BaseController
     function AddProductModel($productModel,$productName){ 
         $CheckData=  $this->ProductModel->addProductModels($productName,$productModel);
         if ($CheckData==1) {
-            $_SESSION['error'] = "Add fail!";
+            $_SESSION['error'] = "Thêm thất bại !";
             $this->index();
         }
         else{
-        $_SESSION['message'] = "Add successfully!";
+        $_SESSION['message'] = "Thêm thành công!";
         $this->index();
         }
     }
     function addType($IdModel,$Name,$List ){
          $CheckData=  $this->ProductModel->addProductTypes($IdModel,$Name);
       if($CheckData==1){
-        $_SESSION['error'] = "Add fail!";
+        $_SESSION['error'] = "Thêm thất bại!";
         $this->index();
         exit();
         
@@ -45,7 +45,7 @@ class AdddetailproductController extends BaseController
              $this->ProductModel->addProductDetails($Urlend, $Name);
                 }
         }
-        $_SESSION['message'] = "Add successfully!";
+        $_SESSION['message'] = "Thêm thành công!";
         $this->index();
         exit();
         

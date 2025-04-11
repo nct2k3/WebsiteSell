@@ -7,7 +7,7 @@ class FileHandler
     {
         // Kiểm tra nếu file hợp lệ
         if (!isset($file) || $file['error'] !== UPLOAD_ERR_OK) {
-            return ['success' => false, 'error' => 'File upload error or no file uploaded'];
+            return ['success' => false, 'error' => 'Lỗi tải tệp hoặc chưa tải tệp nào'];
         }
 
         // Kiểm tra định dạng file (chỉ chấp nhận ảnh)
@@ -15,7 +15,7 @@ class FileHandler
         $fileType = mime_content_type($file['tmp_name']);
 
         if (!in_array($fileType, $allowedTypes)) {
-            return ['success' => false, 'error' => 'Invalid file type. Only JPEG, PNG, and GIF are allowed.'];
+            return ['success' => false, 'error' => 'Định dạng tệp không hợp lệ. Chỉ chấp nhận JPEG, PNG và GIF.'];
         }
 
         // Tạo tên file duy nhất
@@ -25,7 +25,7 @@ class FileHandler
         // Kiểm tra và tạo thư mục nếu chưa tồn tại
         if (!is_dir($destinationFolder)) {
             if (!mkdir($destinationFolder, 0777, true) && !is_dir($destinationFolder)) {
-                return ['success' => false, 'error' => 'Failed to create destination folder.'];
+                return ['success' => false, 'error' => 'Không thể tạo thư mục đích.'];
             }
         }
 
@@ -33,7 +33,7 @@ class FileHandler
         if (move_uploaded_file($file['tmp_name'], $filePath)) {
             return ['success' => true, 'filePath' => $filePath];
         } else {
-            return ['success' => false, 'error' => 'Failed to save the uploaded file.'];
+            return ['success' => false, 'error' => 'Không thể lưu tệp đã tải lên.'];
         }
     }
 }
@@ -54,10 +54,10 @@ class AddProductController extends BaseController
         $this->view('manager.AddProduct.index', ['Url' => $Url, 'dataLineProduct' => $dataLineProduct]);
     }
 
-    public function AddProduct($productLine, $productName,$Status, $originalPrice, $price, $stock, $capacity, $color)
+    public function AddProduct($productLine, $productName, $Status, $originalPrice, $price, $stock, $capacity, $color)
     {
         if (empty($productLine) || empty($productName) || empty($originalPrice) || empty($price)) {
-            $_SESSION['error'] = "Please fill in all required fields.";
+            $_SESSION['error'] = "Vui lòng điền đầy đủ các trường bắt buộc.";
             header("Location: /?controller=addProduct");
             exit();
         }
@@ -65,7 +65,7 @@ class AddProductController extends BaseController
         $Url = $_SESSION['UrlProduct'] ?? '';
 
         if (empty($Url)) {
-            $_SESSION['error'] = "File upload is required.";
+            $_SESSION['error'] = "Yêu cầu tải lên tệp.";
             header("Location: /?controller=addProduct");
             exit();
         }
@@ -87,10 +87,10 @@ class AddProductController extends BaseController
         $result = $this->ProductModel->createProduct($productData);
 
         if ($result) {
-            $_SESSION['message'] = "Thêm thành công!";
+            $_SESSION['message'] = "Thêm sản phẩm thành công!";
             header("Location: /?controller=homeManager");
         } else {
-            $_SESSION['error'] = "Thêm thất bại có thể sản phẩm đã tồn tại.";
+            $_SESSION['error'] = "Thêm sản phẩm thất bại, có thể sản phẩm đã tồn tại.";
             header("Location: /?controller=addProduct");
         }
         exit();
@@ -122,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     exit();
                 }
             } else {
-                $_SESSION['error'] = "No file uploaded.";
+                $_SESSION['error'] = "Chưa tải lên tệp nào.";
                 header("Location: /?controller=addProduct");
                 exit();
             }

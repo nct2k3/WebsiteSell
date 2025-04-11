@@ -25,7 +25,7 @@ class AdduserController extends BaseController {
     public function create($Email, $Password, $FullName, $NumberPhone, $ProvinceCode, $DistrictCode, $SpecificAddress) {
         $emailCheck = $this->AccountModel->CheckEmail($Email);
         if ($emailCheck == 1) {
-            $_SESSION['error'] = "Email already exists!";
+            $_SESSION['error'] = "Email đã tồn tại!";
             $this->index();
             exit;
         }
@@ -51,7 +51,7 @@ class AdduserController extends BaseController {
         );
         $Idac = $this->AccountModel->createAccounts($account);
         $_SESSION['AccountID'] = $IdUser;
-        $_SESSION['message'] = "Adduser successfully!";
+        $_SESSION['message'] = "Thêm người dùng thành công!";
         $this->index();
         exit();
     }
