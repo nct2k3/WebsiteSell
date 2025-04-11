@@ -81,7 +81,9 @@ $controller->index();
             </form>
         </div>
 
+        <?php if (!empty($dataPament)): ?>
         <div class="w-full px-4 py-2 bg-gray-200 mt-2 rounded-lg grid md:grid-cols-3">
+            
             <?php foreach ($dataPament as $payment): ?>
                 <div class="p-3 rounded bg-gray-100 m-2 hover:bg-gray-300">
                     <div class="font-bold text-center my-2">Mã Đơn Hàng: <?php echo $payment['invoice']->invoiceID; ?></div>
@@ -127,6 +129,12 @@ $controller->index();
                 </div>
             <?php endforeach; ?>
         </div>
+        <?php else: ?>
+            <div class="flex justify-center items-center h-64">
+                <p class="text-gray-600 text-lg font-semibold">Không có đơn hàng nào được tìm thấy.</p>
+            </div>
+            
+        <?php endif; ?>
     </div>
 </div>
 </body>
