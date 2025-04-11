@@ -2,8 +2,8 @@
 require_once __DIR__ . '/../entities/Invoice.php';
 require_once __DIR__ .'/../entities/provinces.php';
 require_once __DIR__.'/../entities/districts.php';
-require_once __DIR__ .'./InvoiceDetailModel.php';
-require_once __DIR__ .'./ProductModel.php';
+require_once __DIR__ .'/InvoiceDetailModel.php';
+require_once __DIR__ .'/ProductModel.php';
 class InvoiceModel extends BaseModel
 {
     // creat

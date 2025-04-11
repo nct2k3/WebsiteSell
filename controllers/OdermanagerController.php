@@ -160,8 +160,7 @@ class OdermanagerController extends BaseController
         }
         if (count($dataPament) == 0) {
             $_SESSION['error'] = "Không tìm thấy đơn hàng nào khớp với thời gian!";
-            $this->index();
-            exit();
+            $dataPament=[];
         }
         $provinces = $this->InvoiceModel->getProvinces();
         $statusId = $_GET["id"];
@@ -234,8 +233,7 @@ class OdermanagerController extends BaseController
 
         if (count($dataPament) == 0) {
             $_SESSION['error'] = "Không tìm thấy đơn hàng nào khớp với địa chỉ!";
-            $this->index();
-            exit();
+            $dataPament=[];
         }
 
         $statusId = $_GET["id"] ?? 5;
