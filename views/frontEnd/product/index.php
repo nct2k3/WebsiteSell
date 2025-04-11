@@ -3,6 +3,7 @@ require_once './controllers/HeaderController.php';
 $controller = new HeaderController();
 $controller->index();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,9 +62,9 @@ $controller->index();
 
         <div class="flex justify-end my-6">
             <select id="sortSelect" name="sort" class="bg-gray-700 text-white border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" onchange="handleSort(this.value)">
-                <option value="" disabled selected>Sắp xếp theo giá</option>
-                <option value="0">Giá cao đến thấp</option>
-                <option value="1">Giá thấp đến cao</option>
+                <option value="" disabled <?php echo !isset($_GET['action']) ? 'selected' : ''; ?>>Sắp xếp theo giá</option>
+                <option value="0" <?php echo (isset($_GET['action']) && $_GET['action'] === 'indexSortHightToLow') ? 'selected' : ''; ?>>Giá cao đến thấp</option>
+                <option value="1" <?php echo (isset($_GET['action']) && $_GET['action'] === 'indexSortLowToHight') ? 'selected' : ''; ?>>Giá thấp đến cao</option>
             </select>
         </div>
 
@@ -89,9 +90,13 @@ $controller->index();
 
         <div class="flex justify-center mt-8 space-x-2">
             <?php if(isset($numpage) && $numpage > 0): ?>
-                <?php for($i = 1; $i <= $numpage; $i++): ?>
-                <button onclick="window.location.href='?controller=product&items=<?php echo isset($items) ? htmlspecialchars($items) : ''; ?>&page=<?php echo $i;?>'"
-                        class="pagination-button h-10 w-10 flex items-center justify-center rounded-lg bg-gray-700 text-white hover:bg-gray-600">
+                <?php 
+                $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                $action = isset($_GET['action']) ? '&action=' . $_GET['action'] : '';
+                for($i = 1; $i <= $numpage; $i++): 
+                ?>
+                <button onclick="window.location.href='?controller=product&items=<?php echo htmlspecialchars($items); ?><?php echo $action; ?>&page=<?php echo $i; ?>'"
+                        class="pagination-button h-10 w-10 flex items-center justify-center rounded-lg bg-gray-700 text-white hover:bg-gray-600 <?php echo $i === $currentPage ? 'bg-gray-600' : ''; ?>">
                     <?php echo $i; ?>
                 </button>
                 <?php endfor; ?>
@@ -102,9 +107,11 @@ $controller->index();
     <script>
         function handleSort(value) {
             if (value === "0") {
-                window.location.href = '?controller=product&action=indexSortHightToLow&items=<?php echo $items; ?>';
+                window.location.href = '?controller=product&action=indexSortHightToLow&items=<?php echo htmlspecialchars($items); ?>';
             } else if (value === "1") {
-                window.location.href = '?controller=product&action=indexSortLowToHight&items=<?php echo $items; ?>';
+                window.location.href = '?controller=product&action=indexSortLowToHight&items=<?php echo htmlspecialchars($items); ?>';
+            } else {
+                window.location.href = '?controller=product&items=<?php echo htmlspecialchars($items); ?>';
             }
         }
     </script>
@@ -114,6 +121,7 @@ $controller->index();
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
 <?php
 require_once './views/footer.php';
 ?>

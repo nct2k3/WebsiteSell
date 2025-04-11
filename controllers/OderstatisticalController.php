@@ -18,8 +18,8 @@ class OderstatisticalController extends BaseController {
     }
 
     public function index() {
-        $datefrom = '2025-04-06';
-        $dateto = '2025-04-08';
+        $datefrom = '2025-01-01';
+        $dateto = '2025-12-30';
         if (isset($_GET['datefrom'])) {
             $datefrom = $_GET['datefrom'];
         }

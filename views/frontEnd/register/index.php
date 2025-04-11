@@ -126,7 +126,7 @@ $controller->index();
           <div>
             <label for="NumberPhone" class="block text-sm font-medium mb-2">Số Điện Thoại</label>
             <input 
-              type="tel" 
+              type="number" 
               name="NumberPhone" 
               id="NumberPhone" 
               class="w-full px-3 py-2 border border-gray-700 rounded-lg bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" 
