@@ -45,17 +45,17 @@ class InformationController extends BaseController
                     ];
                 }
                 if ($items->status == 1) {
-                    $status = "Đã xác nhận";
+                    $status = "confirmed";
                 } else if ($items->status == 2) {
-                    $status = "Đang vận chuyển";
+                    $status = "being transported";
                 } else if ($items->status == 3) {
-                    $status = "Đã giao hàng";
+                    $status = "delivered";
                 } else if ($items->status == 4) {
-                    $status = "Hoàn thành";
+                    $status = "complete";
                 } else if ($items->status == 5) {
-                    $status = "Đã hoàn tất đơn hàng";
+                    $status = "complete the order";
                 } else {
-                    $status = "Chờ xác nhận";
+                    $status = "wait for confirmation";
                 }
                 $paymentData = [
                     'products' => $products,
@@ -89,7 +89,7 @@ class InformationController extends BaseController
     public function logout(){
         $_SESSION['AccountID'] = "";
         $_SESSION['Role'] ="";
-        $_SESSION['message'] = "Đăng xuất thành công!";
+        $_SESSION['message'] = "Log out successfully!";
         header("Location: /");
         exit();
     }
@@ -97,7 +97,7 @@ class InformationController extends BaseController
     public function CancalOder(){
         $InvoiceId = $_GET['ID'];
         $this->InvoiceModel->deleteInvoice($InvoiceId);
-        $_SESSION['message'] = "Hủy đơn hàng thành công!";
+        $_SESSION['message'] = "Cancel successfully!";
         $this->index();
     }
     public function change($FullName, $NumberPhone, $ProvinceCode, $DistrictCode, $SpecificAddress) {
@@ -123,7 +123,7 @@ class InformationController extends BaseController
         }
         $this->UserModel->updateInformation($dataFullName, $dataNumberPhone, $dataAddress, $id);
         if ($dataFullName !== $dataUser->FullName || $dataNumberPhone !== $dataUser->PhoneNumber || $isAddressChanged) {
-            $_SESSION['message'] = "Thay đổi thông tin thành công!";
+            $_SESSION['message'] = "Change successfully!";
         } else {
             $_SESSION['error'] = "Điền đủ thông tin (Địa chỉ, Quận/Huyện, Tỉnh/Thành phố).";
         }
@@ -156,7 +156,7 @@ class InformationController extends BaseController
         $dataUser = $this->UserModel->getUserByID($id);
         $EndTotal=($dataUser->LoyaltyPoints-$InvoiceData->UsePoints)+$TotalAmount/100;
         $this->UserModel->UpdateLoyaltyPoints($id,$EndTotal);
-        $_SESSION['message'] = "Thay đổi trạng thái thành công!";
+        $_SESSION['message'] = "Change successfully!";
         $this->index();
     }
     // mua lại hàng

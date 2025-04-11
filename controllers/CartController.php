@@ -10,7 +10,7 @@ class CartController extends BaseController
     }
     public function index()
     {
-        $userID = $this->takeIDAccount();
+        $userID =$this->takeIDAccount();
         $dataCart = $this->CartModel->getCart($userID);
         $products = []; 
         if (is_array($dataCart)) {
@@ -21,7 +21,7 @@ class CartController extends BaseController
                         $products[] = [
                             'item' => $product,
                             'quantity' => $item->Quantity,
-                            'price' => $product->price * $item->Quantity,
+                            'price'=>$product->price*$item->Quantity,
                         ];
                     }
                 }
@@ -29,54 +29,53 @@ class CartController extends BaseController
         }
         $total = 0;
         foreach ($products as $product) {
-            $total += $product['item']->price * $product['quantity'];
+            $total += $product['item']->price*$product['quantity'];
         }
         $this->view('frontEnd.cart.index', ['products' => $products, 'total' => $total, 'userID' => $userID]);
     }
 
-    // Xóa giỏ hàng
+    // xóa giỏ hàng
     public function delete()
     {
         if (isset($_GET['user']) && isset($_GET['product'])) {
             $userID = (int)$_GET['user']; 
             $productID = (int)$_GET['product']; 
-            $data = $this->CartModel->delete($userID, $productID); 
-            if ($data == 1) {
-                $_SESSION['message'] = "Xóa sản phẩm thành công!";
+            $data=$this->CartModel->delete($userID, $productID); 
+            if ($data==1) {
+                $_SESSION['message'] = "Xóa thành công!";
             }
             $this->index(); 
         } else {
-            echo "ID người dùng hoặc sản phẩm không hợp lệ.";
+            echo "Invalid user or product ID.";
         }
     }
-    // Thay đổi số lượng giỏ hàng
+    // thay đổi số lượng giỏ hàng
     public function ChangeQuantity(){
-        $userId = $this->takeIDAccount();
-        if ($userId == "") {
-            $_SESSION['error'] = "Bạn chưa đăng nhập!";
+        $userId= $this->takeIDAccount();
+        if($userId==""){
+            $_SESSION['error'] = "You are not logged in yet!";
             $this->index(); 
             return;
         }
         $id = $_GET['product'];
         $quantity = $_GET['quantity'];
-        if (number_format($quantity) <= 0) {
-            $_SESSION['error'] = "Số lượng phải lớn hơn 0!";
+        if(number_format($quantity)<=0){
+            $_SESSION['error'] = "Number must be greater than zero!";
             $this->index(); 
             return;
         }
         $product = $this->ProductModel->getProductByID($id);
         
-        $cart = new Cart(
+        $cart= new Cart(
             '',
             $userId,
             $id,
             $quantity
         );
-        $data = $this->CartModel->createCart($cart);
-        if ($data == 1) {
-            $_SESSION['message'] = "Thay đổi số lượng thành công!";
+        $data=$this->CartModel->createCart($cart);
+        if ($data==1) {
+            $_SESSION['message'] = "Change successfully!";
         }
         $this->index(); 
     }
 }
-?>
