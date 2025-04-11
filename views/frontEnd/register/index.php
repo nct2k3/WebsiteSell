@@ -54,7 +54,7 @@ $controller->index();
       <div class="hidden md:block md:w-1/2">
         <img 
           class="h-full w-full object-cover"
-          src="https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:quality(100)/2022_9_21_637993950025502251_iphone-quoc-te-la-gi-0.jpg" 
+          src="https://cdnv2.tgdd.vn/mwg-static/common/News/1569700/messageImage_1725918893002.jpg" 
           alt="Banner Cửa Hàng Apple"
         >
       </div>

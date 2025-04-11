@@ -25,14 +25,14 @@ class LoginController extends BaseController {
         } elseif ($temp->role == 0) {
             $_SESSION['AccountID'] = $temp->userID;
             $_SESSION['Role'] = $temp->role;
-            $_SESSION['message'] = "Login successfully!";
+            $_SESSION['message'] = "Đăng nhập thành công!";
             header("Location: /");
             exit();
         }
         elseif ($temp->role == 1) {
             $_SESSION['AccountID'] = $temp->userID;
             $_SESSION['Role'] = $temp->role;
-            $_SESSION['message'] = "Login successfully!";
+            $_SESSION['message'] = "Đăng nhập thành công!";
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             $currentTime = date('Y-m-d H:i:s');
             $loginmanager = new LoginManager(

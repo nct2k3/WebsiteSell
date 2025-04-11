@@ -16,7 +16,7 @@ $controller->index();
         <div class="flex bg-gray-800/50 backdrop-blur-sm shadow-2xl rounded-2xl overflow-hidden w-full max-w-4xl">
             <div class="hidden md:flex md:w-1/2 bg-white justify-center items-center p-6">
                 <img class="rounded-2xl object-cover w-full h-full shadow-lg transform hover:scale-105 transition-transform duration-300" 
-                     src="https://haloshop.vn/image/cache/catalog/products/apple/iphone/iphone16-16-plus/iphone_16_41-1400x1400.jpg" 
+                     src="https://baothainguyen.vn/file/e7837c027f6ecd14017ffa4e5f2a0e34/092024/iphone-16_promax_20240916104159.jpg" 
                      alt="iPhone Apple">
             </div>
             <div class="w-full md:w-1/2 p-8">
