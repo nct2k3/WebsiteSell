@@ -10,6 +10,7 @@ $controller->index();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thông Tin Đơn Hàng</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script>
         function loadDistricts() {
             const provinceCode = document.getElementById("ProvinceCode").value;
@@ -39,172 +40,383 @@ $controller->index();
             }
         };
     </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        }
+        /* Custom scrollbar for dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+        .order-container {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            height: 600px; /* Chiều cao cố định cho cả hai phần */
+        }
+        .order-list {
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #4b5563 #1f2937;
+        }
+    </style>
 </head>
-<body class="bg-gray-700 text-white">
-<div class="container mx-auto p-5">
-    <div class="w-full">
-        <div class="bg-gray-600 rounded-lg shadow-md py-6 p-4">
-            <h2 class="text-xl font-semibold mb-2 text-center font-bold">Thông Tin Khách Hàng</h2>
-            <div class="w-full flex justify-center">
-                <div class="h-20 w-20 p-2 bg-gray-300 rounded-full">
-                    <img class="" src="https://img.icons8.com/?size=100&id=99268&format=png&color=000000">
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+<div class="container mx-auto p-4 md:p-5">
+    <!-- Header Section -->
+    <div class="mb-8 text-center">
+        <h1 class="text-3xl font-bold text-blue-400">Thông Tin Tài Khoản & Đơn Hàng</h1>
+        <p class="text-gray-400">Quản lý thông tin cá nhân và theo dõi đơn hàng của bạn</p>
+    </div>
+
+    <!-- Customer Information Card -->
+    <div class="w-full mb-8">
+        <div class="bg-gray-800 rounded-xl shadow-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold text-blue-400"><i class="fas fa-user-circle mr-2"></i>Thông Tin Khách Hàng</h2>
+                <div class="h-16 w-16 rounded-full bg-gray-700 flex items-center justify-center">
+                    <img class="h-10 w-10" src="https://img.icons8.com/?size=100&id=99268&format=png&color=ffffff">
                 </div>
             </div>
-            <form action="?controller=information" method="POST" class="space-y-4">
+            
+            <form action="?controller=information" method="POST" class="space-y-5">
                 <input type="hidden" name="action" value="change">
-                <div class="w-full grid md:grid-cols-2">
-                    <p class="flex items-center">
-                        <strong class="mr-2">Họ và tên:</strong>
-                        <input type="text" name="fullName" id="fullName" class="w-auto p-1 border-0 focus:outline-none h-8 bg-gray-600 hover:bg-green-300 rounded-2xl" placeholder="<?php echo $dataUser->FullName; ?>">
-                    </p>
-                    <p class="flex items-center">
-                        <strong class="mr-2">Email:</strong>
-                        <input type="email" name="Email" id="Email" class="w-auto p-1 border-0 focus:outline-none h-8 bg-gray-600 hover:bg-red-400 rounded-2xl" placeholder="<?php echo $Email; ?>" readonly>
-                    </p>
-                    <p class="flex items-center">
-                        <strong class="mr-2">Số điện thoại:</strong>
-                        <input type="tel" name="phone" id="phone" class="w-auto p-1 border-0 focus:outline-none h-8 bg-gray-600 hover:bg-green-300 rounded-2xl" placeholder="<?php echo $dataUser->PhoneNumber; ?>">
-                    </p>
-                    <p class="flex items-center">
-                        <strong class="mr-2">Điểm tích lũy:</strong>
-                        <input type="text" name="LoyaltyPoints" id="LoyaltyPoints" class="w-auto p-1 border-0 focus:outline-none h-8 bg-gray-600 hover:bg-red-400 rounded-2xl" placeholder="<?php echo number_format($dataUser->LoyaltyPoints, 0, ',', '.'); ?>đ" readonly>
-                    </p>
-                    <p class="flex items-center">
-                        <strong class="mr-2">Tỉnh/Thành Phố:</strong>
-                        <select name="ProvinceCode" id="ProvinceCode" class="w-auto p-1 border-0 focus:outline-none h-8 bg-gray-600 hover:bg-green-300 rounded-2xl" onchange="loadDistricts()">
-                            <option value="">Chọn tỉnh</option>
-                            <?php foreach ($provinces as $province): ?>
-                                <option value="<?php echo $province->code; ?>" <?php if ($province->name === $provinceName) echo 'selected'; ?>><?php echo $province->name; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </p>
-                    <p class="flex items-center">
-                        <strong class="mr-2">Quận/Huyện:</strong>
-                        <select name="DistrictCode" id="DistrictCode" class="w-auto p-1 border-0 focus:outline-none h-8 bg-gray-600 hover:bg-green-300 rounded-2xl">
-                            <option value="">Chọn huyện</option>
-                        </select>
-                    </p>
-                    <p class="flex items-center">
-                        <strong class="mr-2">Địa chỉ cụ thể:</strong>
-                        <input type="text" name="SpecificAddress" id="SpecificAddress" class="flex-1 p-1 border-0 focus:outline-none h-8 bg-gray-600 hover:bg-green-300 rounded-2xl" placeholder="<?php echo $specificAddress; ?>">
-                    </p>
+                
+                <!-- Họ và tên ở hàng đầu tiên -->
+                <div class="space-y-2">
+                    <label for="fullName" class="block text-sm font-medium text-gray-300">Họ và tên</label>
+                    <div class="flex items-center bg-gray-700 rounded-lg px-3 py-2">
+                        <i class="fas fa-user text-blue-400 mr-2"></i>
+                        <input type="text" name="fullName" id="fullName" 
+                            class="w-full bg-transparent border-0 focus:outline-none text-gray-100" 
+                            placeholder="<?php echo $dataUser->FullName; ?>">
+                    </div>
                 </div>
-                <div class="flex justify-center">
-                    <button class="w-1/2 p-2 my-2 text-center font-bold bg-blue-500 rounded-2xl hover:bg-blue-600">Thay đổi</button>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Left Column -->
+                    <div class="space-y-4">
+                        <div class="space-y-2">
+                            <label for="Email" class="block text-sm font-medium text-gray-300">Email</label>
+                            <div class="flex items-center bg-gray-700 rounded-lg px-3 py-2">
+                                <i class="fas fa-envelope text-blue-400 mr-2"></i>
+                                <input type="email" name="Email" id="Email" 
+                                    class="w-full bg-transparent border-0 focus:outline-none text-gray-400" 
+                                    placeholder="<?php echo $Email; ?>" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label for="phone" class="block text-sm font-medium text-gray-300">Số điện thoại</label>
+                            <div class="flex items-center bg-gray-700 rounded-lg px-3 py-2">
+                                <i class="fas fa-phone text-blue-400 mr-2"></i>
+                                <input type="tel" name="phone" id="phone" 
+                                    class="w-full bg-transparent border-0 focus:outline-none text-gray-100" 
+                                    placeholder="<?php echo $dataUser->PhoneNumber; ?>">
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label for="SpecificAddress" class="block text-sm font-medium text-gray-300">Địa chỉ cụ thể</label>
+                            <div class="flex items-center bg-gray-700 rounded-lg px-3 py-2">
+                                <i class="fas fa-home text-blue-400 mr-2"></i>
+                                <input type="text" name="SpecificAddress" id="SpecificAddress" 
+                                    class="w-full bg-transparent border-0 focus:outline-none text-gray-100" 
+                                    placeholder="<?php echo $specificAddress; ?>">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column -->
+                    <div class="space-y-4">
+                        <div class="space-y-2">
+                            <label for="LoyaltyPoints" class="block text-sm font-medium text-gray-300">Điểm tích lũy</label>
+                            <div class="flex items-center bg-gray-700 rounded-lg px-3 py-2">
+                                <i class="fas fa-star text-yellow-300 mr-2"></i>
+                                <input type="text" name="LoyaltyPoints" id="LoyaltyPoints" 
+                                    class="w-full bg-transparent border-0 focus:outline-none text-gray-400" 
+                                    placeholder="<?php echo number_format($dataUser->LoyaltyPoints, 0, ',', '.'); ?>đ" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label for="ProvinceCode" class="block text-sm font-medium text-gray-300">Tỉnh/Thành Phố</label>
+                            <div class="flex items-center bg-gray-700 rounded-lg px-3 py-2">
+                                <i class="fas fa-map-marker-alt text-blue-400 mr-2"></i>
+                                <select name="ProvinceCode" id="ProvinceCode" 
+                                    class="w-full bg-gray-700 border-0 focus:outline-none text-gray-100" 
+                                    onchange="loadDistricts()">
+                                    <option value="">Chọn tỉnh</option>
+                                    <?php foreach ($provinces as $province): ?>
+                                        <option value="<?php echo $province->code; ?>" <?php if ($province->name === $provinceName) echo 'selected'; ?>>
+                                            <?php echo $province->name; ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label for="DistrictCode" class="block text-sm font-medium text-gray-300">Quận/Huyện</label>
+                            <div class="flex items-center bg-gray-700 rounded-lg px-3 py-2">
+                                <i class="fas fa-map text-blue-400 mr-2"></i>
+                                <select name="DistrictCode" id="DistrictCode" 
+                                    class="w-full bg-gray-700 border-0 focus:outline-none text-gray-100">
+                                    <option value="">Chọn huyện</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <button type="submit" class="flex-1 py-3 px-4 bg-blue-700 text-white rounded-lg font-bold">
+                        <i class="fas fa-save mr-2"></i>Lưu Thay Đổi
+                    </button>
+                    <a href="?controller=information&action=logout" class="flex-1 py-3 px-4 bg-red-700 text-white rounded-lg font-bold text-center">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Đăng Xuất
+                    </a>
                 </div>
             </form>
-            <div class="flex justify-center">
-                <div onclick="window.location='?controller=information&action=logout'" class="w-1/2 p-2 text-xl text-center text-gray-200 bg-red-500 font-bold rounded-full hover:bg-red-600 hover:text-white underline cursor-pointer">
-                    Đăng xuất
-                </div>
-            </div>
         </div>
     </div>
 
-    <div class="grid md:grid-cols-2">
-        <!-- Đơn hàng đang thực hiện -->
-        <div class="w-full bg-gray-600 mt-2 rounded-l-lg">
-            <h2 class="text-xl font-semibold mb-2 font-bold text-center">Đơn hàng đang thực hiện</h2>
-            <?php foreach ($dataPament as $payment): ?>
-                <div class="p-3 rounded bg-gray-800 m-2 hover:bg-gray-700">
-                    <div class="font-bold text-center my-2">Mã đơn hàng: <?php echo $payment['invoice']->invoiceID; ?></div>
-                    <?php foreach ($payment['products'] as $productDetail): ?>
-                        <div class="bg-gray-500 rounded-lg shadow-md p-6 mb-2 flex justify-between">
-                            <div>
-                                <p><strong>Tên sản phẩm:</strong> <?php echo $productDetail['product']->productName; ?></p>
-                                <p><strong>Số lượng:</strong> <?php echo $productDetail['quantity']; ?></p>
-                                <p><strong>Giá:</strong> <?php echo number_format($productDetail['product']->price * $productDetail['quantity'], 0, ',', '.'); ?></p>
-                            </div>
-                            <div>
-                                <img class="h-32" src="<?php echo $productDetail['product']->img; ?>">
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                    <div class="p-4 bg-gray-500 rounded">
-                        <p><strong>Trạng thái: </strong><?php echo $payment['status']; ?></p>
-                        <p><strong>Số điện thoại: </strong><?php echo $payment['invoice']->NumberPhone; ?></p>
-                        <p><strong>Địa chỉ: </strong><?php echo $payment['invoice']->Address; ?></p>
-                        <div class="flex justify-between">
-                            <p><strong>Ngày đặt: </strong><?php echo $payment['invoice']->invoiceDate; ?></p>
-                            <p><strong>Tổng tiền: </strong><?php echo number_format($payment['invoice']->totalAmount); ?></p>
-                        </div>
-                        <p><strong class="text-green-500">Ngày giao hàng mong muốn: </strong>
-                            <?php 
-                                if ($payment['invoice']->DateDelivery == '0000-00-00' || empty($payment['invoice']->DateDelivery)) {
-                                    echo "Bạn không chọn ngày giao hàng mong muốn";
-                                } else {
-                                    echo $payment['invoice']->DateDelivery;
-                                }
-                            ?>
-                        </p>
-                        <p><strong class="text-green-500">Ghi chú: </strong><?php echo $payment['invoice']->Note; ?></p>
-                        <?php if ($payment['status'] == 'delivered'): ?>
-                            <form action="?controller=information" method="POST" class="space-y-4">
-                                <input type="hidden" name="action" value="ChangeStatus">
-                                <input type="hidden" name="IdOder" value="<?php echo $payment['invoice']->invoiceID; ?>">
-                                <input type="hidden" name="TotalAmount" value="<?php echo $payment['invoice']->totalAmount; ?>">
-                                <button class="p-2 w-full rounded bg-green-500 hover:bg-green-600 my-2 font-bold">Xác nhận đã nhận đơn hàng</button>
-                            </form>
-                        <?php endif; ?>
-                        <?php if ($payment['status'] !== 'delivered' && $payment['status'] !== 'wait for confirmation' && $payment['status'] !== 'complete'): ?>
-                            <button readonly class="opacity-50 p-2 w-full rounded bg-yellow-500 hover:bg-yellow-600 my-2 font-bold">Đơn hàng đang được xử lý</button>
-                        <?php endif; ?>
-                        <?php if ($payment['status'] == 'complete'): ?>
-                            <form action="?controller=information" method="POST">
-                                <input type="hidden" name="action" value="Reorder">
-                                <input type="hidden" name="InvoiceID" value="<?php echo $payment['invoice']->invoiceID; ?>">
-                                <button type="submit" class="p-2 w-full rounded bg-purple-600 hover:bg-purple-400 my-2 font-bold">Đặt lại</button>
-                            </form>
-                        <?php endif; ?>
-                        <?php if ($payment['status'] == 'wait for confirmation'): ?>
-                            <button onclick="window.location='?controller=Information&action=CancalOder&ID=<?php echo $payment['invoice']->invoiceID; ?>'" class="p-2 w-full rounded bg-red-500 hover:bg-red-600 my-2 font-bold">Hủy đơn hàng</button>
-                        <?php endif; ?>
-                    </div>
+    <!-- Orders Section -->
+    <div class="grid md:grid-cols-2 gap-6">
+        <!-- In Progress Orders -->
+        <div class="order-section">
+            <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden order-container">
+                <div class="gradient-bg text-white py-4 px-6">
+                    <h2 class="text-xl font-bold flex items-center">
+                        <i class="fas fa-clock mr-2"></i>Đơn Hàng Đang Thực Hiện
+                    </h2>
                 </div>
-            <?php endforeach; ?>
+                
+                <div class="p-4 space-y-4 order-list">
+                    <?php if (empty($dataPament)): ?>
+                        <div class="text-center py-6 text-gray-400">
+                            <i class="fas fa-shopping-bag text-5xl mb-2"></i>
+                            <p>Không có đơn hàng đang thực hiện</p>
+                        </div>
+                    <?php else: ?>
+                        <?php foreach ($dataPament as $payment): ?>
+                            <div class="bg-gray-700 rounded-lg overflow-hidden shadow">
+                                <div class="bg-blue-800 text-white py-2 px-4 flex justify-between items-center">
+                                    <span class="font-bold">#<?php echo $payment['invoice']->invoiceID; ?></span>
+                                    <span class="text-sm bg-blue-900 rounded-full px-3 py-1">
+                                        <?php 
+                                            $statusText = $payment['status'];
+                                            $statusIcon = 'fa-clock';
+                                            
+                                            if ($statusText == 'wait for confirmation') {
+                                                $statusIcon = 'fa-clock';
+                                                $statusText = 'Chờ xác nhận';
+                                            } elseif ($statusText == 'delivered') {
+                                                $statusIcon = 'fa-truck';
+                                                $statusText = 'Đã giao hàng';
+                                            } elseif ($statusText == 'complete') {
+                                                $statusIcon = 'fa-check-circle';
+                                                $statusText = 'Hoàn thành';
+                                            }
+                                        ?>
+                                        <i class="fas <?php echo $statusIcon; ?> mr-1"></i> <?php echo $statusText; ?>
+                                    </span>
+                                </div>
+                                
+                                <div class="p-4">
+                                    <!-- Products -->
+                                    <?php foreach ($payment['products'] as $productDetail): ?>
+                                        <div class="flex flex-col sm:flex-row gap-4 items-center p-3 mb-3 bg-gray-800 rounded-lg shadow">
+                                            <div class="w-24 h-24 flex-shrink-0 bg-gray-700 rounded-lg overflow-hidden">
+                                                <img class="w-full h-full object-cover" src="<?php echo $productDetail['product']->img; ?>">
+                                            </div>
+                                            <div class="flex-grow space-y-1">
+                                                <h3 class="font-bold text-blue-300"><?php echo $productDetail['product']->productName; ?></h3>
+                                                <div class="flex justify-between text-sm">
+                                                    <span class="text-gray-300">SL: <?php echo $productDetail['quantity']; ?></span>
+                                                    <span class="font-medium text-gray-200"><?php echo number_format($productDetail['product']->price * $productDetail['quantity'], 0, ',', '.'); ?>đ</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                    
+                                    <!-- Order Info -->
+                                    <div class="mt-4 pt-4 space-y-2 text-sm">
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-400">Ngày đặt:</span>
+                                            <span class="font-medium text-gray-300"><?php echo $payment['invoice']->invoiceDate; ?></span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-400">Số điện thoại:</span>
+                                            <span class="font-medium text-gray-300"><?php echo $payment['invoice']->NumberPhone; ?></span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-400">Địa chỉ:</span>
+                                            <span class="font-medium text-gray-300"><?php echo $payment['invoice']->Address; ?></span>
+                                        </div>
+                                        <div class="flex justify-between font-bold text-blue-300">
+                                            <span>Tổng tiền:</span>
+                                            <span><?php echo number_format($payment['invoice']->totalAmount); ?>đ</span>
+                                        </div>
+                                        
+                                        <?php if ($payment['invoice']->DateDelivery != '0000-00-00' && !empty($payment['invoice']->DateDelivery)): ?>
+                                            <div class="flex justify-between text-green-400">
+                                                <span>Ngày giao hàng mong muốn:</span>
+                                                <span><?php echo $payment['invoice']->DateDelivery; ?></span>
+                                            </div>
+                                        <?php endif; ?>
+                                        
+                                        <?php if (!empty($payment['invoice']->Note)): ?>
+                                            <div class="mt-2 bg-gray-600 p-2 rounded-lg">
+                                                <p class="text-gray-300"><strong class="text-yellow-300">Ghi chú:</strong> <?php echo $payment['invoice']->Note; ?></p>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                    
+                                    <!-- Action Buttons -->
+                                    <div class="mt-4 pt-3">
+                                        <?php if ($payment['status'] == 'delivered'): ?>
+                                            <form action="?controller=information" method="POST">
+                                                <input type="hidden" name="action" value="ChangeStatus">
+                                                <input type="hidden" name="IdOder" value="<?php echo $payment['invoice']->invoiceID; ?>">
+                                                <input type="hidden" name="TotalAmount" value="<?php echo $payment['invoice']->totalAmount; ?>">
+                                                <button class="w-full py-2 bg-green-700 text-white rounded-lg font-medium">
+                                                    <i class="fas fa-check-circle mr-2"></i>Xác nhận đã nhận đơn hàng
+                                                </button>
+                                            </form>
+                                        <?php elseif ($payment['status'] !== 'wait for confirmation' && $payment['status'] !== 'complete'): ?>
+                                            <button disabled class="w-full py-2 bg-yellow-600 text-white rounded-lg font-medium opacity-75 cursor-not-allowed">
+                                                <i class="fas fa-truck mr-2"></i>Đơn hàng đang được xử lý
+                                            </button>
+                                        <?php elseif ($payment['status'] == 'complete'): ?>
+                                            <form action="?controller=information" method="POST">
+                                                <input type="hidden" name="action" value="Reorder">
+                                                <input type="hidden" name="InvoiceID" value="<?php echo $payment['invoice']->invoiceID; ?>">
+                                                <button type="submit" class="w-full py-2 bg-purple-700 text-white rounded-lg font-medium">
+                                                    <i class="fas fa-redo mr-2"></i>Đặt lại
+                                                </button>
+                                            </form>
+                                        <?php elseif ($payment['status'] == 'wait for confirmation'): ?>
+                                            <a href="?controller=Information&action=CancalOder&ID=<?php echo $payment['invoice']->invoiceID; ?>" 
+                                               class="block w-full py-2 bg-red-700 text-white rounded-lg font-medium text-center">
+                                                <i class="fas fa-times-circle mr-2"></i>Hủy đơn hàng
+                                            </a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
-
-        <!-- Đơn hàng đã hoàn thành -->
-        <div class="w-full bg-gray-600 mt-2 rounded-r-lg">
-            <h2 class="text-xl font-semibold mb-2 font-bold text-center">Đơn hàng đã hoàn thành</h2>
-            <?php foreach ($dataWasPayment as $payment): ?>
-                <div class="p-3 rounded bg-gray-800 m-2 hover:bg-gray-700">
-                    <div class="font-bold text-center my-2">Mã đơn hàng: <?php echo $payment['invoice']->invoiceID; ?></div>
-                    <?php foreach ($payment['products'] as $productDetail): ?>
-                        <div class="bg-gray-500 rounded-lg shadow-md p-6 mb-2 flex justify-between">
-                            <div>
-                                <p><strong>Tên sản phẩm:</strong> <?php echo $productDetail['product']->productName; ?></p>
-                                <p><strong>Số lượng:</strong> <?php echo $productDetail['quantity']; ?></p>
-                                <p><strong>Giá:</strong> <?php echo number_format($productDetail['product']->price * $productDetail['quantity'], 0, ',', '.'); ?></p>
-                            </div>
-                            <div>
-                                <img class="h-32" src="<?php echo $productDetail['product']->img; ?>">
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                    <div class="p-4 bg-gray-500 rounded">
-                        <p><strong>Trạng thái: </strong><?php echo $payment['status']; ?></p>
-                        <p><strong>Số điện thoại: </strong><?php echo $payment['invoice']->NumberPhone; ?></p>
-                        <p><strong>Địa chỉ: </strong><?php echo $payment['invoice']->Address; ?></p>
-                        <div class="flex justify-between">
-                            <p><strong>Ngày đặt: </strong><?php echo $payment['invoice']->invoiceDate; ?></p>
-                            <p><strong>Tổng tiền: </strong><?php echo number_format($payment['invoice']->totalAmount); ?></p>
-                        </div>
-                        <p><strong class="text-green-500">Ngày giao hàng dự kiến: </strong><?php echo $payment['invoice']->DateDelivery; ?></p>
-                        <p><strong class="text-green-500">Ghi chú: </strong><?php echo $payment['invoice']->Note; ?></p>
-                        <form action="?controller=information" method="POST">
-                            <input type="hidden" name="action" value="Reorder">
-                            <input type="hidden" name="InvoiceID" value="<?php echo $payment['invoice']->invoiceID; ?>">
-                            <button type="submit" class="p-2 w-full rounded bg-purple-600 hover:bg-purple-400 my-2 font-bold">Đặt lại</button>
-                        </form>
-                    </div>
+        
+        <!-- Completed Orders -->
+        <div class="order-section">
+            <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden order-container">
+                <div class="gradient-bg text-white py-4 px-6">
+                    <h2 class="text-xl font-bold flex items-center">
+                        <i class="fas fa-check-circle mr-2"></i>Đơn Hàng Đã Hoàn Thành
+                    </h2>
                 </div>
-            <?php endforeach; ?>
+                
+                <div class="p-4 space-y-4 order-list">
+                    <?php if (empty($dataWasPayment)): ?>
+                        <div class="text-center py-6 text-gray-400">
+                            <i class="fas fa-shopping-bag text-5xl mb-2"></i>
+                            <p>Không có đơn hàng đã hoàn thành</p>
+                        </div>
+                    <?php else: ?>
+                        <?php foreach ($dataWasPayment as $payment): ?>
+                            <div class="bg-gray-700 rounded-lg overflow-hidden shadow">
+                                <div class="bg-green-800 text-white py-2 px-4 flex justify-between items-center">
+                                    <span class="font-bold">#<?php echo $payment['invoice']->invoiceID; ?></span>
+                                    <span class="text-sm bg-green-900 rounded-full px-3 py-1">
+                                        <i class="fas fa-check-circle mr-1"></i> <?php echo $payment['status']; ?>
+                                    </span>
+                                </div>
+                                
+                                <div class="p-4">
+                                    <!-- Products -->
+                                    <?php foreach ($payment['products'] as $productDetail): ?>
+                                        <div class="flex flex-col sm:flex-row gap-4 items-center p-3 mb-3 bg-gray-800 rounded-lg shadow">
+                                            <div class="w-24 h-24 flex-shrink-0 bg-gray-700 rounded-lg overflow-hidden">
+                                                <img class="w-full h-full object-cover" src="<?php echo $productDetail['product']->img; ?>">
+                                            </div>
+                                            <div class="flex-grow space-y-1">
+                                                <h3 class="font-bold text-green-300"><?php echo $productDetail['product']->productName; ?></h3>
+                                                <div class="flex justify-between text-sm">
+                                                    <span class="text-gray-300">SL: <?php echo $productDetail['quantity']; ?></span>
+                                                    <span class="font-medium text-gray-200"><?php echo number_format($productDetail['product']->price * $productDetail['quantity'], 0, ',', '.'); ?>đ</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                    
+                                    <!-- Order Info -->
+                                    <div class="mt-4 pt-4 space-y-2 text-sm">
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-400">Ngày đặt:</span>
+                                            <span class="font-medium text-gray-300"><?php echo $payment['invoice']->invoiceDate; ?></span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-400">Số điện thoại:</span>
+                                            <span class="font-medium text-gray-300"><?php echo $payment['invoice']->NumberPhone; ?></span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-400">Địa chỉ:</span>
+                                            <span class="font-medium text-gray-300"><?php echo $payment['invoice']->Address; ?></span>
+                                        </div>
+                                        <div class="flex justify-between font-bold text-green-300">
+                                            <span>Tổng tiền:</span>
+                                            <span><?php echo number_format($payment['invoice']->totalAmount); ?>đ</span>
+                                        </div>
+                                        
+                                        <?php if ($payment['invoice']->DateDelivery != '0000-00-00' && !empty($payment['invoice']->DateDelivery)): ?>
+                                            <div class="flex justify-between text-green-400">
+                                                <span>Ngày giao hàng dự kiến:</span>
+                                                <span><?php echo $payment['invoice']->DateDelivery; ?></span>
+                                            </div>
+                                        <?php endif; ?>
+                                        
+                                        <?php if (!empty($payment['invoice']->Note)): ?>
+                                            <div class="mt-2 bg-gray-600 p-2 rounded-lg">
+                                                <p class="text-gray-300"><strong class="text-yellow-300">Ghi chú:</strong> <?php echo $payment['invoice']->Note; ?></p>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                    
+                                    <!-- Reorder Button -->
+                                    <div class="mt-4 pt-3">
+                                        <form action="?controller=information" method="POST">
+                                            <input type="hidden" name="action" value="Reorder">
+                                            <input type="hidden" name="InvoiceID" value="<?php echo $payment['invoice']->invoiceID; ?>">
+                                            <button type="submit" class="w-full py-2 bg-purple-700 text-white rounded-lg font-medium">
+                                                <i class="fas fa-redo mr-2"></i>Đặt lại
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-</body>
-</html>
+
 <?php
 require_once './views/footer.php';
 ?>

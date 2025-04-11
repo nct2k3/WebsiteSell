@@ -3,135 +3,190 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chân Trang</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Chân Trang Cải Thiện</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    /* Custom styles for enhanced visuals */
-    .footer-section h3 {
-      position: relative;
-      display: inline-block;
-      padding-bottom: 8px;
+    /* Enhanced styles */
+    /* Simplified styles */    
+    .payment-icon {
+      filter: grayscale(100%);
+      opacity: 0.7;
+      transition: all 0.3s ease;
     }
-    .footer-section h3::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 50%;
-      height: 2px;
-      background: linear-gradient(to right, #ec4899, transparent);
-    }
-    .footer-link {
-      transition: transform 0.3s ease, color 0.3s ease;
-    }
-    .footer-link:hover {
-      transform: translateX(5px);
-    }
-    .social-icon {
-      transition: transform 0.3s ease, color 0.3s ease;
-    }
-    .social-icon:hover {
-      transform: scale(1.2);
-    }
-    /* Ensure phone number and time stay on the same line */
-    .contact-info {
-      display: flex;
-      flex-wrap: nowrap;
-      align-items: center;
-      gap: 8px;
-      white-space: nowrap;
+    
+    .payment-icon:hover {
+      filter: grayscale(0%);
+      opacity: 1;
     }
   </style>
 </head>
 <body class="bg-gray-900 text-white font-sans">
 
-  <!-- Top Section -->
-  <div class="bg-gradient-to-r from-gray-800 to-gray-700 py-10">
-    <div class="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-      <div class="transform hover:scale-105 transition-transform duration-300">
-        <div class="text-4xl mb-3 text-green-400">✔️</div>
-        <p class="font-medium text-sm leading-relaxed text-white">Đa dạng mẫu mã, sản phẩm chính hãng</p>
-      </div>
-      <div class="transform hover:scale-105 transition-transform duration-300">
-        <div class="text-4xl mb-3 text-blue-400">🚚</div>
-        <p class="font-medium text-sm leading-relaxed text-white">Giao hàng toàn quốc</p>
-      </div>
-      <div class="transform hover:scale-105 transition-transform duration-300">
-        <div class="text-4xl mb-3 text-yellow-400">🛡️</div>
-        <p class="font-medium text-sm leading-relaxed text-white">Cam kết bảo hành lên đến 12 tháng</p>
-      </div>
-      <div class="transform hover:scale-105 transition-transform duration-300">
-        <div class="text-4xl mb-3 text-purple-400">🔄</div>
-        <p class="font-medium text-sm leading-relaxed text-white">Đổi trả với chúng tôi</p>
+  <!-- Enhanced Top Section with Compact Features -->
+  <div class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 py-8 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gray-900 opacity-60"></div>
+    
+    <!-- Compact Features Section -->
+    <div class="max-w-6xl mx-auto px-4 relative z-10">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="flex items-center space-x-2 p-2">
+          <i class="fas fa-check text-xl text-green-400"></i>
+          <p class="text-xs sm:text-sm text-white">Sản phẩm chính hãng Apple</p>
+        </div>
+        
+        <div class="flex items-center space-x-2 p-2">
+          <i class="fas fa-truck text-xl text-blue-400"></i>
+          <p class="text-xs sm:text-sm text-white">Giao hàng toàn quốc</p>
+        </div>
+        
+        <div class="flex items-center space-x-2 p-2">
+          <i class="fas fa-shield-alt text-xl text-yellow-400"></i>
+          <p class="text-xs sm:text-sm text-white">Bảo hành đến 12 tháng</p>
+        </div>
+        
+        <div class="flex items-center space-x-2 p-2">
+          <i class="fas fa-exchange-alt text-xl text-purple-400"></i>
+          <p class="text-xs sm:text-sm text-white">Đổi trả trong 30 ngày</p>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="bg-gradient-to-b from-gray-900 to-black py-12 text-white">
+  <!-- Compact Footer -->
+  <footer class="relative pt-8 pb-6 bg-gradient-to-b from-gray-900 to-black">
+    <!-- Simple divider -->
+    <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-pink-500 to-transparent opacity-30"></div>
+    
     <div class="max-w-6xl mx-auto px-4">
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-        <!-- Logo and Contact -->
-        <div class="space-y-4">
-          <h2 class="text-xl font-bold tracking-tight">
-            Cửa hàng <span class="text-pink-500 font-extrabold">iPhone hàng đầu</span>
-          </h2>
-          <p class="contact-info hover:text-pink-400 transition-colors text-sm">
-            <span class="text-pink-400">📞</span> 
-            <span>Bán hàng:</span> 
-            <strong>+84 368 731 585</strong>
-            <span class="text-xs text-gray-400">(8:00 - 21:30)</span>
-          </p>
-          <p class="contact-info hover:text-pink-400 transition-colors text-sm">
-            <span class="text-pink-400">📞</span> 
-            <span>Khiếu nại:</span> 
-            <strong>+84 368 731 585</strong>
-            <span class="text-xs text-gray-400">(8:00 - 21:30)</span>
-          </p>
-          <div class="flex space-x-4 mt-4">
-            <a href="#" class="text-2xl social-icon hover:text-blue-400">🌐</a>
-            <a href="#" class="text-2xl social-icon hover:text-red-400">📺</a>
-            <a href="#" class="text-2xl social-icon hover:text-green-400">💬</a>
+      <!-- Main Footer Content -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <!-- Column 1: Logo and Contact (Compact) -->
+        <div class="space-y-3">
+          <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center">
+              <i class="fab fa-apple text-sm text-white"></i>
+            </div>
+            <h2 class="text-lg font-bold tracking-tight">
+              <span class="text-white">iPhone</span>
+              <span class="text-pink-500 font-extrabold">Store</span>
+            </h2>
+          </div>
+          
+          <!-- Compact Contact Info -->
+          <div class="space-y-2">
+            <div class="flex items-center space-x-3">
+              <i class="fas fa-phone-alt text-pink-400 text-xs"></i>
+              <span class="text-xs text-white">Bán hàng: <strong>+84 368 731 585</strong> (8:00-21:30)</span>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+              <i class="fas fa-headset text-pink-400 text-xs"></i>
+              <span class="text-xs text-white">Hỗ trợ: <strong>+84 368 731 585</strong> (8:00-21:30)</span>
+            </div>
+            
+            <!-- Social Links (Integrated) -->
+            <div class="flex items-center space-x-3 pt-1">
+              <i class="fas fa-globe text-pink-400 text-xs"></i>
+              <div class="flex space-x-2">
+                <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+                  <i class="fab fa-facebook-f text-sm"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-pink-400 transition-colors">
+                  <i class="fab fa-instagram text-sm"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-red-500 transition-colors">
+                  <i class="fab fa-youtube text-sm"></i>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-teal-400 transition-colors">
+                  <i class="fab fa-tiktok text-sm"></i>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-
-        <!-- Store Info -->
-        <div class="footer-section">
-          <h3 class="text-base font-bold mb-4 text-pink-400">Hệ Thống Cửa Hàng</h3>
-          <ul class="space-y-3">
-            <li><a href="#" class="footer-link text-sm text-gray-300 hover:text-pink-500 flex items-center gap-1">→ Xem 86 cửa hàng</a></li>
-            <li><a href="#" class="footer-link text-sm text-gray-300 hover:text-pink-500 flex items-center gap-1">→ Quy định cửa hàng</a></li>
-            <li><a href="#" class="footer-link text-sm text-gray-300 hover:text-pink-500 flex items-center gap-1">→ Chất lượng dịch vụ</a></li>
-            <li><a href="#" class="footer-link text-sm text-gray-300 hover:text-pink-500 flex items-center gap-1">→ Chính sách bảo hành & đổi trả</a></li>
+        
+        <!-- Columns 2-4: Links in 3 columns -->
+        <div>
+          <h3 class="text-sm font-bold mb-2 text-pink-400">Hệ Thống</h3>
+          <ul class="space-y-1">
+            <li>
+              <a href="#" class="text-gray-300 text-xs hover:text-pink-500 transition-colors">
+                → Xem 86 cửa hàng
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 text-xs hover:text-pink-500 transition-colors">
+                → Quy định cửa hàng
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 text-xs hover:text-pink-500 transition-colors">
+                → Chất lượng dịch vụ
+              </a>
+            </li>
           </ul>
         </div>
-
-        <!-- Customer Support -->
-        <div class="footer-section">
-          <h3 class="text-base font-bold mb-4 text-pink-400">Hỗ Trợ Khách Hàng</h3>
-          <ul class="space-y-3">
-            <li><a href="#" class="footer-link text-sm text-gray-300 hover:text-pink-500 flex items-center gap-1">→ Điều kiện giao dịch chung</a></li>
-            <li><a href="#" class="footer-link text-sm text-gray-300 hover:text-pink-500 flex items-center gap-1">→ Hướng dẫn mua hàng online</a></li>
-            <li><a href="#" class="footer-link text-sm text-gray-300 hover:text-pink-500 flex items-center gap-1">→ Chính sách vận chuyển</a></li>
-            <li><a href="#" class="footer-link text-sm text-gray-300 hover:text-pink-500 flex items-center gap-1">→ Hướng dẫn thanh toán</a></li>
+        
+        <div>
+          <h3 class="text-sm font-bold mb-2 text-pink-400">Chính Sách</h3>
+          <ul class="space-y-1">
+            <li>
+              <a href="#" class="text-gray-300 text-xs hover:text-pink-500 transition-colors">
+                → Điều kiện giao dịch
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 text-xs hover:text-pink-500 transition-colors">
+                → Hướng dẫn mua online
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 text-xs hover:text-pink-500 transition-colors">
+                → Bảo hành & đổi trả
+              </a>
+            </li>
           </ul>
         </div>
-
-        <!-- About iPhone Store -->
-        <div class="footer-section">
-          <h3 class="text-base font-bold mb-4 text-pink-400">Về Cửa Hàng iPhone</h3>
-          <ul class="space-y-3">
-            <li><a href="#" class="footer-link text-sm text-gray-300 hover:text-pink-500 flex items-center gap-1">→ Điểm Thưởng VIP</a></li>
-            <li><a href="#" class="footer-link text-sm text-gray-300 hover:text-pink-500 flex items-center gap-1">→ Giới thiệu cửa hàng</a></li>
-            <li><a href="#" class="footer-link text-sm text-gray-300 hover:text-pink-500 flex items-center gap-1">→ Bán hàng doanh nghiệp</a></li>
-            <li><a href="#" class="footer-link text-sm text-gray-300 hover:text-pink-500 flex items-center gap-1">→ Chính sách bảo mật</a></li>
-            <li><a href="#" class="footer-link text-sm text-gray-300 hover:text-pink-500 flex items-center gap-1">→ Phiên bản di động</a></li>
+        
+        <div>
+          <h3 class="text-sm font-bold mb-2 text-pink-400">Về Chúng Tôi</h3>
+          <ul class="space-y-1">
+            <li>
+              <a href="#" class="text-gray-300 text-xs hover:text-pink-500 transition-colors">
+                → Giới thiệu cửa hàng
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 text-xs hover:text-pink-500 transition-colors">
+                → Chương trình VIP
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-300 text-xs hover:text-pink-500 transition-colors">
+                → Chính sách bảo mật
+              </a>
+            </li>
           </ul>
         </div>
       </div>
-      <!-- Footer Bottom -->
-      <div class="mt-10 pt-6 border-t border-gray-700 text-center text-sm text-gray-400">
-        <p>© 2025 Cửa hàng iPhone hàng đầu. All rights reserved.</p>
+      
+      <!-- Minimal Bottom bar -->
+      <div class="mt-5 pt-3 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-xs text-gray-500">© 2025 Cửa hàng iPhone hàng đầu</p>
+        
+        <div class="mt-2 md:mt-0 flex space-x-3 text-xs text-gray-500">
+          <a href="#" class="hover:text-pink-400 transition-colors">Điều khoản</a>
+          <span>|</span>
+          <a href="#" class="hover:text-pink-400 transition-colors">Bảo mật</a>
+        </div>
+      </div>
+      
+      <!-- Small back to top button -->
+      <div class="fixed bottom-3 right-3 z-50">
+        <a href="#" class="bg-pink-500 opacity-70 hover:opacity-100 w-6 h-6 rounded-full flex items-center justify-center shadow-sm transition-opacity">
+          <i class="fas fa-chevron-up text-white text-xs"></i>
+        </a>
       </div>
     </div>
   </footer>
