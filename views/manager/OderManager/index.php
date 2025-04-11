@@ -97,7 +97,7 @@ $controller->index();
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
         }
         
-        /* Status badges */
+        /* Status badges - all white */
         .status-badge {
             display: inline-flex;
             align-items: center;
@@ -106,19 +106,11 @@ $controller->index();
             font-size: 0.75rem;
             font-weight: 500;
             white-space: nowrap;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
         }
         
-        .status-pending {
-            background-color: rgba(245, 158, 11, 0.1);
-            color: #F59E0B;
-        }
-        
-        .status-completed {
-            background-color: rgba(16, 185, 129, 0.1);
-            color: #10B981;
-        }
-        
-        /* Product item styling */
+        /* Product item styling - updated */
         .product-item {
             transition: all 0.2s ease;
         }
@@ -130,12 +122,12 @@ $controller->index();
         /* Form groups */
         .form-group {
             display: flex;
-            align-items: center;
-            margin-right: 1rem;
+            flex-direction: column;
+            margin-bottom: 0.75rem;
         }
         
         .form-group label {
-            margin-right: 0.5rem;
+            margin-bottom: 0.25rem;
             white-space: nowrap;
         }
         
@@ -183,7 +175,7 @@ $controller->index();
             <!-- Status heading -->
             <?php if ($donestatus == 5): ?>
                 <div class="flex justify-center items-center mb-6">
-                    <div class="status-badge status-pending">
+                    <div class="status-badge">
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
@@ -193,7 +185,7 @@ $controller->index();
             <?php endif; ?>
             <?php if ($donestatus == 4): ?>
                 <div class="flex justify-center items-center mb-6">
-                    <div class="status-badge status-completed">
+                    <div class="status-badge">
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
@@ -202,73 +194,86 @@ $controller->index();
                 </div>
             <?php endif; ?>
 
-            <!-- Filter section -->
-            <div class="bg-gray-700 bg-opacity-50 rounded-lg p-4 mb-6">
-                <h2 class="text-lg font-medium text-indigo-300 mb-4">Bộ lọc đơn hàng</h2>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Improved Filter Section -->
+            <div class="bg-gray-700 bg-opacity-50 rounded-lg p-6 mb-6">
+                <h2 class="text-lg font-medium text-indigo-300 mb-5">Bộ lọc đơn hàng</h2>
+                
+                <div class="grid grid-cols-1 gap-6">
                     <!-- Date filter -->
-                    <form action="?controller=OderManager&id=<?php echo $donestatus ?>" method="POST" class="flex flex-wrap items-center space-x-2 space-y-2 sm:space-y-0">
-                        <input type="hidden" name="action" value="Fillter">
-                        <input type="hidden" name="Status" value="<?php echo $donestatus; ?>">
-                        
-                        <div class="form-group">
-                            <label for="DateFrom" class="text-sm font-medium text-indigo-300">
-                                <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                </svg>
-                                Từ ngày:
-                            </label>
-                            <input required id="DateFrom" name="DateFrom" type="date" class="input-field p-2 rounded-lg">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="DateTo" class="text-sm font-medium text-indigo-300">Đến ngày:</label>
-                            <input required id="DateTo" name="DateTo" type="date" class="input-field p-2 rounded-lg">
-                        </div>
-                        
-                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition duration-300 btn-glow">
-                            <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                    <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4">
+                        <h3 class="text-sm font-medium text-indigo-200 mb-3 flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                             </svg>
-                            Lọc
-                        </button>
-                    </form>
+                            Lọc theo ngày
+                        </h3>
+                        
+                        <form action="?controller=OderManager&id=<?php echo $donestatus ?>" method="POST" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <input type="hidden" name="action" value="Fillter">
+                            <input type="hidden" name="Status" value="<?php echo $donestatus; ?>">
+                            
+                            <div class="flex flex-col">
+                                <label for="DateFrom" class="text-sm font-medium text-gray-400 mb-1">Từ ngày:</label>
+                                <input required id="DateFrom" name="DateFrom" type="date" class="input-field p-2 rounded-lg">
+                            </div>
+                            
+                            <div class="flex flex-col">
+                                <label for="DateTo" class="text-sm font-medium text-gray-400 mb-1">Đến ngày:</label>
+                                <input required id="DateTo" name="DateTo" type="date" class="input-field p-2 rounded-lg">
+                            </div>
+                            
+                            <div class="flex items-end md:col-span-2">
+                                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition duration-300 btn-glow w-full">
+                                    <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                                    </svg>
+                                    Lọc theo ngày
+                                </button>
+                            </div>
+                        </form>
+                    </div>
 
                     <!-- Address filter -->
-                    <form action="?controller=OderManager&id=<?php echo $donestatus ?>" method="POST" class="flex flex-wrap items-center space-x-2 space-y-2 sm:space-y-0">
-                        <input type="hidden" name="action" value="FilterByAddress">
-                        <input type="hidden" name="Status" value="<?php echo $donestatus; ?>">
-                        
-                        <div class="form-group">
-                            <label for="ProvinceCode" class="text-sm font-medium text-indigo-300">
-                                <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                </svg>
-                                Tỉnh:
-                            </label>
-                            <select id="ProvinceCode" name="ProvinceCode" class="input-field p-2 rounded-lg" onchange="loadDistricts()">
-                                <option value="" class="bg-gray-800 text-gray-200">Chọn tỉnh</option>
-                                <?php foreach ($provinces as $province): ?>
-                                    <option value="<?php echo $province->code; ?>" <?php if ($province->code === $selectedProvince) echo 'selected'; ?> class="bg-gray-800 text-gray-200"><?php echo $province->name; ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="DistrictCode" class="text-sm font-medium text-indigo-300">Huyện:</label>
-                            <select id="DistrictCode" name="DistrictCode" class="input-field p-2 rounded-lg">
-                                <option value="" class="bg-gray-800 text-gray-200">Chọn huyện</option>
-                            </select>
-                        </div>
-                        
-                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition duration-300 btn-glow">
-                            <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4">
+                        <h3 class="text-sm font-medium text-indigo-200 mb-3 flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             </svg>
-                            Tìm kiếm
-                        </button>
-                    </form>
+                            Lọc theo địa chỉ
+                        </h3>
+                        
+                        <form action="?controller=OderManager&id=<?php echo $donestatus ?>" method="POST" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <input type="hidden" name="action" value="FilterByAddress">
+                            <input type="hidden" name="Status" value="<?php echo $donestatus; ?>">
+                            
+                            <div class="flex flex-col">
+                                <label for="ProvinceCode" class="text-sm font-medium text-gray-400 mb-1">Tỉnh:</label>
+                                <select id="ProvinceCode" name="ProvinceCode" class="input-field p-2 rounded-lg" onchange="loadDistricts()">
+                                    <option value="" class="bg-gray-800 text-gray-200">Chọn tỉnh</option>
+                                    <?php foreach ($provinces as $province): ?>
+                                        <option value="<?php echo $province->code; ?>" <?php if ($province->code === $selectedProvince) echo 'selected'; ?> class="bg-gray-800 text-gray-200"><?php echo $province->name; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            
+                            <div class="flex flex-col">
+                                <label for="DistrictCode" class="text-sm font-medium text-gray-400 mb-1">Huyện:</label>
+                                <select id="DistrictCode" name="DistrictCode" class="input-field p-2 rounded-lg">
+                                    <option value="" class="bg-gray-800 text-gray-200">Chọn huyện</option>
+                                </select>
+                            </div>
+                            
+                            <div class="flex items-end md:col-span-2">
+                                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition duration-300 btn-glow w-full">
+                                    <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                    </svg>
+                                    Tìm kiếm địa chỉ
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -290,120 +295,176 @@ $controller->index();
                                 </div>
                             </div>
                             
-                            <!-- Products in the order -->
+                            <!-- Products in the order - cải tiến bố cục -->
                             <div class="p-4">
-                                <h4 class="font-medium text-gray-300 mb-2">Sản phẩm:</h4>
+                                <h4 class="font-medium text-gray-300 mb-3 uppercase text-sm tracking-wide">Sản phẩm đã đặt:</h4>
                                 <?php foreach ($payment['products'] as $productDetail): ?>
-                                    <div class="product-item flex justify-between items-center bg-gray-800 bg-opacity-50 rounded-lg p-3 mb-2">
-                                        <div class="mr-3">
-                                            <p class="font-medium text-indigo-200"><?php echo $productDetail['product']->productName; ?></p>
-                                            <div class="flex mt-1">
-                                                <span class="text-sm bg-indigo-900 bg-opacity-30 text-indigo-300 py-1 px-2 rounded mr-2">
-                                                    <svg class="w-3 h-3 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path>
-                                                    </svg>
-                                                    <?php echo $productDetail['quantity']; ?>
-                                                </span>
-                                                <span class="text-sm text-orange-400">
-                                                    <?php echo number_format($productDetail['product']->price * $productDetail['quantity'], 0, ',', '.'); ?> đ
-                                                </span>
+                                    <div class="product-item bg-gray-800 bg-opacity-50 rounded-lg p-3 mb-2">
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0 mr-3">
+                                                <img class="h-16 w-16 object-cover rounded" src="<?php echo $productDetail['product']->img; ?>">
+                                            </div>
+                                            <div class="flex-grow">
+                                                <p class="font-medium text-indigo-200 text-base"><?php echo $productDetail['product']->productName; ?></p>
+                                                <div class="flex flex-wrap gap-2 mt-2">
+                                                    <div class="flex items-center">
+                                                        <div class="w-6 h-6 rounded-full bg-indigo-900 bg-opacity-30 flex items-center justify-center mr-1 flex-shrink-0">
+                                                            <svg class="w-3 h-3 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path>
+                                                            </svg>
+                                                        </div>
+                                                        <span class="text-sm text-gray-300">Số lượng: <span class="text-indigo-300 font-medium"><?php echo $productDetail['quantity']; ?></span></span>
+                                                    </div>
+                                                    <div class="flex items-center">
+                                                        <div class="w-6 h-6 rounded-full bg-orange-900 bg-opacity-30 flex items-center justify-center mr-1 flex-shrink-0">
+                                                            <svg class="w-3 h-3 text-orange-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                            </svg>
+                                                        </div>
+                                                        <span class="text-sm text-gray-300">Giá: <span class="text-orange-300 font-medium"><?php echo number_format($productDetail['product']->price * $productDetail['quantity'], 0, ',', '.'); ?> đ</span></span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <img class="h-16 w-16 object-cover rounded" src="<?php echo $productDetail['product']->img; ?>">
                                     </div>
                                 <?php endforeach; ?>
                                 
-                                <!-- Order details -->
-                                <div class="mt-4 bg-gray-800 bg-opacity-30 rounded-lg p-4">
-                                    <div class="grid grid-cols-2 gap-2 text-sm">
-                                        <div>
-                                            <p class="flex items-center">
-                                                <svg class="w-4 h-4 text-gray-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                <!-- Order details - Redesigned và loại bỏ phương thức thanh toán -->
+                                <div class="mt-3 bg-gray-800 bg-opacity-50 rounded-lg overflow-hidden ">
+                                    <!-- Order header with ID and date -->
+                                    <div class="bg-gray-700 bg-opacity-50 p-3">
+                                        <div class="flex justify-between items-center">
+                                            <h3 class="font-semibold text-indigo-300 flex items-center">
+                                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                                                 </svg>
-                                                <span class="text-gray-400">SĐT: </span>
-                                                <span class="ml-1 text-gray-300"><?php echo $payment['invoice']->NumberPhone; ?></span>
-                                            </p>
-                                            <p class="flex items-start mt-2">
-                                                <svg class="w-4 h-4 text-gray-500 mr-1 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                </svg>
-                                                <span class="text-gray-400">Địa chỉ: </span>
-                                                <span class="ml-1 text-gray-300 break-words"><?php echo $payment['invoice']->Address; ?></span>
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p class="flex items-center">
-                                                <svg class="w-4 h-4 text-gray-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
-                                                </svg>
-                                                <span class="text-gray-400">Thanh toán: </span>
-                                                <span class="ml-1 text-gray-300"><?php echo $payment['invoice']->paymentType; ?></span>
-                                            </p>
-                                            <p class="flex items-center mt-2">
-                                                <svg class="w-4 h-4 text-gray-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                </svg>
-                                                <span class="text-gray-400">Tổng tiền: </span>
-                                                <span class="ml-1 text-orange-400 font-medium"><?php echo number_format($payment['invoice']->totalAmount, 0, ',', '.'); ?> đ</span>
-                                            </p>
+                                                Chi tiết đơn hàng
+                                            </h3>
+                                            <span class="text-sm bg-gray-800 rounded-full px-3 py-1 text-gray-300">
+                                                #<?php echo $payment['invoice']->invoiceID; ?>
+                                            </span>
                                         </div>
                                     </div>
                                     
-                                    <div class="mt-3 pt-3 border-t border-gray-700">
-                                        <p class="flex items-center text-sm">
-                                            <svg class="w-4 h-4 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
-                                            </svg>
-                                            <span class="text-green-500">Giao hàng dự kiến: </span>
-                                            <span class="ml-1 text-gray-300"><?php echo $payment['invoice']->DateDelivery; ?></span>
-                                        </p>
+                                    <!-- Order info in sections - giảm khoảng cách -->
+                                    <div class="p-3">
+                                        <!-- Contact section -->
+                                        <div class="mb-3 pb-3">
+                                            <h4 class="text-sm uppercase text-gray-400 mb-2 font-medium tracking-wide">Thông tin liên hệ</h4>
+                                            <div class="flex flex-col space-y-2">
+                                                <div class="flex items-center">
+                                                    <div class="w-8 h-8 rounded-full bg-indigo-900 bg-opacity-30 flex items-center justify-center mr-2 flex-shrink-0">
+                                                        <svg class="w-4 h-4 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <div>
+                                                        <p class="text-sm text-gray-400">Số điện thoại</p>
+                                                        <p class="text-gray-200 font-medium"><?php echo $payment['invoice']->NumberPhone; ?></p>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="flex items-start">
+                                                    <div class="w-8 h-8 rounded-full bg-indigo-900 bg-opacity-30 flex items-center justify-center mr-2 flex-shrink-0">
+                                                        <svg class="w-4 h-4 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <div>
+                                                        <p class="text-sm text-gray-400">Địa chỉ giao hàng</p>
+                                                        <p class="text-gray-200"><?php echo $payment['invoice']->Address; ?></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         
-                                        <?php if (!empty($payment['invoice']->Note)): ?>
-                                            <p class="flex items-start mt-2 text-sm">
-                                                <svg class="w-4 h-4 text-yellow-500 mr-1 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
-                                                </svg>
-                                                <span class="text-yellow-500">Ghi chú: </span>
-                                                <span class="ml-1 text-gray-300 break-words"><?php echo $payment['invoice']->Note; ?></span>
-                                            </p>
+                                        <!-- Payment section - chỉ giữ lại tổng tiền -->
+                                        <div class="mb-3 pb-3 ">
+                                            <h4 class="text-sm uppercase text-gray-400 mb-2 font-medium tracking-wide">Thông tin thanh toán</h4>
+                                            <div class="flex items-center">
+                                                <div class="w-8 h-8 rounded-full bg-orange-900 bg-opacity-30 flex items-center justify-center mr-2 flex-shrink-0">
+                                                    <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm text-gray-400">Tổng thanh toán</p>
+                                                    <p class="text-orange-400 font-bold text-lg"><?php echo number_format($payment['invoice']->totalAmount, 0, ',', '.'); ?> đ</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Status section -->
+                                        <div>
+                                            <h4 class="text-sm uppercase text-gray-400 mb-2 font-medium tracking-wide">Tình trạng đơn hàng</h4>
+                                            <div class="flex flex-col space-y-2">
+                                                <div class="flex items-center">
+                                                    <div class="w-8 h-8 rounded-full bg-blue-900 bg-opacity-30 flex items-center justify-center mr-2 flex-shrink-0">
+                                                        <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <div>
+                                                        <p class="text-sm text-gray-400">Trạng thái đơn hàng</p>
+                                                        <p class="text-gray-200 font-medium"><?php echo $payment['status']; ?></p>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="flex items-center">
+                                                    <div class="w-8 h-8 rounded-full bg-purple-900 bg-opacity-30 flex items-center justify-center mr-2 flex-shrink-0">
+                                                        <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <div>
+                                                        <p class="text-sm text-gray-400">Giao hàng dự kiến</p>
+                                                        <p class="text-gray-200 font-medium"><?php echo $payment['invoice']->DateDelivery; ?></p>
+                                                    </div>
+                                                </div>
+                                                
+                                                <?php if (!empty($payment['invoice']->Note)): ?>
+                                                <div class="flex items-start">
+                                                    <div class="w-8 h-8 rounded-full bg-yellow-900 bg-opacity-30 flex items-center justify-center mr-2 flex-shrink-0">
+                                                        <svg class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <div>
+                                                        <p class="text-sm text-gray-400">Ghi chú</p>
+                                                        <p class="text-gray-200"><?php echo $payment['invoice']->Note; ?></p>
+                                                    </div>
+                                                </div>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Action buttons for pending orders -->
+                                        <?php if ($donestatus == 5 || $_GET['id'] == 5): ?>
+                                            <div class="mt-3 pt-3">
+                                                <form action="?controller=OderManager" method="POST" class="mb-2">
+                                                    <input type="hidden" name="action" value="ChangeStatus">
+                                                    <input type="hidden" name="IdPayment" value="<?php echo $payment['invoice']->invoiceID; ?>">
+                                                    <input type="hidden" name="IdUser" value="<?php echo $payment['invoice']->userID; ?>">
+                                                    <select onchange="this.form.submit()" id="Status" name="Status" required class="w-full bg-gray-700 text-white rounded-lg p-2 text-sm cursor-pointer hover:bg-gray-600 transition-colors duration-300">
+                                                        <option value="" disabled selected class="bg-gray-800 text-white">Thay đổi trạng thái</option>
+                                                        <option value="1" class="bg-gray-800 text-white">Đã xác nhận</option>
+                                                        <option value="2" class="bg-gray-800 text-white">Đang vận chuyển</option>
+                                                        <option value="3" class="bg-gray-800 text-white">Đã giao hàng</option>
+                                                    </select>
+                                                </form>
+                                                
+                                                <button 
+                                                    onclick="confirmDelete(<?php echo $payment['invoice']->invoiceID; ?>, <?php echo $payment['invoice']->userID; ?>)" 
+                                                    class="w-full bg-red-600 hover:bg-red-700 text-white rounded-lg p-2 text-sm flex items-center justify-center transition-colors duration-300">
+                                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                    </svg>
+                                                    Xóa Đơn Hàng
+                                                </button>
+                                            </div>
                                         <?php endif; ?>
-                                        
-                                        <p class="flex items-center mt-2 text-sm">
-                                            <svg class="w-4 h-4 text-blue-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                            </svg>
-                                            <span class="text-blue-500">Trạng thái: </span>
-                                            <span class="ml-1 text-gray-300"><?php echo $payment['status']; ?></span>
-                                        </p>
                                     </div>
-                                    
-                                    <!-- Action buttons for pending orders -->
-                                    <?php if ($donestatus == 5 || $_GET['id'] == 5): ?>
-                                        <div class="mt-4 grid grid-cols-1 gap-3">
-                                            <form action="?controller=OderManager" method="POST">
-                                                <input type="hidden" name="action" value="ChangeStatus">
-                                                <input type="hidden" name="IdPayment" value="<?php echo $payment['invoice']->invoiceID; ?>">
-                                                <input type="hidden" name="IdUser" value="<?php echo $payment['invoice']->userID; ?>">
-                                                <select onchange="this.form.submit()" id="Status" name="Status" required class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg p-2 text-sm cursor-pointer hover:from-indigo-700 hover:to-purple-700 transition-colors duration-300">
-                                                    <option value="" disabled selected class="bg-gray-800 text-gray-200">Thay đổi trạng thái</option>
-                                                    <option value="1" class="bg-gray-800 text-gray-200">Đã xác nhận</option>
-                                                    <option value="2" class="bg-gray-800 text-gray-200">Đang vận chuyển</option>
-                                                    <option value="3" class="bg-gray-800 text-gray-200">Đã giao hàng</option>
-                                                </select>
-                                            </form>
-                                            
-                                            <button 
-                                                onclick="confirmDelete(<?php echo $payment['invoice']->invoiceID; ?>, <?php echo $payment['invoice']->userID; ?>)" 
-                                                class="w-full bg-red-600 hover:bg-red-700 text-white rounded-lg p-2 text-sm flex items-center justify-center transition-colors duration-300">
-                                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                                </svg>
-                                                Xóa Đơn Hàng
-                                            </button>
-                                        </div>
-                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
