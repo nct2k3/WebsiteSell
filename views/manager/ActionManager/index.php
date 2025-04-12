@@ -2,6 +2,11 @@
 require_once './controllers/HeadermanagerController.php';
 $controller = new HeadermanagerController();
 $controller->index();
+
+// Sắp xếp mảng $data theo thời gian gần nhất (mới nhất lên đầu)
+usort($data, function($a, $b) {
+    return strtotime($b->TimeLogin) - strtotime($a->TimeLogin);
+});
 ?>
 <!DOCTYPE html>
 <html lang="vi">
