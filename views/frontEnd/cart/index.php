@@ -158,7 +158,7 @@ $controller->index();
                                class="px-6 py-3 bg-blue-700 text-white rounded-lg font-bold text-center hover:bg-blue-800 transition-colors">
                                 <i class="fas fa-credit-card mr-2"></i>Tiến Hành Thanh Toán
                             </a>
-                            <a href="?controller=product" 
+                            <a href="?controller=home" 
                                class="mt-3 px-6 py-3 bg-gray-600 text-white rounded-lg font-medium text-center hover:bg-gray-700 transition-colors">
                                 <i class="fas fa-arrow-left mr-2"></i>Tiếp Tục Mua Sắm
                             </a>
