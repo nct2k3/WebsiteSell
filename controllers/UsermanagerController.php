@@ -126,12 +126,18 @@ class UsermanagerController extends BaseController
     public function updateUser($userID, $fullName, $email, $phone, $password, $provinceCode, $districtCode, $specificAddress)
     {
         try {
-            $emailCheck = $this->AccountModel->CheckEmail($email);
-            if ($emailCheck == 1) {
-                $_SESSION['error'] = "Email đã tồn tại!";
-                $this->index();
-                exit;
-            }    
+
+            $user= $this->AccountModel->getAccountByIDUser($userID);
+            if($user->email != $email){
+                $emailCheck = $this->AccountModel->CheckEmail($email);
+                if ($emailCheck == 1) {
+                    $_SESSION['error'] = "Email đã tồn tại!";
+                    $this->index();
+                    exit;
+                }    
+            }
+            
+
             $currentUser = $this->UserModel->getUserById($userID);
             $currentAddress = $currentUser->Address;
 
