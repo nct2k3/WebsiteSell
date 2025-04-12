@@ -66,6 +66,7 @@ class SearchController extends BaseController
             'searchQuery' => http_build_query($_GET),
             'ProductLine' => $ProductLine // Truyền biến $ProductLine
         ]);
+        exit;
     }
 
     private function paginate($items, $page, $itemsPerPage = 6)
