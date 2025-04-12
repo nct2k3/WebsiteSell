@@ -73,7 +73,7 @@ $controller->index();
                     <div id="carouselExampleControls" class="carousel slide px-4" data-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img class="d-block w-100 rounded-xl" src="<?php echo htmlspecialchars($productInfo->img); ?>" alt="Product Image">
+                                <img class="d-block w-100 rounded-xl" src="<?php echo htmlspecialchars($productInfo->img, ENT_QUOTES, 'UTF-8'); ?>" alt="Product Image">
                             </div>
                         </div>
                         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -89,17 +89,19 @@ $controller->index();
 
                 <!-- Product Details Section -->
                 <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden">
-                    <div class="card-header-gradient text-white py-3 px-4">
+                    <div class="card-header-gradient text-white py-3 px-4 flex justify-between">
                         <h2 class="text-xl font-bold flex items-center">
-                            <i class="fas fa-info-circle mr-2"></i>Chi Tiết Sản Phẩm
+                            </i>Chi Tiết Sản Phẩm
                         </h2>
+                        <div class="text-white font-bold text-xl">
+                        Dòng sản phẩm: 
+                        <?php echo htmlspecialchars($nameLine['ProductLineName']); ?>
                     </div>
-                    <div>
-                        <?php echo $name ?>
                     </div>
                     
+                    
                     <div class="p-6">
-                        <h1 class="text-2xl font-bold mb-2 text-blue-400"><?php echo htmlspecialchars($productInfo->productName); ?></h1>
+                        <h1 class="text-2xl font-bold mb-2 text-blue-400"><?php echo htmlspecialchars($productInfo->productName, ENT_QUOTES, 'UTF-8'); ?></h1>
                         <p class="text-gray-400 flex items-center mb-4">
                             <i class="fas fa-map-marker-alt mr-2"></i>Giá và khuyến mãi tại: Hồ Chí Minh
                         </p>
@@ -110,7 +112,7 @@ $controller->index();
                                 <div class="flex space-x-4">
                                     <span class="px-4 py-2 bg-gray-700 rounded-lg flex items-center">
                                         <i class="fas fa-hdd mr-2 text-blue-400"></i>
-                                        <?php echo htmlspecialchars($productInfo->capacity); ?>
+                                        <?php echo htmlspecialchars($productInfo->capacity, ENT_QUOTES, 'UTF-8'); ?>
                                     </span>
                                 </div>
                             </div>
@@ -121,8 +123,8 @@ $controller->index();
                                     <?php
                                         $colorClass = ($productInfo->color == "black" || $productInfo->color == "white") ? $productInfo->color : $productInfo->color . '-500';
                                     ?>
-                                    <div class="w-8 h-8 bg-<?php echo htmlspecialchars($colorClass); ?> rounded-full cursor-pointer"></div>
-                                    <span class="text-gray-300 capitalize"><?php echo htmlspecialchars($productInfo->color); ?></span>
+                                    <div class="w-8 h-8 bg-<?php echo htmlspecialchars($colorClass, ENT_QUOTES, 'UTF-8'); ?> rounded-full cursor-pointer"></div>
+                                    <span class="text-gray-300 capitalize"><?php echo htmlspecialchars($productInfo->color, ENT_QUOTES, 'UTF-8'); ?></span>
                                 </div>
                             </div>
 
@@ -150,13 +152,13 @@ $controller->index();
                                 </button>
                             <?php else: ?>
                                 <button
-                                    onclick="window.location='?controller=payment&action=buyOne&items=<?php echo htmlspecialchars($productInfo->productID); ?>'"
+                                    onclick="window.location='?controller=payment&action=buyOne&items=<?php echo htmlspecialchars($productInfo->productID, ENT_QUOTES, 'UTF-8'); ?>'"
                                     class="btn btn-primary w-full font-bold py-3 flex items-center justify-center">
                                     <i class="fas fa-shopping-cart mr-2"></i>Mua ngay
                                 </button>
 
                                 <button
-                                    onclick="window.location='?controller=DetailProduct&action=addCart&items=<?php echo htmlspecialchars($productInfo->productID); ?>'"
+                                    onclick="window.location='?controller=DetailProduct&action=addCart&items=<?php echo htmlspecialchars($productInfo->productID, ENT_QUOTES, 'UTF-8'); ?>'"
                                     class="btn btn-warning text-white w-full font-bold py-3 flex items-center justify-center">
                                     <i class="fas fa-cart-plus mr-2"></i>Thêm giỏ hàng
                                 </button>
@@ -187,14 +189,13 @@ $controller->index();
                     
                     <div class="p-6">
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <?php
-                            if(isset($ProductIphone) && !empty($ProductIphone)): ?>
-                                <?php foreach($ProductIphone as $items): ?>
+                            <?php if (isset($ProductIphone) && !empty($ProductIphone)): ?>
+                                <?php foreach ($ProductIphone as $items): ?>
                                     <div
-                                        onclick="window.location='?controller=DetailProduct&items=<?php echo htmlspecialchars($items->productID); ?>'"
+                                        onclick="window.location='?controller=DetailProduct&items=<?php echo htmlspecialchars($items->productID, ENT_QUOTES, 'UTF-8'); ?>'"
                                         class="bg-gray-700 hover:bg-gray-600 rounded-xl shadow-lg p-4 text-white cursor-pointer transition duration-300">
-                                        <img src="<?php echo htmlspecialchars($items->img); ?>" alt="<?php echo htmlspecialchars($items->productName); ?>" class="w-full h-48 object-contain rounded-lg mb-4">
-                                        <h2 class="text-lg font-semibold mb-2 text-blue-300"><?php echo htmlspecialchars($items->productName); ?></h2>
+                                        <img src="<?php echo htmlspecialchars($items->img, ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($items->productName, ENT_QUOTES, 'UTF-8'); ?>" class="w-full h-48 object-contain rounded-lg mb-4">
+                                        <h2 class="text-lg font-semibold mb-2 text-blue-300"><?php echo htmlspecialchars($items->productName, ENT_QUOTES, 'UTF-8'); ?></h2>
                                         <div class="flex justify-between items-center">
                                             <h1 class="font-bold text-xl text-blue-400"><?php echo number_format($items->price, 0, ',', '.'); ?>₫</h1>
                                             <h1 class="line-through text-gray-400 text-sm"><?php echo number_format($items->originalPrice, 0, ',', '.'); ?>₫</h1>

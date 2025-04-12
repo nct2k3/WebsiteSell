@@ -14,8 +14,9 @@ class DetailProductController extends BaseController
         $id = $_GET['items'];
         $product = $this->ProductModel->getProductByID($id);
         $ProductIphone = $this->ProductModel->getByIdGroup(rand(1, 6));
-        $nameLine = $this->ProductModel->getnameLine($product['productLineID']);
-        $this->view('frontEnd.detailProduct.index', ['ProductIphone' => $ProductIphone,'name'=>$nameLine,'products' => $product]);
+        $nameLine = $this->ProductModel->getnameLine($product->productLineID);
+        
+        $this->view('frontEnd.detailProduct.index', ['ProductIphone' => $ProductIphone,'nameLine'=>$nameLine,'products' => $product]);
     }
    
     // thêm giỏ hànghàng

@@ -120,7 +120,7 @@ $searchString = $_GET['string'] ?? '';
                     <input 
                         id="string" 
                         name="string" 
-                        value="<?php echo isset($_GET['string']) ? htmlspecialchars($_GET['string']) : ''; ?>"  
+                        value="<?php echo htmlspecialchars($string ?? ''); ?>"  
                         required 
                         class="input-field w-full py-3 px-4 pr-12 rounded-lg text-gray-100"
                         placeholder="Nhập từ khóa tìm kiếm..."
@@ -136,33 +136,37 @@ $searchString = $_GET['string'] ?? '';
             <!-- Active Filters -->
             <div class="flex flex-wrap items-center justify-between mb-6">
                 <div class="flex flex-wrap gap-2">
+                    <?php  if($productLineName==''&&$From==''&&$To=='' ):?>
+                        <div class="filter-tag flex items-center text-sm px-3 py-1.5 rounded-lg text-indigo-200">
+                            <span> Không có điều kiện tìm kiếm</span>
+                        </div>
+                    <?php endif?>
                     <?php if (isset($productLineName) && $productLineName != '' && !empty($productLineName)): ?>
                         <div class="filter-tag flex items-center text-sm px-3 py-1.5 rounded-lg text-indigo-200">
                             <span><?php echo htmlspecialchars($productLineName['ProductLineName']); ?></span>
                         </div>
                     <?php endif; ?>
                     
-                    <?php if (isset($FromAdd) && $FromAdd != '' && $FromAdd != 0): ?>
+                    <?php if (isset($From) && $From != '' && $From != 0): ?>
                         <div class="filter-tag flex items-center text-sm px-3 py-1.5 rounded-lg text-indigo-200">
-                            <span>Từ: <?php echo number_format($FromAdd, 0, ',', '.') . '₫'; ?></span>
+                            <span>Từ: <?php echo number_format($From, 0, ',', '.') . '₫'; ?></span>
                         </div>
                     <?php endif; ?>
                     
-                    <?php if (isset($ToAdd) && $ToAdd != '' && $ToAdd != 0): ?>
+                    <?php if (isset($To) && $To != '' && $To != 0): ?>
                         <div class="filter-tag flex items-center text-sm px-3 py-1.5 rounded-lg text-indigo-200">
-                            <span>Đến: <?php echo number_format($ToAdd, 0, ',', '.') . '₫'; ?></span>
+                            <span>Đến: <?php echo number_format($To, 0, ',', '.') . '₫'; ?></span>
                         </div>
                     <?php endif; ?>
                     
-                    <?php if ((isset($productLineName) && $productLineName != '') || (isset($FromAdd) && $FromAdd != '' && $FromAdd != 0) || (isset($ToAdd) && $ToAdd != '' && $ToAdd != 0)): ?>
-                        <button 
-                            onclick="window.location='?controller=search&action=CleanAll'"
-                            class="filter-tag flex items-center text-sm px-3 py-1.5 rounded-lg text-red-300 hover:text-red-100">
+                    <?php if ((isset($productLineName) && $productLineName != '') || (isset($From) && $From != '' && $From != 0) || (isset($To) && $To != '' && $To != 0)): ?>
+                        <a href="?controller=search&action=search&string=<?php echo urlencode($string ?? ''); ?>"
+                           class="filter-tag flex items-center text-sm px-3 py-1.5 rounded-lg text-red-300 hover:text-red-100">
                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                             </svg>
                             Xóa tất cả
-                        </button>
+                        </a>
                     <?php endif; ?>
                 </div>
                 
@@ -180,15 +184,19 @@ $searchString = $_GET['string'] ?? '';
             <div id="SearchWithConditions" class="hidden mb-6 bg-gray-700 bg-opacity-50 p-4 rounded-lg">
                 <form action="" method="GET" class="space-y-4">
                     <input type="hidden" name="controller" value="search">
-                    <input type="hidden" name="action" value="searchWithConditions">
+                    <input type="hidden" name="action" value="search">
+                    <input type="hidden" name="string" value="<?php echo htmlspecialchars($string ?? ''); ?>">
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-indigo-300 mb-1">Dòng Sản Phẩm</label>
                             <select id="ProductLine" name="ProductLine" class="input-field w-full py-2 px-3 rounded-lg text-gray-100">
-                                <option value="" selected>Tất cả dòng sản phẩm</option>
+                                <option value="" <?php echo empty($ProductLine) ? 'selected' : ''; ?>>Tất cả dòng sản phẩm</option>
                                 <?php foreach ($dataLineProduct as $items): ?>
-                                    <option value="<?php echo $items->ProductLineID ?>"><?php echo $items->ProductLineName ?></option>
+                                    <option value="<?php echo $items->ProductLineID ?>" 
+                                            <?php echo (isset($ProductLine) && $ProductLine == $items->ProductLineID) ? 'selected' : ''; ?>>
+                                        <?php echo $items->ProductLineName ?>
+                                    </option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -197,6 +205,7 @@ $searchString = $_GET['string'] ?? '';
                             <label class="block text-sm font-medium text-indigo-300 mb-1">Giá từ</label>
                             <input 
                                 name="From" 
+                                value="<?php echo htmlspecialchars($From ?? ''); ?>"
                                 class="input-field w-full py-2 px-3 rounded-lg text-gray-100" 
                                 type="number" 
                                 placeholder="VNĐ" 
@@ -207,6 +216,7 @@ $searchString = $_GET['string'] ?? '';
                             <label class="block text-sm font-medium text-indigo-300 mb-1">Giá đến</label>
                             <input 
                                 name="To" 
+                                value="<?php echo htmlspecialchars($To ?? ''); ?>"
                                 class="input-field w-full py-2 px-3 rounded-lg text-gray-100" 
                                 type="number" 
                                 placeholder="VNĐ" 
@@ -269,28 +279,17 @@ $searchString = $_GET['string'] ?? '';
             
             <!-- Pagination -->
             <?php if (isset($numpage) && $numpage > 1): ?>
-                <?php 
-                $controller = isset($_GET['controller']) && !empty($_GET['controller']) ? $_GET['controller'] : 'search';
-                $action = isset($_GET['action']) && !empty($_GET['action']) ? $_GET['action'] : 'search';
-                $string = isset($_GET['string']) ? $_GET['string'] : '';
-                $productLine = isset($_SESSION['ProductLineSearch']) ? $_SESSION['ProductLineSearch'] : '';
-                $from = isset($_SESSION['From']) ? $_SESSION['From'] : '';
-                $to = isset($_SESSION['To']) ? $_SESSION['To'] : '';
-
-                function buildUrl($page, $controller, $action, $string, $productLine, $from, $to) {
-                    return "?controller=" . urlencode($controller) . 
-                           "&action=" . urlencode($action) . 
-                           "&string=" . urlencode($string) . 
-                           "&ProductLine=" . urlencode($productLine) . 
-                           "&From=" . urlencode($from) . 
-                           "&To=" . urlencode($to) . 
-                           "&page=" . intval($page);
+                <?php
+                function buildUrl($page) {
+                    $query = $_GET;
+                    $query['page'] = $page;
+                    return '?' . http_build_query($query);
                 }
                 ?>
                 
                 <div class="flex justify-center mt-8 space-x-2">
                     <?php if ($currentPage > 1): ?>
-                        <a href="<?php echo buildUrl($currentPage - 1, $controller, $action, $string, $productLine, $from, $to); ?>" 
+                        <a href="<?php echo buildUrl($currentPage - 1); ?>" 
                            class="pagination-item px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 flex items-center">
                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -300,14 +299,14 @@ $searchString = $_GET['string'] ?? '';
                     <?php endif; ?>
 
                     <?php for ($i = 1; $i <= $numpage; $i++): ?>
-                        <a href="<?php echo buildUrl($i, $controller, $action, $string, $productLine, $from, $to); ?>" 
+                        <a href="<?php echo buildUrl($i); ?>" 
                            class="pagination-item px-4 py-2 <?php echo ($i == $currentPage) ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white' : 'bg-gray-700 text-white'; ?> rounded-lg">
                             <?php echo $i; ?>
                         </a>
                     <?php endfor; ?>
 
                     <?php if ($currentPage < $numpage): ?>
-                        <a href="<?php echo buildUrl($currentPage + 1, $controller, $action, $string, $productLine, $from, $to); ?>" 
+                        <a href="<?php echo buildUrl($currentPage + 1); ?>" 
                            class="pagination-item px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 flex items-center">
                             Tiếp
                             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
