@@ -135,32 +135,62 @@ $searchString = $_GET['string'] ?? '';
             
             <!-- Active Filters -->
             <div class="flex flex-wrap items-center justify-between mb-6">
+                 <button 
+                    id="btnSearchWithConditions" 
+                    class="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg text-sm font-medium hover:from-indigo-700 hover:to-purple-700 flex items-center">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                    </svg>
+                    Tìm kiếm với điều kiện
+                </button>
                 <div class="flex flex-wrap gap-2">
-                    <?php  if($productLineName==''&&$From==''&&$To=='' ):?>
+                    <?php
+                    // Initialize variables if not set
+                    $productLineName = $productLineName ?? '';
+                    $From = $From ?? '';
+                    $To = $To ?? '';
+                    $string = $string ?? '';
+
+                    // Show message when no search conditions are applied
+                    if ((!isset($productLineName) || $productLineName == '') && 
+                        (!isset($From) || $From == '') && 
+                        (!isset($To) || $To == '')): ?>
                         <div class="filter-tag flex items-center text-sm px-3 py-1.5 rounded-lg text-indigo-200">
-                            <span> Không có điều kiện tìm kiếm</span>
+                            <span>Không có điều kiện tìm kiếm</span>
                         </div>
-                    <?php endif?>
-                    <?php if (isset($productLineName) && $productLineName != '' && !empty($productLineName)): ?>
+                    <?php endif; ?>
+
+                    <?php 
+                    // Show product line name if exists and is valid
+                    if (isset($productLineName) && is_array($productLineName) && 
+                        !empty($productLineName) && isset($productLineName['ProductLineName'])): ?>
                         <div class="filter-tag flex items-center text-sm px-3 py-1.5 rounded-lg text-indigo-200">
                             <span><?php echo htmlspecialchars($productLineName['ProductLineName']); ?></span>
                         </div>
                     <?php endif; ?>
                     
-                    <?php if (isset($From) && $From != '' && $From != 0): ?>
+                    <?php 
+                    // Show minimum price if set and valid
+                    if (isset($From) && $From !== '' && is_numeric($From) && $From > 0): ?>
                         <div class="filter-tag flex items-center text-sm px-3 py-1.5 rounded-lg text-indigo-200">
                             <span>Từ: <?php echo number_format($From, 0, ',', '.') . '₫'; ?></span>
                         </div>
                     <?php endif; ?>
                     
-                    <?php if (isset($To) && $To != '' && $To != 0): ?>
+                    <?php 
+                    // Show maximum price if set and valid
+                    if (isset($To) && $To !== '' && is_numeric($To) && $To > 0): ?>
                         <div class="filter-tag flex items-center text-sm px-3 py-1.5 rounded-lg text-indigo-200">
                             <span>Đến: <?php echo number_format($To, 0, ',', '.') . '₫'; ?></span>
                         </div>
                     <?php endif; ?>
                     
-                    <?php if ((isset($productLineName) && $productLineName != '') || (isset($From) && $From != '' && $From != 0) || (isset($To) && $To != '' && $To != 0)): ?>
-                        <a href="?controller=search&action=search&string=<?php echo urlencode($string ?? ''); ?>"
+                    <?php 
+                    // Show clear all button if any filter is applied
+                    if ((isset($productLineName) && is_array($productLineName) && !empty($productLineName)) || 
+                        (isset($From) && $From !== '' && is_numeric($From) && $From > 0) || 
+                        (isset($To) && $To !== '' && is_numeric($To) && $To > 0)): ?>
+                        <a href="?controller=search&action=search&string=<?php echo urlencode($string); ?>"
                            class="filter-tag flex items-center text-sm px-3 py-1.5 rounded-lg text-red-300 hover:text-red-100">
                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
@@ -170,14 +200,6 @@ $searchString = $_GET['string'] ?? '';
                     <?php endif; ?>
                 </div>
                 
-                <button 
-                    id="btnSearchWithConditions" 
-                    class="px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg text-sm font-medium hover:from-indigo-700 hover:to-purple-700 flex items-center">
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
-                    </svg>
-                    Tìm kiếm với điều kiện
-                </button>
             </div>
             
             <!-- Advanced Search Form -->
