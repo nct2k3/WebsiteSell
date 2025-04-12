@@ -43,6 +43,11 @@ $controller->index();
             background-color: #374151;
             transition: background-color 0.3s ease;
         }
+
+        select option {
+            background-color: #1f2937; /* Màu nền tối */
+            color: #f3f4f6; /* Màu chữ sáng */
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100 min-h-screen">
@@ -85,7 +90,9 @@ $controller->index();
                                             class="w-full bg-transparent border-0 focus:outline-none text-gray-100">
                                             <option value="" disabled selected>Chọn tỉnh/thành phố</option>
                                             <?php foreach ($provinceList as $province): ?>
-                                                <option value="<?php echo $province->code; ?>"><?php echo $province->name; ?></option>
+                                                <option value="<?php echo $province->code; ?>" <?php echo (isset($userProvince) && $userProvince == $province->code) ? 'selected' : ''; ?>>
+                                                    <?php echo $province->name; ?>
+                                                </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -110,7 +117,8 @@ $controller->index();
                                     <div class="flex items-center bg-gray-700 rounded-lg px-3 py-2">
                                         <input type="text" id="address" name="address" 
                                             class="w-full bg-transparent border-0 focus:outline-none text-gray-100" 
-                                            placeholder="<?php echo $dataUser->Address ?>">
+                                            placeholder="Nhập số nhà, tên đường" 
+                                            value="<?php echo htmlspecialchars($userStreetAddress ?? ''); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -232,7 +240,59 @@ $controller->index();
     </div>
 
     <script>
-        document.getElementById('paymentType').addEventListener('change', function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lấy giá trị province đã chọn
+            const provinceSelect = document.getElementById('province');
+            if (provinceSelect.value) {
+                // Load danh sách quận/huyện của tỉnh đã chọn
+                loadDistricts(provinceSelect.value, <?php echo json_encode($userDistrict ?? null); ?>);
+            }
+        });
+
+        function loadDistricts(provinceCode, selectedDistrictCode = null) {
+    if (!provinceCode) return;
+    
+    fetch(`?controller=payment&action=getDistricts&province=${provinceCode}`)
+        .then(response => {
+            // Kiểm tra response có hợp lệ không
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.text().then(text => {
+                try {
+                    return JSON.parse(text);
+                } catch (e) {
+                    console.error("Invalid JSON response:", text);
+                    return [];
+                }
+            });
+        })
+        .then(districts => {
+            if (!Array.isArray(districts)) {
+                console.error("Expected array of districts, got:", districts);
+                districts = [];
+            }
+            
+            const districtSelect = document.getElementById('district');
+            districtSelect.innerHTML = '<option value="" disabled selected>Chọn quận/huyện</option>';
+            
+            districts.forEach(district => {
+                const option = document.createElement('option');
+                option.value = district.code;
+                option.textContent = district.name;
+                if (selectedDistrictCode && district.code == selectedDistrictCode) {
+                    option.selected = true;
+                }
+                districtSelect.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Error loading districts:', error);
+            // Hiển thị thông báo lỗi cho người dùng nếu cần
+        });
+}
+
+        document.getElementById('paymentType') && document.getElementById('paymentType').addEventListener('change', function() {
             const creditCardFields = document.getElementById('creditCardFields');
             if (this.value == 3) {
                 creditCardFields.classList.remove('hidden'); 
@@ -254,25 +314,6 @@ $controller->index();
                 window.location.href = url.toString();
             });
         });
-        
-        function loadDistricts(provinceCode) {
-            if (!provinceCode) return;
-            
-            fetch(`?controller=payment&action=getDistricts&province=${provinceCode}`)
-                .then(response => response.json())
-                .then(districts => {
-                    const districtSelect = document.getElementById('district');
-                    districtSelect.innerHTML = '<option value="" disabled selected>Chọn quận/huyện</option>';
-                    
-                    districts.forEach(district => {
-                        const option = document.createElement('option');
-                        option.value = district.code;
-                        option.textContent = district.name;
-                        districtSelect.appendChild(option);
-                    });
-                })
-                .catch(error => console.error('Error loading districts:', error));
-        }
     </script>
 </body>
 </html>

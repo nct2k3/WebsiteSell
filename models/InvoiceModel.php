@@ -303,4 +303,27 @@ class InvoiceModel extends BaseModel
          $this->deleteID('invoices', $InvoiceId,'InvoiceID');
 
     }
+
+    public function getProvinceCode($provinceName) {
+        try {
+            $sql = "SELECT code FROM `provinces` WHERE name = '$provinceName'";
+            $result = $this->getCustome($sql);
+            return !empty($result) ? $result[0]['code'] : null;
+        } catch (Exception $e) {
+            error_log("Error in getProvinceCode: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    // Thêm phương thức mới để lấy mã quận/huyện từ tên và mã tỉnh
+    public function getDistrictCode($districtName, $provinceCode) {
+        try {
+            $sql = "SELECT code FROM `districts` WHERE name = '$districtName' AND province_code = $provinceCode";
+            $result = $this->getCustome($sql);
+            return !empty($result) ? $result[0]['code'] : null;
+        } catch (Exception $e) {
+            error_log("Error in getDistrictCode: " . $e->getMessage());
+            return null;
+        }
+    }
 }

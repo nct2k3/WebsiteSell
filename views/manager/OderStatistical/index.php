@@ -445,24 +445,48 @@ $controller->index();
 
     <script>
         function toggleDetails(elementId, button) {
-            const element = document.getElementById(elementId);
-            
-            if (element.classList.contains('hidden')) {
-                element.classList.remove('hidden');
-                button.textContent = 'Ẩn chi tiết';
-                button.classList.remove('text-blue-400', 'bg-blue-500/10');
-                button.classList.add('text-red-400', 'bg-red-500/10', 'active');
-                button.classList.add('hover:bg-red-500/20');
-                button.classList.remove('hover:bg-blue-500/20');
-            } else {
-                element.classList.add('hidden');
-                button.textContent = 'Xem chi tiết';
-                button.classList.remove('text-red-400', 'bg-red-500/10', 'active');
-                button.classList.add('text-blue-400', 'bg-blue-500/10');
-                button.classList.add('hover:bg-blue-500/20');
-                button.classList.remove('hover:bg-red-500/20');
+    const element = document.getElementById(elementId);
+    
+    // If we're opening this detail section
+    if (element.classList.contains('hidden')) {
+        // First close any open detail sections
+        document.querySelectorAll('.detail-section:not(.hidden)').forEach(section => {
+            if (section.id !== elementId) {
+                // Hide the section
+                section.classList.add('hidden');
+                
+                // Find and reset the corresponding button
+                const sectionId = section.id;
+                const buttonSelector = `button[onclick*="${sectionId}"]`;
+                const otherButton = document.querySelector(buttonSelector);
+                
+                if (otherButton) {
+                    otherButton.textContent = 'Xem chi tiết';
+                    otherButton.classList.remove('text-red-400', 'bg-red-500/10', 'active');
+                    otherButton.classList.add('text-blue-400', 'bg-blue-500/10');
+                    otherButton.classList.add('hover:bg-blue-500/20');
+                    otherButton.classList.remove('hover:bg-red-500/20');
+                }
             }
-        }
+        });
+        
+        // Now open the requested section
+        element.classList.remove('hidden');
+        button.textContent = 'Ẩn chi tiết';
+        button.classList.remove('text-blue-400', 'bg-blue-500/10');
+        button.classList.add('text-red-400', 'bg-red-500/10', 'active');
+        button.classList.add('hover:bg-red-500/20');
+        button.classList.remove('hover:bg-blue-500/20');
+    } else {
+        // Closing this detail section
+        element.classList.add('hidden');
+        button.textContent = 'Xem chi tiết';
+        button.classList.remove('text-red-400', 'bg-red-500/10', 'active');
+        button.classList.add('text-blue-400', 'bg-blue-500/10');
+        button.classList.add('hover:bg-blue-500/20');
+        button.classList.remove('hover:bg-red-500/20');
+    }
+}
         
         function switchChart(chartId) {
             // Ẩn tất cả các tab và chart

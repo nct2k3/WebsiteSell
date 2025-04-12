@@ -39,9 +39,43 @@ class PaymentController extends BaseController
             $total += $product['item']->price*$product['quantity'];
         }
 
+        // Phân tích địa chỉ để lấy quận/huyện và tỉnh/thành phố
+        $userProvince = null;
+        $userDistrict = null;
+        $userStreetAddress = $dataUser->Address;
+        
+        if (!empty($dataUser->Address)) {
+            $addressParts = explode(", ", $dataUser->Address);
+            if (count($addressParts) >= 3) {
+                // Lấy tỉnh/thành phố (phần tử cuối)
+                $provinceName = trim(end($addressParts));
+                // Lấy quận/huyện (phần tử kế cuối)
+                $districtName = trim($addressParts[count($addressParts) - 2]);
+                // Phần còn lại là địa chỉ đường/số nhà
+                $userStreetAddress = implode(", ", array_slice($addressParts, 0, count($addressParts) - 2));
+                
+                // Lấy mã tỉnh/thành phố từ tên
+                $userProvince = $this->InvoiceModel->getProvinceCode($provinceName);
+                if ($userProvince) {
+                    // Lấy mã quận/huyện từ tên và mã tỉnh
+                    $userDistrict = $this->InvoiceModel->getDistrictCode($districtName, $userProvince);
+                }
+            }
+        }
+
         $provinceList = $this->InvoiceModel->getProvinces();
         $dataAction='payment';
-        $this->view('frontEnd.payment.index', ['dataAction'=>$dataAction,'products' => $products, 'total' => $total, 'userID' => $userID,'dataUser'=>$dataUser,'provinceList'=>$provinceList]);
+        $this->view('frontEnd.payment.index', [
+            'dataAction' => $dataAction,
+            'products' => $products, 
+            'total' => $total, 
+            'userID' => $userID,
+            'dataUser' => $dataUser,
+            'provinceList' => $provinceList,
+            'userProvince' => $userProvince,
+            'userDistrict' => $userDistrict,
+            'userStreetAddress' => $userStreetAddress
+        ]);
     }
     public function getDistricts() {
         if (isset($_GET['province'])) {
@@ -50,10 +84,19 @@ class PaymentController extends BaseController
             $province = str_pad($province, 2, '0', STR_PAD_LEFT);
             
             $districts = $this->InvoiceModel->getDistricts($province);
+            
+            // Đảm bảo không có output nào trước khi thiết lập header
+            if (ob_get_length()) ob_clean();
+            
             header('Content-Type: application/json');
             echo json_encode($districts);
             exit;
         }
+        
+        // Trả về mảng trống nếu không có province
+        header('Content-Type: application/json');
+        echo json_encode([]);
+        exit;
     }
     // mua 1 sản phẩm 
     public function buyOne()
@@ -82,15 +125,50 @@ class PaymentController extends BaseController
         $product = $this->ProductModel->getProductByID($idProduct);
         if ($product) {
             $products[] = [
-                            'item' => $product,
-                            'quantity' =>1,
-                            'price'=>$product->price,
-                        ];
-         }
+                'item' => $product,
+                'quantity' => 1,
+                'price'=>$product->price,
+            ];
+        }
         $total =$product->price; 
+        
+        // Phân tích địa chỉ để lấy quận/huyện và tỉnh/thành phố
+        $userProvince = null;
+        $userDistrict = null;
+        $userStreetAddress = $dataUser->Address;
+        
+        if (!empty($dataUser->Address)) {
+            $addressParts = explode(", ", $dataUser->Address);
+            if (count($addressParts) >= 3) {
+                // Lấy tỉnh/thành phố (phần tử cuối)
+                $provinceName = trim(end($addressParts));
+                // Lấy quận/huyện (phần tử kế cuối)
+                $districtName = trim($addressParts[count($addressParts) - 2]);
+                // Phần còn lại là địa chỉ đường/số nhà
+                $userStreetAddress = implode(", ", array_slice($addressParts, 0, count($addressParts) - 2));
+                
+                // Lấy mã tỉnh/thành phố từ tên
+                $userProvince = $this->InvoiceModel->getProvinceCode($provinceName);
+                if ($userProvince) {
+                    // Lấy mã quận/huyện từ tên và mã tỉnh
+                    $userDistrict = $this->InvoiceModel->getDistrictCode($districtName, $userProvince);
+                }
+            }
+        }
+        
         $dataAction='payOne';
         $provinceList = $this->InvoiceModel->getProvinces();
-        $this->view('frontEnd.payment.index', ['dataAction'=>$dataAction,'products' => $products, 'total' => $total, 'userID' => $userID,'dataUser'=>$dataUser,'provinceList'=>$provinceList]);
+        $this->view('frontEnd.payment.index', [
+            'dataAction' => $dataAction,
+            'products' => $products, 
+            'total' => $total, 
+            'userID' => $userID,
+            'dataUser' => $dataUser,
+            'provinceList' => $provinceList,
+            'userProvince' => $userProvince,
+            'userDistrict' => $userDistrict,
+            'userStreetAddress' => $userStreetAddress
+        ]);
     }
     // xóa  spsp
 

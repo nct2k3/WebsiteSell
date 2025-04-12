@@ -332,6 +332,9 @@ $controller->index();
                 }
             }
         });
+        function confirmDelete(productName) {
+            return confirm(`Bạn có chắc chắn muốn xóa sản phẩm "${productName}" không?`);
+        }
     </script>
 </body>
 </html>
