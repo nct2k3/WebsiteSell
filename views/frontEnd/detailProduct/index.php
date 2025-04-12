@@ -94,6 +94,9 @@ $controller->index();
                             <i class="fas fa-info-circle mr-2"></i>Chi Tiết Sản Phẩm
                         </h2>
                     </div>
+                    <div>
+                        <?php echo $name ?>
+                    </div>
                     
                     <div class="p-6">
                         <h1 class="text-2xl font-bold mb-2 text-blue-400"><?php echo htmlspecialchars($productInfo->productName); ?></h1>
