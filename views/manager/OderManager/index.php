@@ -484,9 +484,9 @@ $controller->index();
     
     <script>
         function confirmDelete(orderId, userId) {
-            if (confirm('Bạn có chắc chắn muốn xóa đơn hàng này?')) {
+   
                 window.location.href = `?controller=NotificationManager&idOder=${orderId}&idUser=${userId}`;
-            }
+            
         }
     </script>
 </body>
