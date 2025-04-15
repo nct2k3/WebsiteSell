@@ -61,7 +61,7 @@ $controller->index();
         <div class="mb-8 text-center py-4">
             <div class="flex w-full justify-center p-2">
                 <img class="h-10" src="https://img.icons8.com/?size=100&id=30840&format=png&color=ffffff" alt="Logo">
-                <div class="text-3xl font-bold text-blue-400">iPhone</div>
+                <div class="text-3xl font-bold text-blue-400"><?php echo htmlspecialchars($nameLine['ProductLineName']); ?></div>
             </div>
             <p class="text-gray-400 mt-2">Chi tiết sản phẩm và thông tin mua hàng</p>
         </div>
@@ -139,10 +139,10 @@ $controller->index();
                                 
                                 <div class="mt-3 mb-2">
                                     <div class="bg-gray-600 rounded-full">
-                                        <div class="bg-blue-500 rounded-full h-2" style="width: 80%;"></div>
+                                        <div class="bg-blue-500 rounded-full h-2" style="width: 100%;"></div>
                                     </div>
                                 </div>
-                                <p class="text-sm text-gray-400">Giảm <?php echo round((1 - $productInfo->price / $productInfo->originalPrice) * 100); ?>% so với giá gốc</p>
+                
                             </div>
                             
                             <div class="mt-4 flex flex-col sm:flex-row gap-4">   

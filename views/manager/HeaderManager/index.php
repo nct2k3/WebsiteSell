@@ -52,7 +52,6 @@
                         <option value="" disabled selected>Quản Lý Sản Phẩm</option>
                         <option value="1">Danh Sách Sản Phẩm</option>
                         <option value="2">Thêm Sản Phẩm Mới</option>
-                        <option value="3">Xóa Sản Phẩm</option>
                     </select>
                 </div>
                 <div class="col-12 col-md-2 text-white">
