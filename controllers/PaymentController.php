@@ -335,7 +335,7 @@ class PaymentController extends BaseController
 
             if($address == '' || $province == '' || $district == '') {
                 $_SESSION['error'] = "Vui lòng điền đầy đủ thông tin địa chỉ (Địa chỉ, Tỉnh/Thành phố, Quận/Huyện) khi thay đổi";
-                header("Location: /?controller=payment");
+                header("Location: /?controller=payment&action=buyOne&items=$idProduct");
                 exit;
             }
             $province = strlen($province) == 1 ? str_pad($province, 2, '0', STR_PAD_LEFT) : $province;
