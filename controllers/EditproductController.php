@@ -118,16 +118,17 @@ class EditProductController extends BaseController
                 $updatedData['productName'],
                 $updatedData['Status'],
                 $updatedData['price'],
-                0,
                 $updatedData['originalPrice'],
+                0,
                 $updatedData['imageUrl'],
                 $updatedData['capacity'],
                 $updatedData['color'],
                 
             );
+            print_r($productData);
             $this->ProductModel->updateProduct($productData);
             $_SESSION['success'] = "Product updated successfully!";
-            header("Location: /?controller=homeManager");
+           header("Location: /?controller=homeManager");
             exit();
             
         } catch (Exception $e) {
