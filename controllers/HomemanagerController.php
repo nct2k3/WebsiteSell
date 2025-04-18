@@ -103,6 +103,7 @@ class HomemanagerController extends BaseController
                 header("Location: ?controller=homeManager&action=search&string=" . $_GET['string'] . "&page=1");
             } else {
                 $this->index();
+                exit;
             }
             exit;
         }
@@ -176,7 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $HomemanagerController->deleteProduct();
             exit;
         default:
-            echo "Hành động không hợp lệ!";
+            //echo "Hành động không hợp lệ!";
             break;
     }
 } else if ($_SERVER["REQUEST_METHOD"] == "GET") {
