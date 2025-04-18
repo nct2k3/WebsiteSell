@@ -371,7 +371,7 @@ class PaymentController extends BaseController
                     1
                 );
                 $this->InvoiceDetailModel->createInvoice($invoiceDetail);
-            $this->CartModel->deleteById($userID);
+           // $this->CartModel->deleteById($userID);
             $_SESSION['message'] = "Payment successfully!";
             header("Location: /?controller=information&user=$userID");
         } else {

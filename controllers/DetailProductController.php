@@ -3,10 +3,12 @@ class DetailProductController extends BaseController
 {
     private $ProductModel;
     private $CartModel;
+    private $UserModel;
     public function __construct()
     {
         $this->ProductModel = $this->loadModel("ProductModel");
         $this->CartModel = $this->loadModel("CartModel");
+        $this->UserModel = $this->loadModel("UserModel");
     }
 
     public function index()
@@ -26,6 +28,13 @@ class DetailProductController extends BaseController
             $_SESSION['error'] = "You are not logged in yet!";
             $this->index(); 
             return;
+        }
+        $dataUser = $this->UserModel->getUserByID($userId);
+        if($dataUser->FullName=="Admin"){
+            $_SESSION['error'] = "Admin không có quyền mua hàng!";
+            header("Location: /");
+            return;
+
         }
         $id = $_GET['items'];
         $cart= new Cart(

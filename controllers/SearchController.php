@@ -12,6 +12,7 @@ class SearchController extends BaseController
     {
         $dataLineProduct = $this->ProductModel->getLineProduct();
         $this->view('frontEnd.search.index', ['dataLineProduct' => $dataLineProduct]);
+        exit;
     }
 
     public function search()

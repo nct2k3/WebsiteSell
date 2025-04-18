@@ -111,8 +111,9 @@
                     <a>Watch</a>
                 </div>
                 
-                <div id="searchButton" onclick="window.location='?controller=search'" class="bg-black opacity-50 col-12 col-md-1 rounded-full hover:bg-gray-400 search-btn">
-                    <img class="h-8 mx-1 mt-1 p-1" src="https://img.icons8.com/?size=100&id=7695&format=png&color=ffffff" alt="Icon">
+                <div id="searchButton" onclick="window.location='?controller=search'" class="flex col-12 col-md-1 items-center justify-center text-white font-bold text-sm rounded-full  p-2 search-btn">
+                    <img class="h-6 w-6" src="https://img.icons8.com/?size=100&id=7695&format=png&color=ffffff" alt="Search Icon">
+                    <span class="ml-1">Search</span>
                 </div>
                
                 <div class="col-12 col-md-3 d-flex align-items-center justify-content-center text-white font-bold text-sm mt-2 mt-md-0">
